@@ -1,6 +1,26 @@
 #pragma once
 
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
 #include "ofMain.h"
+
+#include "board.h"
+#include "tile.h"
+
+#include "pacman.h"
+
+#include "blinky.h"
+#include "clyde.h"
+#include "inky.h"
+#include "pinky.h"
+
+using std::ifstream;
+using std::ofstream;
+using std::string;
+using std::vector;
 
 enum GameState {
 	START,
@@ -14,31 +34,30 @@ enum GameState {
 class ofApp : public ofBaseApp {
 
 	private: 
-		// Variables
-		ofSoundPlayer background_music_;
-		GameState current_state_;
+		// OpenFrameworks Variables
+		ofSoundPlayer backgroundMusic;
+		GameState currentState;
 
-		int screen_width_ = 1024;
-		int screen_height_ = 768;
-		int frame_rate_ = 60;
+		int screenWidth = 1024;
+		int screenHeight = 768;
+		int frameRate = 60;
+
+		// Game Variables
+		vector<vector<Tile>> board;
+		PacMan pacman;
+		Blinky blinky;
+		Clyde clyde;
+		Inky inky;
+		Pinky pinky;
 
 		// Helper Methods For Display Render
-		// GameState = START
 		void drawLandingPage();
-
-		// GameState = INSTRUCTIONS
 		void drawInstructions();
-
-		// GameState = IN_PROGRESS || PAUSED
 		void drawGameBoard();
 		void drawMisc();
 		void drawPacMan();
 		void drawGhosts();
-
-		// GameState = GAME_OVER
 		void drawGameOver();
-
-		// GameState = HIGH_SCORE
 		void drawHighScores();
 
 		/*

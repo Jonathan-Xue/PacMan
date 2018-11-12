@@ -1,22 +1,34 @@
 #pragma once
 
+/*
+	Tile Class
+		ID:
+			-1	-> Invalid Block
+			0	-> Wall
+			1	-> Valid Block
+		Pellet:
+			Type Of Pellet Within A Valid Block (None, Standard, Power)
+*/
 class Tile {
 
-private:
-	int id;
-	bool edible;
-	bool powerup;
+	private:
+		int id;
+		bool standardPellet;
+		bool powerPellet;
 
-public:
-	// Constructors
-	Tile();
-	Tile(int x, bool e, bool p);
-	~Tile();
+	public:
+		// Constructors
+		Tile();
+		Tile(int x, bool sp, bool pp);
+		~Tile();
 
-	// Setter
-	void setID(int x);
+		// Setters
+		void setStandardPellet(bool sp);
+		void setPowerPellet(bool pp);
 
-	// Getter
-	int getID();
+		// Getters
+		int getID();
+		bool isStandardPellet();
+		bool isPowerPellet();
 
 };

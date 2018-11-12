@@ -9,6 +9,11 @@
 using std::string;
 using std::vector;
 
+/*
+	Board Class
+		Purpose:
+			Generates A New Board & Returns It As A 2D Vector Of Tiles
+*/
 class Board {
 
 	private:

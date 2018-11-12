@@ -82,7 +82,7 @@ void Board::parseBoard() {
 				board[i][j] = Tile(1, true, false);
 			}
 			else if (val == 4) {
-				board[i][j] = Tile(1, true, true);
+				board[i][j] = Tile(1, false, true);
 			}
 			else {
 				std::cerr << "Error. GameState Is Invalid" << std::endl;

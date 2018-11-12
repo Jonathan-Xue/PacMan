@@ -11,7 +11,36 @@ void ofApp::drawInstructions() {
 }
 
 void ofApp::drawGameBoard() {
+	for (size_t i = 0; i < board.size(); i++) {
+		for (size_t j = 0; j < board[0].size(); j++) {
+			if (board[i][j].getID() == -1) {
+				// Invalid Block
 
+			}
+			else if (board[i][j].getID() == 0) {
+				// Wall
+
+			} 
+			else if (board[i][j].getID() == 1) {
+				if (board[i][j].isStandardPellet()) {
+					// Standard Pellet
+
+				}
+				else if (board[i][j].isPowerPellet()) {
+					// Power Pellet
+
+				}
+				else {
+					// No Pellet
+
+				}
+			}
+			else {
+				std::cerr << "Error. GameBoard Is Invalid" << std::endl;
+				std::exit(1);
+			}
+		}
+	}
 }
 
 void ofApp::drawMisc() {
@@ -71,23 +100,31 @@ void ofApp::reset() {
 /* Public Methods */
 // Setup Method
 void ofApp::setup(){
+	// Set Window Name
 	ofSetWindowTitle("Pac-Man");
 
-	background_music_.load("temp.mp3");
-	background_music_.setLoop(true);
-	background_music_.play();
+	// Background Music
+	backgroundMusic.load("temp.mp3");
+	backgroundMusic.setLoop(true);
+	backgroundMusic.play();
+
+	// Create A New Board
+	board = Board().getBoard();
+
+	// Set GameState
+	currentState = IN_PROGRESS;
 }
 
 // Update Game Information
 void ofApp::update(){
-	if (current_state_ != PAUSED) {
+	if (currentState != PAUSED) {
 		
 	}
 }
 
 // Draw Game
 void ofApp::draw() {
-	switch (current_state_) {
+	switch (currentState) {
 		case START:
 			drawLandingPage();
 			break;
@@ -128,15 +165,15 @@ void ofApp::keyPressed(int key){
 	int upper_key = toupper(key);
 	if (upper_key == 'P') {
 		// Flip current_state_
-		if (current_state_ == IN_PROGRESS) {
-			current_state_ = PAUSED;
+		if (currentState == IN_PROGRESS) {
+			currentState = PAUSED;
 		}
-		else if (current_state_ == PAUSED) {
-			current_state_ = IN_PROGRESS;
+		else if (currentState == PAUSED) {
+			currentState = IN_PROGRESS;
 		}
 		return;
 	}
-	else if (current_state_ == IN_PROGRESS) {
+	else if (currentState == IN_PROGRESS) {
 		if (upper_key == 'W') {
 
 		}
@@ -157,6 +194,6 @@ void ofApp::mousePressed(int x, int y, int button){
 }
 
 void ofApp::windowResized(int w, int h){
-	screen_width_ = w;
-	screen_height_ = h;
+	screenWidth = w;
+	screenHeight = h;
 }
