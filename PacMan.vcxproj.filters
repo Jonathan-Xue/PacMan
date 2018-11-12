@@ -7,20 +7,29 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="blinky.cpp">
-      <Filter>src\ghosts</Filter>
-    </ClCompile>
-    <ClCompile Include="inky.cpp">
-      <Filter>src\ghosts</Filter>
-    </ClCompile>
-    <ClCompile Include="clyde.cpp">
-      <Filter>src\ghosts</Filter>
-    </ClCompile>
-    <ClCompile Include="pinky.cpp">
-      <Filter>src\ghosts</Filter>
-    </ClCompile>
-    <ClCompile Include="ghost.cpp">
+    <ClCompile Include="src\game.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pacman.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tile.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\blinky.cpp">
+      <Filter>src\ghosts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\clyde.cpp">
+      <Filter>src\ghosts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ghost.cpp">
+      <Filter>src\ghosts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\inky.cpp">
+      <Filter>src\ghosts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pinky.cpp">
+      <Filter>src\ghosts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -35,20 +44,29 @@
     <ClInclude Include="src\ofApp.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="blinky.h">
-      <Filter>src\ghosts</Filter>
-    </ClInclude>
-    <ClInclude Include="inky.h">
-      <Filter>src\ghosts</Filter>
-    </ClInclude>
-    <ClInclude Include="pinky.h">
-      <Filter>src\ghosts</Filter>
-    </ClInclude>
-    <ClInclude Include="clyde.h">
-      <Filter>src\ghosts</Filter>
-    </ClInclude>
-    <ClInclude Include="ghost.h">
+    <ClInclude Include="src\game.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pacman.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tile.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\blinky.h">
+      <Filter>src\ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\clyde.h">
+      <Filter>src\ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ghost.h">
+      <Filter>src\ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\inky.h">
+      <Filter>src\ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pinky.h">
+      <Filter>src\ghosts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

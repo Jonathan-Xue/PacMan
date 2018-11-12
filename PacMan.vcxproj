@@ -180,21 +180,27 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="blinky.cpp" />
-    <ClCompile Include="clyde.cpp" />
-    <ClCompile Include="ghost.cpp" />
-    <ClCompile Include="inky.cpp" />
-    <ClCompile Include="pinky.cpp" />
+    <ClCompile Include="src\blinky.cpp" />
+    <ClCompile Include="src\clyde.cpp" />
+    <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\ghost.cpp" />
+    <ClCompile Include="src\inky.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
+    <ClCompile Include="src\pacman.cpp" />
+    <ClCompile Include="src\pinky.cpp" />
+    <ClCompile Include="src\tile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="blinky.h" />
-    <ClInclude Include="clyde.h" />
-    <ClInclude Include="ghost.h" />
-    <ClInclude Include="inky.h" />
-    <ClInclude Include="pinky.h" />
+    <ClInclude Include="src\blinky.h" />
+    <ClInclude Include="src\clyde.h" />
+    <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\ghost.h" />
+    <ClInclude Include="src\inky.h" />
     <ClInclude Include="src\ofApp.h" />
+    <ClInclude Include="src\pacman.h" />
+    <ClInclude Include="src\pinky.h" />
+    <ClInclude Include="src\tile.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
