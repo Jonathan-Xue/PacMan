@@ -4,11 +4,13 @@ class Tile {
 
 private:
 	int id;
+	bool edible;
+	bool powerup;
 
 public:
 	// Constructors
 	Tile();
-	Tile(int x);
+	Tile(int x, bool e, bool p);
 	~Tile();
 
 	// Setter

@@ -132,7 +132,7 @@ void ofApp::keyPressed(int key){
 			current_state_ = PAUSED;
 		}
 		else if (current_state_ == PAUSED) {
-			current_state_ == IN_PROGRESS;
+			current_state_ = IN_PROGRESS;
 		}
 		return;
 	}

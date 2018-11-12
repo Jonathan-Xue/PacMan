@@ -2,6 +2,7 @@
 
 #include "tile.h"
 
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -11,14 +12,26 @@ using std::vector;
 class Board {
 
 	private:
-		string default = "";
+		// Before & After Blank Tiles For Miscellaneous Display
+		const int before = 3;
+		const int after = 2;
+
+		// Board Width, Height
+		int numRows;
+		int numCols;
+
+		// Board Variables
+		string default;
 		vector<vector<Tile>> board;
 
 	public:
 		// Constructors
 		Board();
-		Board(string input);
+		Board(int r, int c, string input);
 		~Board();
+
+		// Methods
+		void parseBoard();
 
 		// Getter
 		vector<vector<Tile>> getBoard();

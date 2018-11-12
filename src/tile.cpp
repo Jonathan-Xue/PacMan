@@ -2,8 +2,10 @@
 
 Tile::Tile() {}
 
-Tile::Tile(int x) {
+Tile::Tile(int x, bool e, bool p) {
 	id = x;
+	edible = e;
+	powerup = p;
 }
 
 Tile::~Tile() {}
