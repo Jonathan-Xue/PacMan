@@ -38,9 +38,10 @@ class ofApp : public ofBaseApp {
 		ofSoundPlayer backgroundMusic;
 		GameState currentState;
 
-		int screenWidth = 1024;
-		int screenHeight = 768;
+		int screenWidth = ofGetWindowWidth();
+		int screenHeight = ofGetWindowHeight();
 		int frameRate = 60;
+		int tileSize;
 
 		// Game Variables
 		vector<vector<Tile>> board;

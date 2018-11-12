@@ -15,24 +15,29 @@ void ofApp::drawGameBoard() {
 		for (size_t j = 0; j < board[0].size(); j++) {
 			if (board[i][j].getID() == -1) {
 				// Invalid Block
-
+				ofSetColor(0, 0, 0);
+				ofDrawRectangle(tileSize * j, tileSize * i, tileSize, tileSize);
 			}
 			else if (board[i][j].getID() == 0) {
 				// Wall
-
+				ofSetColor(50, 50, 255);
+				ofDrawRectangle(tileSize * j, tileSize * i, tileSize, tileSize);
 			} 
 			else if (board[i][j].getID() == 1) {
 				if (board[i][j].isStandardPellet()) {
 					// Standard Pellet
-
+					ofSetColor(255, 255, 100);
+					ofDrawRectangle(tileSize * j, tileSize * i, tileSize, tileSize);
 				}
 				else if (board[i][j].isPowerPellet()) {
 					// Power Pellet
-
+					ofSetColor(255, 150, 100);
+					ofDrawRectangle(tileSize * j, tileSize * i, tileSize, tileSize);
 				}
 				else {
 					// No Pellet
-
+					ofSetColor(100, 100, 150);
+					ofDrawRectangle(tileSize * j, tileSize * i, tileSize, tileSize);
 				}
 			}
 			else {
@@ -113,6 +118,9 @@ void ofApp::setup(){
 
 	// Set GameState
 	currentState = IN_PROGRESS;
+
+	// Tile Size
+	tileSize = min(screenHeight / board.size(), screenWidth / board[0].size());
 }
 
 // Update Game Information
@@ -194,6 +202,10 @@ void ofApp::mousePressed(int x, int y, int button){
 }
 
 void ofApp::windowResized(int w, int h){
+	// Update Width & Height
 	screenWidth = w;
 	screenHeight = h;
+
+	// Tile Size
+	tileSize = min(screenHeight / board.size(), screenWidth / board[0].size());
 }

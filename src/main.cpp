@@ -13,7 +13,7 @@ int main( ){
 	*/
 
 	// setup the GL context (width, height, OF_WINDOW/OF_FULLSCREEN)
-	ofSetupOpenGL(1024, 768, OF_WINDOW); 
+	ofSetupOpenGL(672, 864, OF_WINDOW); 
 	ofSetFrameRate(60);
 	ofRunApp(new ofApp());
 }
