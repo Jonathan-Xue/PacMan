@@ -2,23 +2,57 @@
 
 #include "ofMain.h"
 
+enum GameState {
+	START,
+	INSTRUCTIONS,
+	IN_PROGRESS,
+	PAUSED,
+	FINISHED
+};
+
 class ofApp : public ofBaseApp{
 
+	private: 
+		// Variables
+		ofSoundPlayer background_music_;
+		GameState current_state_;
+
+		int screen_width_ = 1024;
+		int screen_height_ = 768;
+		int frame_rate_ = 60;
+
+		// Helper Methods For Display Render
+		// GameState = START
+		void drawLandingPage();
+
+		// GameState = INSTRUCTIONS
+		void drawInstructions();
+
+		// GameState = IN_PROGRESS || PAUSED
+		void drawGameBoard();
+		void drawMisc();
+		void drawPacMan();
+		void drawGhosts();
+
+		// GameState = FINISHED
+		void drawHighScores();
+
+		// String Bounding Box
+		ofRectangle getBitmapStringBoundingBox(string text);
+
+		// Reset
+		void reset();
+
 	public:
+		// Setup
 		void setup();
+
+		// Game Loop
 		void update();
 		void draw();
 
+		// User Actions
 		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
 		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
-		
+		void windowResized(int w, int h);		
 };
