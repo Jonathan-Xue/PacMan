@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 
-#include "board.h"
 #include "tile.h"
 
 #include "pacman.h"
