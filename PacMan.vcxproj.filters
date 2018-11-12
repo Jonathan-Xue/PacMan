@@ -13,9 +13,6 @@
     <ClCompile Include="src\pacman.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\tile.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\blinky.cpp">
       <Filter>src\ghosts</Filter>
     </ClCompile>
@@ -31,6 +28,12 @@
     <ClCompile Include="src\pinky.cpp">
       <Filter>src\ghosts</Filter>
     </ClCompile>
+    <ClCompile Include="src\board.cpp">
+      <Filter>src\board</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tile.cpp">
+      <Filter>src\board</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -38,6 +41,9 @@
     </Filter>
     <Filter Include="src\ghosts">
       <UniqueIdentifier>{ed29c92d-bf1a-4f72-879c-69b464b0f5d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\board">
+      <UniqueIdentifier>{e6c4f09e-9631-4379-a323-92dceb497297}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,9 +54,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\pacman.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\tile.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\blinky.h">
@@ -67,6 +70,12 @@
     </ClInclude>
     <ClInclude Include="src\pinky.h">
       <Filter>src\ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\board.h">
+      <Filter>src\board</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tile.h">
+      <Filter>src\board</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
