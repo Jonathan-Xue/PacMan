@@ -20,7 +20,7 @@ using std::ofstream;
 using std::string;
 using std::vector;
 
-class game {
+class Game {
 
 	private:
 		

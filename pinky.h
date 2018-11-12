@@ -2,7 +2,7 @@
 
 #include "ghost.h"
 
-class pinky : public ghost {
+class Pinky : public Ghost {
 
 	private:
 		

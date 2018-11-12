@@ -1,6 +1,6 @@
 #pragma once
 
-class board {
+class Board {
 
 	private: 
 		

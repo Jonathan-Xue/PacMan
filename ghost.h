@@ -1,6 +1,6 @@
 #pragma once
 
-class ghost {
+class Ghost {
 
 	private:
 		

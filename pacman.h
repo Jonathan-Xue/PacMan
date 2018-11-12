@@ -1,6 +1,6 @@
 #pragma once
 
-class pacman {
+class PacMan {
 
 	private:
 		
