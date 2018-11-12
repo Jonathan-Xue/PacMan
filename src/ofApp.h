@@ -11,7 +11,7 @@ enum GameState {
 	HIGH_SCORE
 };
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp {
 
 	private: 
 		// Variables

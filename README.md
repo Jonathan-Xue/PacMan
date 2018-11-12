@@ -3,6 +3,9 @@
 Build a standard game of PacMan using OpenFrameworks. Input will be controlled either via WASD or through a joystick connected to an Arduino.
 
 ### Standard PacMan Rules
+#### References
+* [Link](https://www.gamasutra.com/view/feature/3938/the_pacman_dossier.php?print=1)
+ 
 #### Board Design
 * Each tile is 8 pixels by 8 pixels
 * Screen Size: 28 tiles by 36 tiles
