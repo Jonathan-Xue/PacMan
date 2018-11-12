@@ -7,7 +7,8 @@ enum GameState {
 	INSTRUCTIONS,
 	IN_PROGRESS,
 	PAUSED,
-	FINISHED
+	GAME_OVER,
+	HIGH_SCORE
 };
 
 class ofApp : public ofBaseApp{
@@ -34,10 +35,18 @@ class ofApp : public ofBaseApp{
 		void drawPacMan();
 		void drawGhosts();
 
-		// GameState = FINISHED
+		// GameState = GAME_OVER
+		void drawGameOver();
+
+		// GameState = HIGH_SCORE
 		void drawHighScores();
 
-		// String Bounding Box
+		/*
+			Purpose: Return String Bounding Box
+			Author: roymacdonald
+			Date: February, 2016
+			Link: https://forum.openframeworks.cc/t/how-to-get-size-of-ofdrawbitmapstring/22578/7
+		*/
 		ofRectangle getBitmapStringBoundingBox(string text);
 
 		// Reset
