@@ -1,8 +1,8 @@
 #pragma once
 
-class ghost {
+class board {
 
-	private:
+	private: 
 		
 	public:
 		

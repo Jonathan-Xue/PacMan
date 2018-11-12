@@ -5,7 +5,7 @@
 class clyde : public ghost {
 
 	private:
-
+		
 	public:
-
+		
 };

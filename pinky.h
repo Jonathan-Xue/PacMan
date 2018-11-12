@@ -5,7 +5,7 @@
 class pinky : public ghost {
 
 	private:
-
+		
 	public:
-
+		
 };

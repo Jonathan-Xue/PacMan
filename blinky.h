@@ -5,7 +5,7 @@
 class blinky : public ghost {
 
 	private:
-
+		
 	public:
-
+		
 };
