@@ -134,7 +134,7 @@ void ofApp::setup(){
 // Update Game Information
 void ofApp::update(){
 	if (currentState != PAUSED) {
-		pacman.move(board);
+		pacman.update(board);
 	}
 }
 

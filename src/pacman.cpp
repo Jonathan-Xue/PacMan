@@ -1,16 +1,37 @@
 #include "pacman.h"
 
+// Constructors
 Pacman::Pacman() {
-	tilePosition = { 23, 14 };
-	pixelPosition = { 0, 0 };
-
-	currentVelocity = { 0, 0 };
-	queuedVelocity = { 0, 0 };
+	tilePosition[0] = 23;
+	tilePosition[1] = 14;
 }
 
 Pacman::~Pacman() {}
 
-void Pacman::move(vector<vector<Tile>> &board) {
+// Methods
+void Pacman::update(vector<vector<Tile>> &board) {
+	// Eat Pellet
+	eat(board);
+
+	// Update currentVelocity
+	updateVelocity(board);
+
+	// Move In The Direction Of currentVelocity
+	move();
+
+	// Adjust tilePosition To Stay In Bounds
+	adjustBounds(board);
+
+	// Calculate pixelPosition
+	calculatePixelPosition();
+}
+
+void Pacman::eat(vector<vector<Tile>> &board) {
+	board[tilePosition[0]][tilePosition[1]].setStandardPellet(false);
+	board[tilePosition[0]][tilePosition[1]].setPowerPellet(false);
+}
+
+void Pacman::updateVelocity(vector<vector<Tile>> board) {
 	// Ensure currentVelocity Is Valid
 	if (!checkValidVelocity(board, currentVelocity)) {
 		// Set currentVelocity To { 0, 0 } If PacMan Is In The Center Of The Tile
@@ -27,43 +48,9 @@ void Pacman::move(vector<vector<Tile>> &board) {
 			queuedVelocity = { 0, 0 };
 		}
 	}
-
-	// Eat Pellets
-	board[tilePosition[0]][tilePosition[1]].setStandardPellet(false);
-	board[tilePosition[0]][tilePosition[1]].setPowerPellet(false);
-
-	// Adjust currentTick
-	currentTick[1] += currentVelocity[0] * speed;
-	currentTick[0] += currentVelocity[1] * speed;
-
-	// Horizontal Movement & Tick Bounds
-	if (std::abs(currentTick[1]) < epsilon) {
-		tilePosition[1]--;
-		currentTick[1] = maxTick;
-	}
-	else if (std::abs(currentTick[1] - maxTick) < epsilon) {
-		tilePosition[1]++;
-		currentTick[1] = 0.0;
-	}
-
-	// Vertical Movement & Tick Bounds
-	if (std::abs(currentTick[0]) < epsilon) {
-		tilePosition[0]--;
-		currentTick[0] = maxTick;
-	}
-	else if (std::abs(currentTick[0] - maxTick) < epsilon) {
-		tilePosition[0]++;
-		currentTick[0] = 0.0;
-	}
-
-	// Adjusts Bounds
-	adjustBounds(board);
-
-	// Calculate pixelPosition
-	calculatePixelPosition();
 }
 
-bool Pacman::checkValidVelocity(vector<vector<Tile>> &board, vector<int> velocity) {
+bool Pacman::checkValidVelocity(vector<vector<Tile>> board, vector<int> velocity) {
 	if (velocity[0] == 0 && velocity[1] == 0) {
 		return false;
 	}
@@ -99,7 +86,33 @@ bool Pacman::checkValidVelocity(vector<vector<Tile>> &board, vector<int> velocit
 	return false;
 }
 
-void Pacman::adjustBounds(vector<vector<Tile>> &board) {
+void Pacman::move() {
+	// Adjust currentTick
+	currentTick[1] += currentVelocity[0] * speed;
+	currentTick[0] += currentVelocity[1] * speed;
+
+	// Horizontal Movement & Tick Bounds
+	if (std::abs(currentTick[1]) < epsilon) {
+		tilePosition[1]--;
+		currentTick[1] = maxTick;
+	}
+	else if (std::abs(currentTick[1] - maxTick) < epsilon) {
+		tilePosition[1]++;
+		currentTick[1] = 0.0;
+	}
+
+	// Vertical Movement & Tick Bounds
+	if (std::abs(currentTick[0]) < epsilon) {
+		tilePosition[0]--;
+		currentTick[0] = maxTick;
+	}
+	else if (std::abs(currentTick[0] - maxTick) < epsilon) {
+		tilePosition[0]++;
+		currentTick[0] = 0.0;
+	}
+}
+
+void Pacman::adjustBounds(vector<vector<Tile>> board) {
 	// Vertical OutOfBounds
 	if (tilePosition[0] < 0) {
 		tilePosition[0] = board.size() - 1;
@@ -122,10 +135,12 @@ void Pacman::calculatePixelPosition() {
 	pixelPosition[1] = (tilePosition[0] + (currentTick[0] / 100)) * tileSize;
 }
 
+// Setter
 void Pacman::setQueuedVelocity(vector<int> v) {
 	queuedVelocity = v;
 }
 
+// Getters
 vector<double> Pacman::getPixelPosition() {
 	return pixelPosition;
 }

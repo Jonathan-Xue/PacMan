@@ -19,11 +19,11 @@ class Pacman {
 		int tileSize;
 
 		// Class Variables
-		vector<int> tilePosition;
-		vector<double> pixelPosition;
+		vector<int> tilePosition = { 0, 0 };
+		vector<double> pixelPosition = { 0, 0 };
 
-		vector<int> currentVelocity;
-		vector<int> queuedVelocity;
+		vector<int> currentVelocity = { 0, 0 };
+		vector<int> queuedVelocity = { 0, 0 };
 		
 		// Separate Each Tile Into X Ticks
 		const double maxTick = 100.0;
@@ -33,7 +33,7 @@ class Pacman {
 		const int tilesPerSecond = 10;
 
 		// Ticks Per Frame
-		double speed;
+		double speed = 0.0;
 
 	public:
 		// Constructors
@@ -41,9 +41,17 @@ class Pacman {
 		~Pacman();
 
 		// Methods
-		void move(vector<vector<Tile>> &board);
-		bool checkValidVelocity(vector<vector<Tile>> &board, vector<int> velocity); 
-		void adjustBounds(vector<vector<Tile>> &board);
+		void update(vector<vector<Tile>> &board);
+
+		void eat(vector<vector<Tile>> &board);
+
+		void updateVelocity(vector<vector<Tile>> board);
+		bool checkValidVelocity(vector<vector<Tile>> board, vector<int> velocity);
+
+		void move();
+
+		void adjustBounds(vector<vector<Tile>> board);
+
 		void calculatePixelPosition();
 
 		// Setter
