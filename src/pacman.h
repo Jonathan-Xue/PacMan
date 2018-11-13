@@ -13,6 +13,7 @@ class Pacman {
 
 	private:
 		// OpenFramework Variables
+		const double epsilon = 0.001;
 		int screenWidth;
 		int screenHeight;
 		int tileSize;
@@ -25,15 +26,14 @@ class Pacman {
 		vector<int> queuedVelocity;
 		
 		// Separate Each Tile Into X Ticks
-		double maxTick = 100.0;
+		const double maxTick = 100.0;
 		vector<double> currentTick = { maxTick / 2, maxTick / 2 };
 
 		// Tiles Per Second
-		int tilesPerSecond;
+		const int tilesPerSecond = 10;
 
-		// Speed (Ticks Per Frame)
+		// Ticks Per Frame
 		double speed;
-		
 
 	public:
 		// Constructors
@@ -42,9 +42,9 @@ class Pacman {
 
 		// Methods
 		void move(vector<vector<Tile>> &board);
-		void calculatePixelPosition();
+		bool checkValidVelocity(vector<vector<Tile>> &board, vector<int> velocity); 
 		void adjustBounds(vector<vector<Tile>> &board);
-		bool checkValidVelocity(vector<vector<Tile>> &board, vector<int> velocity);
+		void calculatePixelPosition();
 
 		// Setter
 		void setQueuedVelocity(vector<int> v);

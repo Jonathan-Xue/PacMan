@@ -128,7 +128,7 @@ void ofApp::setup(){
 	tileSize = min(screenHeight / board.size(), screenWidth / board[0].size());
 
 	// Resize
-	pacman.resize(screenWidth, screenHeight, tileSize);
+	windowResized(screenWidth, screenHeight);
 }
 
 // Update Game Information
