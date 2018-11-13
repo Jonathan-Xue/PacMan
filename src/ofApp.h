@@ -34,7 +34,7 @@ enum GameState {
 class ofApp : public ofBaseApp {
 
 	private: 
-		// OpenFrameworks Variables
+		// OpenFramework Variables
 		ofSoundPlayer backgroundMusic;
 		GameState currentState;
 
@@ -45,7 +45,7 @@ class ofApp : public ofBaseApp {
 
 		// Game Variables
 		vector<vector<Tile>> board;
-		PacMan pacman;
+		Pacman pacman;
 		Blinky blinky;
 		Clyde clyde;
 		Inky inky;

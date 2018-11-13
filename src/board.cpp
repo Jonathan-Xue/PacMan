@@ -4,7 +4,7 @@ Board::Board() {
 	numRows = 31;
 	numCols = 28;
 	default = 
-		"1111111111111111111111111111"
+		"1111111111113113111111111111"
 		"1333333333333113333333333331"
 		"1311113111113113111113111131"
 		"1411113111113113111113111141"
@@ -34,7 +34,7 @@ Board::Board() {
 		"1311111111113113111111111131"
 		"1311111111113113111111111131"
 		"1333333333333333333333333331"
-		"1111111111111111111111111111"
+		"1111111111113113111111111111"
 	;
 	parseBoard();
 }
@@ -94,12 +94,14 @@ void Board::parseBoard() {
 	}
 
 	// Before & After Blank Tiles For Miscellaneous Display
+	/*
 	for (int i = 0; i < before; i++) {
 		board.insert(board.begin(), vector<Tile>(numCols, Tile(-1, false, false)));
 	}
 	for (int i = 0; i < after; i++) {
 		board.push_back(vector<Tile>(numCols, Tile(-1, false, false)));
 	}
+	*/
 }
 
 vector<vector<Tile>> Board::getBoard() {

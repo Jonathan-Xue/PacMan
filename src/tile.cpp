@@ -15,7 +15,7 @@ void Tile::setStandardPellet(bool sp) {
 }
 
 void Tile::setPowerPellet(bool pp) {
-	standardPellet = pp;
+	powerPellet = pp;
 }
 
 int Tile::getID() {

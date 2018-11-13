@@ -53,7 +53,8 @@ void ofApp::drawMisc() {
 }
 
 void ofApp::drawPacMan() {
-
+	ofSetColor(255, 255, 255);
+	ofDrawCircle(pacman.getPixelPosition()[0], pacman.getPixelPosition()[1], tileSize / 2);
 }
 
 void ofApp::drawGhosts() {
@@ -108,10 +109,14 @@ void ofApp::setup(){
 	// Set Window Name
 	ofSetWindowTitle("Pac-Man");
 
+	// Background Color
+	ofBackground(0, 0, 0);
+	ofSetBackgroundAuto(false);
+
 	// Background Music
 	backgroundMusic.load("temp.mp3");
 	backgroundMusic.setLoop(true);
-	backgroundMusic.play();
+	// backgroundMusic.play();
 
 	// Create A New Board
 	board = Board().getBoard();
@@ -121,12 +126,15 @@ void ofApp::setup(){
 
 	// Tile Size
 	tileSize = min(screenHeight / board.size(), screenWidth / board[0].size());
+
+	// Resize
+	pacman.resize(screenWidth, screenHeight, tileSize);
 }
 
 // Update Game Information
 void ofApp::update(){
 	if (currentState != PAUSED) {
-		
+		pacman.move(board);
 	}
 }
 
@@ -183,16 +191,16 @@ void ofApp::keyPressed(int key){
 	}
 	else if (currentState == IN_PROGRESS) {
 		if (upper_key == 'W') {
-
+			pacman.setQueuedVelocity({ 0, -1 });
 		}
 		else if (upper_key == 'A') {
-
+			pacman.setQueuedVelocity({ -1, 0 });
 		}
 		else if (upper_key == 'S') {
-
+			pacman.setQueuedVelocity({ 0, 1 });
 		}
 		else if (upper_key == 'D') {
-
+			pacman.setQueuedVelocity({ 1, 0 });
 		}
 	}
 }
@@ -208,4 +216,7 @@ void ofApp::windowResized(int w, int h){
 
 	// Tile Size
 	tileSize = min(screenHeight / board.size(), screenWidth / board[0].size());
+
+	// Resize
+	pacman.resize(screenWidth, screenHeight, tileSize);
 }
