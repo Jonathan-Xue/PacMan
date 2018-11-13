@@ -7,5 +7,7 @@ class Pinky : public Ghost {
 	private:
 		
 	public:
-		
+		Pinky();
+		~Pinky();
+
 };

@@ -58,7 +58,17 @@ void ofApp::drawPacMan() {
 }
 
 void ofApp::drawGhosts() {
+	ofSetColor(255, 0, 0);
+	ofDrawCircle(blinky.getPixelPosition()[0], blinky.getPixelPosition()[1], tileSize / 2);	
 
+	ofSetColor(255, 185, 255);
+	ofDrawCircle(pinky.getPixelPosition()[0], pinky.getPixelPosition()[1], tileSize / 2);
+
+	ofSetColor(0, 255, 255);
+	ofDrawCircle(inky.getPixelPosition()[0], inky.getPixelPosition()[1], tileSize / 2);
+
+	ofSetColor(255, 185, 80);
+	ofDrawCircle(clyde.getPixelPosition()[0], clyde.getPixelPosition()[1], tileSize / 2);
 }
 
 void ofApp::drawGameOver() {
@@ -135,6 +145,10 @@ void ofApp::setup(){
 void ofApp::update(){
 	if (currentState != PAUSED) {
 		pacman.update(board);
+		blinky.update(board);
+		pinky.update(board);
+		inky.update(board);
+		clyde.update(board);
 	}
 }
 
@@ -219,4 +233,9 @@ void ofApp::windowResized(int w, int h){
 
 	// Resize
 	pacman.resize(screenWidth, screenHeight, tileSize);
+	blinky.resize(screenWidth, screenHeight, tileSize);
+	pinky.resize(screenWidth, screenHeight, tileSize);
+	inky.resize(screenWidth, screenHeight, tileSize);
+	clyde.resize(screenWidth, screenHeight, tileSize);
+	
 }

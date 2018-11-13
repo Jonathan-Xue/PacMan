@@ -7,5 +7,7 @@ class Blinky : public Ghost {
 	private:
 		
 	public:
-		
+		Blinky();
+		~Blinky();
+
 };

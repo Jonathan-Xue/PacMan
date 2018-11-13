@@ -7,5 +7,7 @@ class Clyde : public Ghost {
 	private:
 		
 	public:
-		
+		Clyde();
+		~Clyde();
+
 };
