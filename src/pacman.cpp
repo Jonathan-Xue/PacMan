@@ -1,9 +1,9 @@
 #include "pacman.h"
 
 Pacman::Pacman() {
-	tilePosition = { 14, 23 };
-	pixelPosition = { tilePosition[0] * 24 + 12, tilePosition[1] * 24 + 12 };
-	tilesPerSecond = 5;
+	tilePosition = { 23, 14 };
+	pixelPosition = { (tilePosition[1] + currentTick[1] / 100) * 24, (tilePosition[0] + currentTick[0] / 100) * 24 };
+	tilesPerSecond = 10;
 	currentVelocity = { 0, 0 };
 	queuedVelocity = { 0, 0 };
 }
@@ -12,23 +12,20 @@ Pacman::~Pacman() {}
 
 void Pacman::move(vector<vector<Tile>> &board) {
 	// Calculate Tile Position
-	calculateTilePosition();
-
-	// Adjusts Bounds
-	adjustBounds(board);
+	calculatePixelPosition();
 
 	// Ensure currentVelocity Is Valid
 	if (!checkValidVelocity(board, currentVelocity)) {
 		// Set currentVelocity
-		if ((pixelPosition[0] == tilePosition[1] * tileSize + tileSize / 2) && (pixelPosition[1] == tilePosition[0] * tileSize + tileSize / 2)) {
+		if (currentTick[0] == 50.0 && currentTick[1] == 50.0) {
 			currentVelocity = { 0, 0 };
 		}
 	}
 
 	// Check To See If queuedVelocity Is Valid
 	if (checkValidVelocity(board, queuedVelocity)) {
-		// Recenter Pacman To Tile Center
-		if ((pixelPosition[0] == tilePosition[1] * tileSize + tileSize / 2) && (pixelPosition[1] == tilePosition[0] * tileSize + tileSize / 2)) {
+		// Recenter Pacman To Center Tick
+		if (currentTick[0] == maxTick / 2 && currentTick[1] == maxTick / 2) {
 			currentVelocity = queuedVelocity;
 			queuedVelocity = { 0, 0 };
 		}
@@ -38,37 +35,58 @@ void Pacman::move(vector<vector<Tile>> &board) {
 	board[tilePosition[0]][tilePosition[1]].setStandardPellet(false);
 	board[tilePosition[0]][tilePosition[1]].setPowerPellet(false);
 
-	// Adjust pixelPosition
-	pixelPosition[0] += currentVelocity[0] * speed;
-	pixelPosition[1] += currentVelocity[1] * speed;
-	
+	// Adjust currentTick
+	currentTick[1] += currentVelocity[0] * speed;
+	currentTick[0] += currentVelocity[1] * speed;
+
+	// Horizontal Movement
+	if (std::abs(currentTick[1] - (maxTick / 2 - maxTick)) < 0.001) {
+		currentTick[1] = 50;
+		tilePosition[1]--;
+	}
+	else if (std::abs(currentTick[1] - (maxTick / 2 + maxTick)) < 0.001) {
+		currentTick[1] = 50;
+		tilePosition[1]++;
+	}
+
+	// Vertical Movement
+	if (std::abs(currentTick[0] - (maxTick / 2 - maxTick)) < 0.001) {
+		currentTick[0] = 50;
+		tilePosition[0]--;
+	}
+	else if (std::abs(currentTick[0] - (maxTick / 2 + maxTick)) < 0.001) {
+		currentTick[0] = 50;
+		tilePosition[0]++;
+	}
+	std::cout << currentTick[1] << "\t" << currentTick[0] << std::endl;
+
+	// Adjusts Bounds
+	adjustBounds(board);
 }
 
-void Pacman::calculateTilePosition() {
-	tilePosition[0] = pixelPosition[1] / tileSize;
-	tilePosition[1] = pixelPosition[0] / tileSize;
+void Pacman::calculatePixelPosition() {
+	pixelPosition[0] = (tilePosition[1] + (currentTick[1] / 100)) * tileSize;
+	pixelPosition[1] = (tilePosition[0] + (currentTick[0] / 100)) * tileSize;
 }
 
 void Pacman::adjustBounds(vector<vector<Tile>> &board) {
 	// Vertical OutOfBounds
 	if (tilePosition[0] < 0) {
 		tilePosition[0] = board.size() - 1;
-		pixelPosition[1] = tilePosition[0] * tileSize + tileSize;
 	}
 	else if (size_t(tilePosition[0]) >= board.size()) {
 		tilePosition[0] = 0;
-		pixelPosition[1] = tilePosition[0] * tileSize;
 	}
 
 	// Horizontal OutOfBounds
 	if (tilePosition[1] < 0) {
 		tilePosition[1] = board[0].size() - 1;
-		pixelPosition[0] = tilePosition[1] * tileSize + tileSize;
 	}
 	else if (size_t(tilePosition[1]) >= board[0].size()) {
 		tilePosition[1] = 0;
-		pixelPosition[0] = tilePosition[1] * tileSize;
 	}
+
+	calculatePixelPosition();
 }
 
 bool Pacman::checkValidVelocity(vector<vector<Tile>> &board, vector<int> velocity) {
@@ -111,7 +129,7 @@ void Pacman::setQueuedVelocity(vector<int> v) {
 	queuedVelocity = v;
 }
 
-vector<int> Pacman::getPixelPosition() {
+vector<double> Pacman::getPixelPosition() {
 	return pixelPosition;
 }
 
@@ -124,6 +142,6 @@ void Pacman::resize(int w, int h, int ts) {
 	screenHeight = h;
 	tileSize = ts;
 
-	// tileSize * tilesPerSecond / FrameRate
-	speed = tileSize * tilesPerSecond / 60;
+	// maxTick * tilesPerSecond / FrameRate
+	speed = maxTick * tilesPerSecond / 60;
 }
