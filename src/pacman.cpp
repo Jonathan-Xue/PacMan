@@ -10,58 +10,28 @@ Pacman::Pacman() {
 
 Pacman::~Pacman() {}
 
-void Pacman::calculateTilePosition() {
-	tilePosition[0] = pixelPosition[1] / tileSize;
-	tilePosition[1] = pixelPosition[0] / tileSize;
-}
-
 void Pacman::move(vector<vector<Tile>> &board) {
 	// Calculate Tile Position
 	calculateTilePosition();
 
-	// Vertical OutOfBounds
-	if (tilePosition[0] < 0) {
-		tilePosition[0] = board.size() - 1;
-		pixelPosition[1] = tilePosition[0] * tileSize + tileSize;
-	}
-	else if (tilePosition[0] >= board.size()) {
-		tilePosition[0] = 0;
-		pixelPosition[1] = tilePosition[0] * tileSize;
-	}
-
-	// Horizontal OutOfBounds
-	if (tilePosition[1] < 0) {
-		tilePosition[1] = board[0].size() - 1;
-		pixelPosition[0] = tilePosition[1] * tileSize + tileSize;
-	}
-	else if (tilePosition[1] >= board[0].size()) {
-		tilePosition[1] = 0;
-		pixelPosition[0] = tilePosition[1] * tileSize;
-	}
+	// Adjusts Bounds
+	adjustBounds(board);
 
 	// Ensure currentVelocity Is Valid
 	if (!checkValidVelocity(board, currentVelocity)) {
-		// Recenter Pacman To Tile Center
-		pixelPosition[0] = tilePosition[1] * tileSize + tileSize / 2;
-		pixelPosition[1] = tilePosition[0] * tileSize + tileSize / 2;
-
 		// Set currentVelocity
-		currentVelocity = { 0, 0 };
+		if ((pixelPosition[0] == tilePosition[1] * tileSize + tileSize / 2) && (pixelPosition[1] == tilePosition[0] * tileSize + tileSize / 2)) {
+			currentVelocity = { 0, 0 };
+		}
 	}
 
 	// Check To See If queuedVelocity Is Valid
 	if (checkValidVelocity(board, queuedVelocity)) {
 		// Recenter Pacman To Tile Center
-		if (queuedVelocity[1] == -1 || queuedVelocity[1] == 1) {
-			pixelPosition[0] = tilePosition[1] * tileSize + tileSize / 2;
+		if ((pixelPosition[0] == tilePosition[1] * tileSize + tileSize / 2) && (pixelPosition[1] == tilePosition[0] * tileSize + tileSize / 2)) {
+			currentVelocity = queuedVelocity;
+			queuedVelocity = { 0, 0 };
 		}
-		else {
-			pixelPosition[1] = tilePosition[0] * tileSize + tileSize / 2;
-		}
-
-		// Set currentVelocity
-		currentVelocity = queuedVelocity;
-		queuedVelocity = { 0, 0 };
 	}
 
 	// Eat Pellets
@@ -72,6 +42,33 @@ void Pacman::move(vector<vector<Tile>> &board) {
 	pixelPosition[0] += currentVelocity[0] * speed;
 	pixelPosition[1] += currentVelocity[1] * speed;
 	
+}
+
+void Pacman::calculateTilePosition() {
+	tilePosition[0] = pixelPosition[1] / tileSize;
+	tilePosition[1] = pixelPosition[0] / tileSize;
+}
+
+void Pacman::adjustBounds(vector<vector<Tile>> &board) {
+	// Vertical OutOfBounds
+	if (tilePosition[0] < 0) {
+		tilePosition[0] = board.size() - 1;
+		pixelPosition[1] = tilePosition[0] * tileSize + tileSize;
+	}
+	else if (size_t(tilePosition[0]) >= board.size()) {
+		tilePosition[0] = 0;
+		pixelPosition[1] = tilePosition[0] * tileSize;
+	}
+
+	// Horizontal OutOfBounds
+	if (tilePosition[1] < 0) {
+		tilePosition[1] = board[0].size() - 1;
+		pixelPosition[0] = tilePosition[1] * tileSize + tileSize;
+	}
+	else if (size_t(tilePosition[1]) >= board[0].size()) {
+		tilePosition[1] = 0;
+		pixelPosition[0] = tilePosition[1] * tileSize;
+	}
 }
 
 bool Pacman::checkValidVelocity(vector<vector<Tile>> &board, vector<int> velocity) {

@@ -32,8 +32,9 @@ class Pacman {
 		~Pacman();
 
 		// Methods
-		void calculateTilePosition();
 		void move(vector<vector<Tile>> &board);
+		void calculateTilePosition();
+		void adjustBounds(vector<vector<Tile>> &board);
 		bool checkValidVelocity(vector<vector<Tile>> &board, vector<int> velocity);
 
 		// Setter
