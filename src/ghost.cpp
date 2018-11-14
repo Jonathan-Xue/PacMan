@@ -8,7 +8,10 @@ Ghost::Ghost() {
 Ghost::~Ghost() {}
 
 // Methods
-void Ghost::update(vector<vector<Tile>> &board) {
+void Ghost::update(vector<vector<Tile>> board, Pacman pacman) {
+	// Calculate targetTile
+	calculateTargetTile(pacman);
+
 	// Update currentVelocity
 	updateVelocity(board);
 
@@ -20,6 +23,10 @@ void Ghost::update(vector<vector<Tile>> &board) {
 
 	// Calculate pixelPosition
 	calculatePixelPosition();
+}
+
+void Ghost::calculateTargetTile(Pacman pacman) {
+	targetTile = pacman.getTilePosition();
 }
 
 void Ghost::updateVelocity(vector<vector<Tile>> board) {
@@ -38,11 +45,12 @@ void Ghost::updateVelocity(vector<vector<Tile>> board) {
 		int minIndex = -1;
 		double minVal = 1000000000.0;
 
+		//std::cout << targetTile.size() << "\t" << targetTile[0] << "\t" << targetTile[1] << std::endl;
 		for (size_t i = 0; i < possibleVelocity.size(); i++) {
-			double distance = calculateDistance(tileSize * targetTile[0],
-				tileSize * targetTile[1],
-				tileSize * (tilePosition[0] + (currentTick[0] / 100) + possibleVelocity[i][1]),
-				tileSize * (tilePosition[1] + (currentTick[1] / 100) + possibleVelocity[i][0]));
+			double distance = calculateDistance(tileSize * (targetTile[0] + 0.5),
+				tileSize * (targetTile[1] + 0.5),
+				tileSize * (tilePosition[0] + (currentTick[0] / maxTick) + possibleVelocity[i][1]),
+				tileSize * (tilePosition[1] + (currentTick[1] / maxTick) + possibleVelocity[i][0]));
 
 			if (distance < minVal) {
 				minIndex = i;
@@ -95,7 +103,7 @@ bool Ghost::checkValidVelocity(vector<vector<Tile>> board, vector<int> velocity)
 	return false;
 }
 
-double Ghost::calculateDistance(int x1, int y1, int x2, int y2) {
+double Ghost::calculateDistance(double x1, double y1, double x2, double y2) {
 	double dx = x2 - x1;
 	double dy = y2 - y1;
 
@@ -147,8 +155,8 @@ void Ghost::adjustBounds(vector<vector<Tile>> board) {
 }
 
 void Ghost::calculatePixelPosition() {
-	pixelPosition[0] = (tilePosition[1] + (currentTick[1] / 100)) * tileSize;
-	pixelPosition[1] = (tilePosition[0] + (currentTick[0] / 100)) * tileSize;
+	pixelPosition[0] = (tilePosition[1] + (currentTick[1] / maxTick)) * tileSize;
+	pixelPosition[1] = (tilePosition[0] + (currentTick[0] / maxTick)) * tileSize;
 }
 
 // Getters

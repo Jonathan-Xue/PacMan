@@ -78,7 +78,8 @@ bool Pacman::checkValidVelocity(vector<vector<Tile>> board, vector<int> velocity
 		}
 	}
 	else {
-		std::cerr << "Error. Velocity Vector Is Invalid" << std::endl;
+		// Exit With Error Message
+		std::cerr << "Error. Pacman Velocity Vector Is Invalid" << std::endl;
 		std::exit(1);
 	}
 
@@ -130,8 +131,8 @@ void Pacman::adjustBounds(vector<vector<Tile>> board) {
 }
 
 void Pacman::calculatePixelPosition() {
-	pixelPosition[0] = (tilePosition[1] + (currentTick[1] / 100)) * tileSize;
-	pixelPosition[1] = (tilePosition[0] + (currentTick[0] / 100)) * tileSize;
+	pixelPosition[0] = (tilePosition[1] + (currentTick[1] / maxTick)) * tileSize;
+	pixelPosition[1] = (tilePosition[0] + (currentTick[0] / maxTick)) * tileSize;
 }
 
 // Setter
@@ -152,6 +153,11 @@ vector<int> Pacman::getTilePosition() {
 	return tilePosition;
 }
 
+vector<int> Pacman::getCurrentVelocity() {
+	return currentVelocity;
+}
+
+// Resize
 void Pacman::resize(int w, int h, int ts) {
 	screenWidth = w;
 	screenHeight = h;

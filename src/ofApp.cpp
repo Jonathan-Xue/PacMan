@@ -41,6 +41,7 @@ void ofApp::drawGameBoard() {
 				}
 			}
 			else {
+				// Exit With Error Message
 				std::cerr << "Error. GameBoard Is Invalid" << std::endl;
 				std::exit(1);
 			}
@@ -142,10 +143,10 @@ void ofApp::setup(){
 void ofApp::update(){
 	if (currentState == IN_PROGRESS) {
 		pacman.update(board);
-		blinky.update(board);
-		pinky.update(board);
-		inky.update(board);
-		clyde.update(board);
+		blinky.update(board, pacman);
+		pinky.update(board, pacman);
+		inky.update(board, pacman, blinky);
+		clyde.update(board, pacman);
 	}
 }
 
@@ -172,6 +173,7 @@ void ofApp::draw() {
 			drawHighScores();
 			break;
 		default:
+			// Exit With Error Message
 			std::cerr << "Error. GameState Is Invalid" << std::endl;
 			std::exit(1);
 	}

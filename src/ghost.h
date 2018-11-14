@@ -1,6 +1,7 @@
 #pragma once
 
 #include "tile.h"
+#include "pacman.h"
 
 #include <iostream>
 #include <string>
@@ -28,11 +29,11 @@ class Ghost {
 		vector<vector<int>> queuedVelocity{ {0, -1}, {-1, 0}, {0, 1}, {1, 0} };
 
 		// Separate Each Tile Into X Ticks
-		const double maxTick = 100.0;
+		double maxTick = 100.0;
 		vector<double> currentTick = { maxTick / 2, maxTick / 2 };
 
 		// Tiles Per Second
-		const int tilesPerSecond = 10;
+		int tilesPerSecond = 10;
 
 		// Ticks Per Frame
 		double speed = 0.0;
@@ -43,11 +44,13 @@ class Ghost {
 		~Ghost();
 
 		// Methods
-		void update(vector<vector<Tile>> &board);
+		void update(vector<vector<Tile>> board, Pacman pacman);
+
+		void calculateTargetTile(Pacman pacman);
 
 		void updateVelocity(vector<vector<Tile>> board);
 		bool checkValidVelocity(vector<vector<Tile>> board, vector<int> velocity);
-		double calculateDistance(int x1, int y1, int x2, int y2);
+		double calculateDistance(double x1, double y1, double x2, double y2);
 
 		void move();
 

@@ -28,11 +28,11 @@ class Pacman {
 		vector<int> queuedVelocity = { 0, 0 };
 		
 		// Separate Each Tile Into X Ticks
-		const double maxTick = 100.0;
+		double maxTick = 100.0;
 		vector<double> currentTick = { maxTick / 2, maxTick / 2 };
 
 		// Tiles Per Second
-		const int tilesPerSecond = 10;
+		int tilesPerSecond = 10;
 
 		// Ticks Per Frame
 		double speed = 0.0;
@@ -64,6 +64,7 @@ class Pacman {
 
 		vector<double> getPixelPosition();
 		vector<int> getTilePosition();
+		vector<int> getCurrentVelocity();
 
 		// Resize
 		void resize(int w, int h, int ts);
