@@ -26,7 +26,7 @@ void Ghost::updateVelocity(vector<vector<Tile>> board) {
 	// Check To See If queuedVelocity Is Valid
 	vector<vector<int>> allVelocities{ {0, -1}, {-1, 0}, {0, 1}, {1, 0} };
 
-	for (int i = 0; i < 1000000000; i++) {
+	for (int i = 0; i < 100; i++) {
 		queuedVelocity = allVelocities[rand() % 4];
 		if (checkValidVelocity(board, queuedVelocity)) {
 			// Update currentVelocity To queuedVelocity If Ghost Is In The Center Of The Tile

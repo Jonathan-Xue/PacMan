@@ -2,7 +2,7 @@
 
 // Constructors
 Blinky::Blinky() {
-	tilePosition = { 1, 1 };
+	tilePosition = { 4, 1 };
 }
 
 Blinky::~Blinky() {}

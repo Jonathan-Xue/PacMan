@@ -16,28 +16,28 @@ void ofApp::drawGameBoard() {
 			if (board[i][j].getID() == -1) {
 				// Invalid Block
 				ofSetColor(0, 0, 0);
-				ofDrawRectangle(tileSize * j, tileSize * i, tileSize, tileSize);
+				ofDrawRectangle(tileSize * j + centerOffset[0], tileSize * i + centerOffset[1], tileSize, tileSize);
 			}
 			else if (board[i][j].getID() == 0) {
 				// Wall
 				ofSetColor(50, 50, 255);
-				ofDrawRectangle(tileSize * j, tileSize * i, tileSize, tileSize);
+				ofDrawRectangle(tileSize * j + centerOffset[0], tileSize * i + centerOffset[1], tileSize, tileSize);
 			} 
 			else if (board[i][j].getID() == 1) {
 				if (board[i][j].isStandardPellet()) {
 					// Standard Pellet
 					ofSetColor(255, 255, 100);
-					ofDrawRectangle(tileSize * j, tileSize * i, tileSize, tileSize);
+					ofDrawRectangle(tileSize * j + centerOffset[0], tileSize * i + centerOffset[1], tileSize, tileSize);
 				}
 				else if (board[i][j].isPowerPellet()) {
 					// Power Pellet
 					ofSetColor(255, 150, 100);
-					ofDrawRectangle(tileSize * j, tileSize * i, tileSize, tileSize);
+					ofDrawRectangle(tileSize * j + centerOffset[0], tileSize * i + centerOffset[1], tileSize, tileSize);
 				}
 				else {
 					// No Pellet
 					ofSetColor(100, 100, 150);
-					ofDrawRectangle(tileSize * j, tileSize * i, tileSize, tileSize);
+					ofDrawRectangle(tileSize * j + centerOffset[0], tileSize * i + centerOffset[1], tileSize, tileSize);
 				}
 			}
 			else {
@@ -54,21 +54,21 @@ void ofApp::drawMisc() {
 
 void ofApp::drawPacMan() {
 	ofSetColor(255, 255, 255);
-	ofDrawCircle(pacman.getPixelPosition()[0], pacman.getPixelPosition()[1], tileSize / 2);
+	ofDrawCircle(pacman.getPixelPosition()[0] + centerOffset[0], pacman.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
 }
 
 void ofApp::drawGhosts() {
 	ofSetColor(255, 0, 0);
-	ofDrawCircle(blinky.getPixelPosition()[0], blinky.getPixelPosition()[1], tileSize / 2);	
+	ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);	
 
 	ofSetColor(255, 185, 255);
-	ofDrawCircle(pinky.getPixelPosition()[0], pinky.getPixelPosition()[1], tileSize / 2);
+	ofDrawCircle(pinky.getPixelPosition()[0] + centerOffset[0], pinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
 
 	ofSetColor(0, 255, 255);
-	ofDrawCircle(inky.getPixelPosition()[0], inky.getPixelPosition()[1], tileSize / 2);
+	ofDrawCircle(inky.getPixelPosition()[0] + centerOffset[0], inky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
 
 	ofSetColor(255, 185, 80);
-	ofDrawCircle(clyde.getPixelPosition()[0], clyde.getPixelPosition()[1], tileSize / 2);
+	ofDrawCircle(clyde.getPixelPosition()[0] + centerOffset[0], clyde.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
 }
 
 void ofApp::drawGameOver() {
@@ -120,7 +120,7 @@ void ofApp::setup(){
 	ofSetWindowTitle("Pac-Man");
 
 	// Background Color
-	ofBackground(0, 0, 0);
+	ofBackground(0, 255, 0);
 	ofSetBackgroundAuto(false);
 
 	// Background Music
@@ -134,16 +134,13 @@ void ofApp::setup(){
 	// Set GameState
 	currentState = IN_PROGRESS;
 
-	// Tile Size
-	tileSize = min(screenHeight / board.size(), screenWidth / board[0].size());
-
 	// Resize
 	windowResized(screenWidth, screenHeight);
 }
 
 // Update Game Information
 void ofApp::update(){
-	if (currentState != PAUSED) {
+	if (currentState == IN_PROGRESS) {
 		pacman.update(board);
 		blinky.update(board);
 		pinky.update(board);
@@ -230,6 +227,10 @@ void ofApp::windowResized(int w, int h){
 
 	// Tile Size
 	tileSize = min(screenHeight / board.size(), screenWidth / board[0].size());
+
+	// Offsets
+	centerOffset[0] = (screenWidth - (board[0].size() * tileSize)) / 2;
+	centerOffset[1] = (screenHeight - (board.size() * tileSize)) / 2;
 
 	// Resize
 	pacman.resize(screenWidth, screenHeight, tileSize);

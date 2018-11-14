@@ -2,7 +2,7 @@
 
 // Constructors
 Pinky::Pinky() {
-	tilePosition = { 1, 26 };
+	tilePosition = { 4, 26 };
 }
 
 Pinky::~Pinky() {}

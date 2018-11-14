@@ -43,6 +43,8 @@ class ofApp : public ofBaseApp {
 		int frameRate = 60;
 		int tileSize;
 
+		vector<int> centerOffset{ 0, 0 };
+
 		// Game Variables
 		vector<vector<Tile>> board;
 		Pacman pacman;

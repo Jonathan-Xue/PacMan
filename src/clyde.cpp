@@ -2,7 +2,7 @@
 
 // Constructors
 Clyde::Clyde() {
-	tilePosition = {29, 26};
+	tilePosition = {32, 26};
 }
 
 Clyde::~Clyde() {}

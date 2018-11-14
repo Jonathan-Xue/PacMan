@@ -2,7 +2,7 @@
 
 // Constructors
 Inky::Inky() {
-	tilePosition = { 29, 1 };
+	tilePosition = { 32, 1 };
 }
 
 Inky::~Inky() {}

@@ -19,6 +19,8 @@ class Pacman {
 		int tileSize;
 
 		// Class Variables
+		int lives = 3;
+
 		vector<int> tilePosition = { 0, 0 };
 		vector<double> pixelPosition = { 0, 0 };
 
@@ -58,6 +60,8 @@ class Pacman {
 		void setQueuedVelocity(vector<int> v);
 
 		// Getters
+		int getLives();
+
 		vector<double> getPixelPosition();
 		vector<int> getTilePosition();
 

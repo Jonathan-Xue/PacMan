@@ -2,7 +2,7 @@
 
 // Constructors
 Pacman::Pacman() {
-	tilePosition = { 23, 14 };
+	tilePosition = { 26, 14 };
 }
 
 Pacman::~Pacman() {}
@@ -140,6 +140,10 @@ void Pacman::setQueuedVelocity(vector<int> v) {
 }
 
 // Getters
+int Pacman::getLives() {
+	return lives;
+}
+
 vector<double> Pacman::getPixelPosition() {
 	return pixelPosition;
 }
