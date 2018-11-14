@@ -22,10 +22,10 @@ class Ghost {
 		vector<int> tilePosition = { 0, 0 };
 		vector<double> pixelPosition = { 0, 0 };
 
-		vector<int> targetTile = { 0, 0 };
+		vector<int> targetTile = { 0, 0};
 
 		vector<int> currentVelocity = { 0, 0 };
-		vector<int> queuedVelocity = { 0, 0 };
+		vector<vector<int>> queuedVelocity{ {0, -1}, {-1, 0}, {0, 1}, {1, 0} };
 
 		// Separate Each Tile Into X Ticks
 		const double maxTick = 100.0;
@@ -47,6 +47,7 @@ class Ghost {
 
 		void updateVelocity(vector<vector<Tile>> board);
 		bool checkValidVelocity(vector<vector<Tile>> board, vector<int> velocity);
+		double calculateDistance(int x1, int y1, int x2, int y2);
 
 		void move();
 

@@ -23,20 +23,35 @@ void Ghost::update(vector<vector<Tile>> &board) {
 }
 
 void Ghost::updateVelocity(vector<vector<Tile>> board) {
-	// Check To See If queuedVelocity Is Valid
-	vector<vector<int>> allVelocities{ {0, -1}, {-1, 0}, {0, 1}, {1, 0} };
+	// Update currentVelocity To queuedVelocity If Ghost Is In The Center Of The Tile
+	if (abs(currentTick[0] - maxTick / 2) < epsilon && abs(currentTick[1] - maxTick / 2) < epsilon) {
+		// Retrieve Valid Velocities From queuedVelocity And Append It To possibleVelocity
+		vector<vector<int>> possibleVelocity{};
 
-	for (int i = 0; i < 100; i++) {
-		queuedVelocity = allVelocities[rand() % 4];
-		if (checkValidVelocity(board, queuedVelocity)) {
-			// Update currentVelocity To queuedVelocity If Ghost Is In The Center Of The Tile
-			if (abs(currentTick[0] - maxTick / 2) < epsilon && abs(currentTick[1] - maxTick / 2) < epsilon) {
-				currentVelocity = queuedVelocity;
-				queuedVelocity = { 0, 0 };
+		for (int i = 0; i < 4; i++) {
+			if (checkValidVelocity(board, queuedVelocity[i])) {
+				possibleVelocity.push_back(queuedVelocity[i]);
 			}
-
-			break;
 		}
+
+		// Determine The Velocity Which Yields In Closest Distance To targetTile
+		int minIndex = -1;
+		double minVal = 1000000000.0;
+
+		for (size_t i = 0; i < possibleVelocity.size(); i++) {
+			double distance = calculateDistance(tileSize * targetTile[0],
+				tileSize * targetTile[1],
+				tileSize * (tilePosition[0] + (currentTick[0] / 100) + possibleVelocity[i][1]),
+				tileSize * (tilePosition[1] + (currentTick[1] / 100) + possibleVelocity[i][0]));
+
+			if (distance < minVal) {
+				minIndex = i;
+				minVal = distance;
+			}
+		}
+
+		// Update currentVelocity
+		currentVelocity = possibleVelocity[minIndex];
 	}
 }
 
@@ -78,6 +93,13 @@ bool Ghost::checkValidVelocity(vector<vector<Tile>> board, vector<int> velocity)
 	}
 
 	return false;
+}
+
+double Ghost::calculateDistance(int x1, int y1, int x2, int y2) {
+	double dx = x2 - x1;
+	double dy = y2 - y1;
+
+	return sqrt(pow(dx, 2) + pow(dy, 2));
 }
 
 void Ghost::move() {
