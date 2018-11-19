@@ -13,7 +13,9 @@ class Pacman {
 
 	private:
 		// OpenFramework Variables
+		const int frameRate = 60;
 		const double epsilon = 0.001;
+
 		int screenWidth;
 		int screenHeight;
 		int tileSize;
@@ -56,15 +58,16 @@ class Pacman {
 
 		void calculatePixelPosition();
 
-		// Setter
-		void setQueuedVelocity(vector<int> v);
-
 		// Getters
 		int getLives();
 
 		vector<double> getPixelPosition();
 		vector<int> getTilePosition();
 		vector<int> getCurrentVelocity();
+
+		// Setter
+		void setInitialPosition(vector<int> tp);
+		void setQueuedVelocity(vector<int> v);
 
 		// Resize
 		void resize(int w, int h, int ts);

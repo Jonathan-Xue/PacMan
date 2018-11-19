@@ -22,13 +22,13 @@ class Tile {
 		Tile(int x, bool sp, bool pp);
 		~Tile();
 
-		// Setters
-		void setStandardPellet(bool sp);
-		void setPowerPellet(bool pp);
-
 		// Getters
 		int getID();
 		bool isStandardPellet();
 		bool isPowerPellet();
+
+		// Setters
+		void setStandardPellet(bool sp);
+		void setPowerPellet(bool pp);
 
 };

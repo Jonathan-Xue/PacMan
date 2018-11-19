@@ -35,12 +35,13 @@ class ofApp : public ofBaseApp {
 
 	private: 
 		// OpenFramework Variables
+		const int frameRate = 60;
+
 		ofSoundPlayer backgroundMusic;
 		GameState currentState;
 
 		int screenWidth = ofGetWindowWidth();
 		int screenHeight = ofGetWindowHeight();
-		int frameRate = 60;
 		int tileSize;
 
 		vector<int> centerOffset{ 0, 0 };

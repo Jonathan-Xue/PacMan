@@ -102,6 +102,7 @@ void Board::parseBoard() {
 	}
 }
 
+// Getter
 vector<vector<Tile>> Board::getBoard() {
 	return board;
 }

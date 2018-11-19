@@ -10,14 +10,7 @@ Tile::Tile(int x, bool p, bool pp) {
 
 Tile::~Tile() {}
 
-void Tile::setStandardPellet(bool sp) {
-	standardPellet = sp;
-}
-
-void Tile::setPowerPellet(bool pp) {
-	powerPellet = pp;
-}
-
+// Getters
 int Tile::getID() {
 	return id;
 }
@@ -28,4 +21,13 @@ bool Tile::isStandardPellet() {
 
 bool Tile::isPowerPellet() {
 	return powerPellet;
+}
+
+// Setters
+void Tile::setStandardPellet(bool sp) {
+	standardPellet = sp;
+}
+
+void Tile::setPowerPellet(bool pp) {
+	powerPellet = pp;
 }

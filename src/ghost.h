@@ -14,7 +14,9 @@ class Ghost {
 
 	protected:
 		// OpenFramework Variables
+		const int frameRate = 60;
 		const double epsilon = 0.001;
+
 		int screenWidth;
 		int screenHeight;
 		int tileSize;
@@ -61,6 +63,9 @@ class Ghost {
 		// Getters
 		vector<double> getPixelPosition();
 		vector<int> getTilePosition();
+
+		// Setter
+		void setInitialPosition(vector<int> tp);
 
 		// Resize
 		void resize(int w, int h, int ts);

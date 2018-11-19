@@ -120,6 +120,9 @@ void ofApp::setup(){
 	// Set Window Name
 	ofSetWindowTitle("Pac-Man");
 
+	// Set frameRate
+	ofSetFrameRate(frameRate);
+
 	// Background Color
 	ofBackground(0, 255, 0);
 	ofSetBackgroundAuto(false);

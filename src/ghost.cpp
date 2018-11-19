@@ -168,10 +168,15 @@ vector<int> Ghost::getTilePosition() {
 	return tilePosition;
 }
 
+// Setter
+void Ghost::setInitialPosition(vector<int> tp) {
+	tilePosition = tp;
+}
+
 void Ghost::resize(int w, int h, int ts) {
 	screenWidth = w;
 	screenHeight = h;
 	tileSize = ts;
 
-	speed = maxTick * tilesPerSecond / 60;
+	speed = maxTick * tilesPerSecond / frameRate;
 }
