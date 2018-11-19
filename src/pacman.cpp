@@ -1,9 +1,7 @@
 #include "pacman.h"
 
 // Constructors
-Pacman::Pacman() {
-	tilePosition = { 26, 14 };
-}
+Pacman::Pacman() {}
 
 Pacman::~Pacman() {}
 
@@ -135,6 +133,22 @@ void Pacman::calculatePixelPosition() {
 	pixelPosition[1] = (tilePosition[0] + (currentTick[0] / maxTick)) * tileSize;
 }
 
+// Reset Functions
+void Pacman::resetLevel(int l) {
+	level = l;
+	lives--;
+
+	tilePosition = initialTilePosition;
+}
+
+void Pacman::resetGame() {
+	level = 0;
+	lives = 3;
+	score = 0;
+
+	tilePosition = initialTilePosition;
+}
+
 // Getters
 int Pacman::getLives() {
 	return lives;
@@ -153,8 +167,9 @@ vector<int> Pacman::getCurrentVelocity() {
 }
 
 // Setters
-void Pacman::setInitialPosition(vector<int> tp) {
-	tilePosition = tp;
+void Pacman::setInitialPosition(vector<int> itp) {
+	initialTilePosition = itp;
+	tilePosition = itp;
 }
 
 void Pacman::setQueuedVelocity(vector<int> v) {

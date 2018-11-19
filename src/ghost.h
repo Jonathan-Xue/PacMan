@@ -22,6 +22,9 @@ class Ghost {
 		int tileSize;
 
 		// Class Variables
+		int level = 0;
+
+		vector<int> initialTilePosition = { 0, 0 };
 		vector<int> tilePosition = { 0, 0 };
 		vector<double> pixelPosition = { 0, 0 };
 
@@ -60,12 +63,16 @@ class Ghost {
 
 		void calculatePixelPosition();
 
+		// Reset Functions
+		void resetLevel(int l);
+		void resetGame();
+
 		// Getters
 		vector<double> getPixelPosition();
 		vector<int> getTilePosition();
 
 		// Setter
-		void setInitialPosition(vector<int> tp);
+		void setInitialPosition(vector<int> itp);
 
 		// Resize
 		void resize(int w, int h, int ts);

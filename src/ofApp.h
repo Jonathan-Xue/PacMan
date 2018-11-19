@@ -54,6 +54,8 @@ class ofApp : public ofBaseApp {
 		Inky inky;
 		Pinky pinky;
 
+		int level = 0;
+
 		// Helper Methods For Display Render
 		void drawLandingPage();
 		void drawInstructions();
@@ -72,8 +74,10 @@ class ofApp : public ofBaseApp {
 		*/
 		ofRectangle getBitmapStringBoundingBox(string text);
 
-		// Reset
-		void reset();
+		// Reset Functions
+		void resetLevel();
+		void nextLevel();
+		void resetGame();
 
 	public:
 		// Setup

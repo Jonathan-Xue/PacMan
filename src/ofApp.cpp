@@ -109,9 +109,38 @@ ofRectangle ofApp::getBitmapStringBoundingBox(string text) {
 	return ofRectangle(0, 0, width, height);
 }
 
-// Reset
-void ofApp::reset() {
+// Reset Functions
+void ofApp::resetLevel() {
+	// Create A New Board
+	board = Board().getBoard();
 
+	// Reset Level
+	pacman.resetLevel(level);
+	blinky.resetLevel(level);
+	pinky.resetLevel(level);
+	inky.resetLevel(level);
+	clyde.resetLevel(level);
+
+	// Set GameState
+	currentState = PAUSED;
+}
+
+void ofApp::resetGame() {
+	// Create A New Board
+	board = Board().getBoard();
+
+	// Set Level To 0
+	level = 0;
+
+	// Reset Game
+	pacman.resetGame();
+	blinky.resetGame();
+	pinky.resetGame();
+	inky.resetGame();
+	clyde.resetGame();
+
+	// Set GameState
+	currentState = PAUSED;
 }
 
 /* Public Methods */
@@ -132,11 +161,15 @@ void ofApp::setup(){
 	backgroundMusic.setLoop(true);
 	// backgroundMusic.play();
 
-	// Create A New Board
-	board = Board().getBoard();
+	// Set Starting Positions
+	pacman.setInitialPosition(vector<int>{ 26, 14 });
+	blinky.setInitialPosition(vector<int>{ 4, 1 });
+	pinky.setInitialPosition(vector<int>{ 32, 26});
+	inky.setInitialPosition(vector<int>{ 4, 26 });
+	clyde.setInitialPosition(vector<int>{ 32, 1 });
 
-	// Set GameState
-	currentState = IN_PROGRESS;
+	// Reset Game
+	resetGame();
 
 	// Resize
 	windowResized(screenWidth, screenHeight);

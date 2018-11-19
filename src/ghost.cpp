@@ -1,9 +1,7 @@
 #include "Ghost.h"
 
 // Constructors
-Ghost::Ghost() {
-	tilePosition = { 0, 0 };
-}
+Ghost::Ghost() {}
 
 Ghost::~Ghost() {}
 
@@ -159,6 +157,19 @@ void Ghost::calculatePixelPosition() {
 	pixelPosition[1] = (tilePosition[0] + (currentTick[0] / maxTick)) * tileSize;
 }
 
+// Reset Functions
+void Ghost::resetLevel(int l) {
+	level = l;
+
+	tilePosition = initialTilePosition;
+}
+
+void Ghost::resetGame() {
+	level = 0;
+
+	tilePosition = initialTilePosition;
+}
+
 // Getters
 vector<double> Ghost::getPixelPosition() {
 	return pixelPosition;
@@ -169,8 +180,9 @@ vector<int> Ghost::getTilePosition() {
 }
 
 // Setter
-void Ghost::setInitialPosition(vector<int> tp) {
-	tilePosition = tp;
+void Ghost::setInitialPosition(vector<int> itp) {
+	initialTilePosition = itp;
+	tilePosition = initialTilePosition;
 }
 
 void Ghost::resize(int w, int h, int ts) {

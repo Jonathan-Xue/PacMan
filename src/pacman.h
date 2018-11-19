@@ -21,8 +21,11 @@ class Pacman {
 		int tileSize;
 
 		// Class Variables
+		int level = 0;
 		int lives = 3;
+		int score = 0;
 
+		vector<int> initialTilePosition = { 0, 0 };
 		vector<int> tilePosition = { 0, 0 };
 		vector<double> pixelPosition = { 0, 0 };
 
@@ -58,6 +61,10 @@ class Pacman {
 
 		void calculatePixelPosition();
 
+		// Reset Functions
+		void resetLevel(int l);
+		void resetGame();
+
 		// Getters
 		int getLives();
 
@@ -66,7 +73,7 @@ class Pacman {
 		vector<int> getCurrentVelocity();
 
 		// Setter
-		void setInitialPosition(vector<int> tp);
+		void setInitialPosition(vector<int> itp);
 		void setQueuedVelocity(vector<int> v);
 
 		// Resize
