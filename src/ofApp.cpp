@@ -229,17 +229,16 @@ void ofApp::update(){
 		}
 
 		// Check For Next Level
-		/*
 		for (size_t i = 0; i < board.size(); i++) {
 			for (size_t j = 0; j < board[0].size(); j++) {
 				if (board[i][j].isStandardPellet() || board[i][j].isPowerPellet()) {
-					goto;
+					goto stop;
 				}
 			}
 		}
 		level++;
 		resetLevel();
-		*/
+		stop:
 		 
 		// Check For State Changes
 		if (pacman.getLives() == 0) {
@@ -253,7 +252,6 @@ void ofApp::update(){
 			if (inputFile.is_open()) {
 				int lineCount = 0;
 				string line;
-				std::cout << "Inside File" << std::endl;
 				while (getline(inputFile, line)) {
 					highScores[lineCount] = std::stoi(line);
 					lineCount++;
@@ -267,12 +265,15 @@ void ofApp::update(){
 			}
 
 			// Reorder highscores
+			highScores.push_back(pacman.getScore());
+			std::sort(highScores.begin(), highScores.end(), std::greater<>());
+			highScores.pop_back();
 
 			// Write highscores To File
 			ofstream outputFile("highscores.txt", std::ios::trunc);
 			if (outputFile.is_open()) {
 				for (int i = 0; i < 10; i++) {
-					outputFile << 0 << "\n";
+					outputFile << highScores[i] << "\n";
 				}
 				outputFile.close();
 			}
