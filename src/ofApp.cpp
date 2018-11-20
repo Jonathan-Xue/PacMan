@@ -16,28 +16,38 @@ void ofApp::drawGameBoard() {
 			if (board[i][j].getID() == -1) {
 				// Invalid Block
 				ofSetColor(0, 0, 0);
-				ofDrawRectangle(tileSize * j + centerOffset[0], tileSize * i + centerOffset[1], tileSize, tileSize);
+				ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
 			}
 			else if (board[i][j].getID() == 0) {
 				// Wall
 				ofSetColor(50, 50, 255);
-				ofDrawRectangle(tileSize * j + centerOffset[0], tileSize * i + centerOffset[1], tileSize, tileSize);
+				ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
 			} 
 			else if (board[i][j].getID() == 1) {
 				if (board[i][j].isStandardPellet()) {
+					// Tile
+					ofSetColor(0, 0, 0);
+					ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
+
 					// Standard Pellet
 					ofSetColor(255, 255, 100);
-					ofDrawRectangle(tileSize * j + centerOffset[0], tileSize * i + centerOffset[1], tileSize, tileSize);
+					ofDrawCircle((j + 0.5) * tileSize + centerOffset[0], (i + 0.5) * tileSize + centerOffset[1], tileSize / 8);
 				}
 				else if (board[i][j].isPowerPellet()) {
+					// Tile
+					ofSetColor(0, 0, 0);
+					ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
+
 					// Power Pellet
-					ofSetColor(255, 150, 100);
-					ofDrawRectangle(tileSize * j + centerOffset[0], tileSize * i + centerOffset[1], tileSize, tileSize);
+					ofSetColor(255, 255, 100);
+					ofDrawCircle((j + 0.5) * tileSize + centerOffset[0], (i + 0.5) * tileSize + centerOffset[1], tileSize / 2.5);
 				}
 				else {
+					// Tile
+					ofSetColor(0, 0, 0);
+					ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
+
 					// No Pellet
-					ofSetColor(100, 100, 150);
-					ofDrawRectangle(tileSize * j + centerOffset[0], tileSize * i + centerOffset[1], tileSize, tileSize);
 				}
 			}
 			else {
@@ -62,7 +72,7 @@ void ofApp::drawMisc() {
 }
 
 void ofApp::drawPacMan() {
-	ofSetColor(255, 255, 255);
+	ofSetColor(255, 255, 100);
 	ofDrawCircle(pacman.getPixelPosition()[0] + centerOffset[0], pacman.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
 }
 
