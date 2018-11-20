@@ -18,9 +18,6 @@ void Pacman::update(vector<vector<Tile>> &board) {
 
 	// Adjust tilePosition To Stay In Bounds
 	adjustBounds(board);
-
-	// Calculate pixelPosition
-	calculatePixelPosition();
 }
 
 void Pacman::eat(vector<vector<Tile>> &board) {
@@ -128,11 +125,6 @@ void Pacman::adjustBounds(vector<vector<Tile>> board) {
 	}
 }
 
-void Pacman::calculatePixelPosition() {
-	pixelPosition[0] = (tilePosition[1] + (currentTick[1] / maxTick)) * tileSize;
-	pixelPosition[1] = (tilePosition[0] + (currentTick[0] / maxTick)) * tileSize;
-}
-
 // Reset Functions
 void Pacman::resetLevel(int l) {
 	level = l;
@@ -155,7 +147,8 @@ int Pacman::getLives() {
 }
 
 vector<double> Pacman::getPixelPosition() {
-	return pixelPosition;
+	return vector<double>{ (tilePosition[1] + (currentTick[1] / maxTick)) * tileSize,
+						   (tilePosition[0] + (currentTick[0] / maxTick)) * tileSize };
 }
 
 vector<int> Pacman::getTilePosition() {
@@ -167,6 +160,10 @@ vector<int> Pacman::getCurrentVelocity() {
 }
 
 // Setters
+void Pacman::decrementLives() {
+	lives--;
+}
+
 void Pacman::setInitialPosition(vector<int> itp) {
 	initialTilePosition = itp;
 	tilePosition = itp;

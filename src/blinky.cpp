@@ -18,9 +18,6 @@ void Blinky::update(vector<vector<Tile>> board, Pacman pacman) {
 
 	// Adjust tilePosition To Stay In Bounds
 	adjustBounds(board);
-
-	// Calculate pixelPosition
-	calculatePixelPosition();
 }
 
 /*

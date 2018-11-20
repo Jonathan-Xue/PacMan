@@ -3,7 +3,7 @@
 /* Private Methods */
 // Helper Methods For Display Render
 void ofApp::drawLandingPage() {
-
+	
 }
 
 void ofApp::drawInstructions() {
@@ -50,7 +50,15 @@ void ofApp::drawGameBoard() {
 }
 
 void ofApp::drawMisc() {
+	// Score
 
+	// Lives
+	vector<int> tilePosition{ (int)board.size() - 1, 3 };
+	for (int i = 0; i < pacman.getLives() - 1; i++) {
+		ofSetColor(255, 255, 255);
+		ofDrawCircle((tilePosition[1] + i * 2) * tileSize + centerOffset[0], 
+					 (tilePosition[0]) * tileSize + centerOffset[1], tileSize);
+	}
 }
 
 void ofApp::drawPacMan() {
@@ -61,15 +69,27 @@ void ofApp::drawPacMan() {
 void ofApp::drawGhosts() {
 	ofSetColor(255, 0, 0);
 	ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);	
+	ofDrawRectangle(blinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4, 
+					blinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+					tileSize / 2, tileSize / 2);
 
 	ofSetColor(255, 185, 255);
 	ofDrawCircle(pinky.getPixelPosition()[0] + centerOffset[0], pinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+	ofDrawRectangle(pinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+					pinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+					tileSize / 2, tileSize / 2);
 
 	ofSetColor(0, 255, 255);
 	ofDrawCircle(inky.getPixelPosition()[0] + centerOffset[0], inky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+	ofDrawRectangle(inky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+					inky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+					tileSize / 2, tileSize / 2);
 
 	ofSetColor(255, 185, 80);
 	ofDrawCircle(clyde.getPixelPosition()[0] + centerOffset[0], clyde.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+	ofDrawRectangle(clyde.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+					clyde.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+					tileSize / 2, tileSize / 2);
 }
 
 void ofApp::drawGameOver() {
@@ -153,7 +173,7 @@ void ofApp::setup(){
 	ofSetFrameRate(frameRate);
 
 	// Background Color
-	ofBackground(0, 255, 0);
+	ofBackground(0, 0, 0);
 	ofSetBackgroundAuto(false);
 
 	// Background Music
@@ -161,15 +181,8 @@ void ofApp::setup(){
 	backgroundMusic.setLoop(true);
 	// backgroundMusic.play();
 
-	// Set Starting Positions
-	pacman.setInitialPosition(vector<int>{ 26, 14 });
-	blinky.setInitialPosition(vector<int>{ 4, 1 });
-	pinky.setInitialPosition(vector<int>{ 32, 26});
-	inky.setInitialPosition(vector<int>{ 4, 26 });
-	clyde.setInitialPosition(vector<int>{ 32, 1 });
-
-	// Reset Game
-	resetGame();
+	// Set currentState
+	currentState = START;
 
 	// Resize
 	windowResized(screenWidth, screenHeight);
@@ -222,11 +235,32 @@ void ofApp::draw() {
 	WASD	->	directional control
 */
 void ofApp::keyPressed(int key){
+	// TODO: Remove
+	if (key == OF_KEY_CONTROL) {
+		// Flip State
+		if (currentState = START) {
+			currentState = INSTRUCTIONS;
+		}
+		else if (currentState = INSTRUCTIONS) {
+			// Set Sprite's initialPosition
+			pacman.setInitialPosition(vector<int>{ 26, 14 });
+			blinky.setInitialPosition(vector<int>{ 4, 1 });
+			pinky.setInitialPosition(vector<int>{ 32, 26});
+			inky.setInitialPosition(vector<int>{ 4, 26 });
+			clyde.setInitialPosition(vector<int>{ 32, 1 });
+
+			// Reset Game
+			resetGame();
+		}
+	}
+
+	// Fullscreen
 	if (key == OF_KEY_F12) {
 		ofToggleFullscreen();
 		return;
 	}
 
+	// Pause || WASD
 	int upper_key = toupper(key);
 	if (upper_key == 'P') {
 		// Flip current_state_

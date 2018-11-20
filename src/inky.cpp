@@ -18,9 +18,6 @@ void Inky::update(vector<vector<Tile>> board, Pacman pacman, Blinky blinky) {
 
 	// Adjust tilePosition To Stay In Bounds
 	adjustBounds(board);
-
-	// Calculate pixelPosition
-	calculatePixelPosition();
 }
 
 /*

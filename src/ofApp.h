@@ -47,7 +47,7 @@ class ofApp : public ofBaseApp {
 		vector<int> centerOffset{ 0, 0 };
 
 		// Game Variables
-		vector<vector<Tile>> board;
+		vector<vector<Tile>> board = Board().getBoard();
 		Pacman pacman;
 		Blinky blinky;
 		Clyde clyde;
@@ -76,7 +76,6 @@ class ofApp : public ofBaseApp {
 
 		// Reset Functions
 		void resetLevel();
-		void nextLevel();
 		void resetGame();
 
 	public:

@@ -59,8 +59,6 @@ class Pacman {
 
 		void adjustBounds(vector<vector<Tile>> board);
 
-		void calculatePixelPosition();
-
 		// Reset Functions
 		void resetLevel(int l);
 		void resetGame();
@@ -73,6 +71,7 @@ class Pacman {
 		vector<int> getCurrentVelocity();
 
 		// Setter
+		void decrementLives();
 		void setInitialPosition(vector<int> itp);
 		void setQueuedVelocity(vector<int> v);
 

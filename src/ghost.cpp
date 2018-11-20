@@ -18,9 +18,6 @@ void Ghost::update(vector<vector<Tile>> board, Pacman pacman) {
 
 	// Adjust tilePosition To Stay In Bounds
 	adjustBounds(board);
-
-	// Calculate pixelPosition
-	calculatePixelPosition();
 }
 
 void Ghost::calculateTargetTile(Pacman pacman) {
@@ -152,11 +149,6 @@ void Ghost::adjustBounds(vector<vector<Tile>> board) {
 	}
 }
 
-void Ghost::calculatePixelPosition() {
-	pixelPosition[0] = (tilePosition[1] + (currentTick[1] / maxTick)) * tileSize;
-	pixelPosition[1] = (tilePosition[0] + (currentTick[0] / maxTick)) * tileSize;
-}
-
 // Reset Functions
 void Ghost::resetLevel(int l) {
 	level = l;
@@ -172,11 +164,20 @@ void Ghost::resetGame() {
 
 // Getters
 vector<double> Ghost::getPixelPosition() {
-	return pixelPosition;
+	return vector<double>{ (tilePosition[1] + (currentTick[1] / maxTick)) * tileSize, 
+						   (tilePosition[0] + (currentTick[0] / maxTick)) * tileSize };
 }
 
 vector<int> Ghost::getTilePosition() {
 	return tilePosition;
+}
+
+vector<double> Ghost::getTargetTilePixelPosition() {
+	return vector<double>{ (targetTile[1] + 0.5) * tileSize, (targetTile[0] + 0.5) * tileSize };
+}
+
+vector<int> Ghost::getTargetTile() {
+	return targetTile;
 }
 
 // Setter

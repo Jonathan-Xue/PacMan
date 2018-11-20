@@ -61,8 +61,6 @@ class Ghost {
 
 		void adjustBounds(vector<vector<Tile>> board);
 
-		void calculatePixelPosition();
-
 		// Reset Functions
 		void resetLevel(int l);
 		void resetGame();
@@ -70,6 +68,9 @@ class Ghost {
 		// Getters
 		vector<double> getPixelPosition();
 		vector<int> getTilePosition();
+
+		vector<double> getTargetTilePixelPosition();
+		vector<int> getTargetTile();
 
 		// Setter
 		void setInitialPosition(vector<int> itp);
