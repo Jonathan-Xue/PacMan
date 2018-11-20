@@ -153,12 +153,14 @@ void Ghost::resetLevel(int l) {
 	level = l;
 
 	tilePosition = initialTilePosition;
+	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
 }
 
 void Ghost::resetGame() {
 	level = 0;
 
 	tilePosition = initialTilePosition;
+	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
 }
 
 // Getters

@@ -131,7 +131,19 @@ ofRectangle ofApp::getBitmapStringBoundingBox(string text) {
 
 // Reset Functions
 void ofApp::resetLevel() {
-	// Create A New Board
+	// Reset Level
+	pacman.resetLevel(level);
+	blinky.resetLevel(level);
+	pinky.resetLevel(level);
+	inky.resetLevel(level);
+	clyde.resetLevel(level);
+
+	// Set GameState
+	currentState = PAUSED;
+}
+
+void ofApp::nextLevel() {
+	// New Board
 	board = Board().getBoard();
 
 	// Reset Level
@@ -191,11 +203,42 @@ void ofApp::setup(){
 // Update Game Information
 void ofApp::update(){
 	if (currentState == IN_PROGRESS) {
+		// Update Sprites
 		pacman.update(board);
 		blinky.update(board, pacman);
 		pinky.update(board, pacman);
 		inky.update(board, pacman, blinky);
 		clyde.update(board, pacman);
+
+		// Check For Pacman - Ghost Collision
+		if (pacman.getTilePosition() == blinky.getTilePosition() ||
+			pacman.getTilePosition() == pinky.getTilePosition() ||
+			pacman.getTilePosition() == inky.getTilePosition() ||
+			pacman.getTilePosition() == clyde.getTilePosition()) {
+			// Decrement Lives
+			pacman.decrementLives();
+
+			// Reset Level
+			resetLevel();
+		}
+
+		// Check For Next Level
+		/*
+		for (size_t i = 0; i < board.size(); i++) {
+			for (size_t j = 0; j < board[0].size(); j++) {
+				if (board[i][j].isStandardPellet() || board[i][j].isPowerPellet()) {
+					goto;
+				}
+			}
+		}
+		level++;
+		nextLevel();
+		*/
+		 
+		// Check For State Changes
+		if (pacman.getLives() == 0) {
+			currentState = GAME_OVER;
+		}
 	}
 }
 
@@ -209,6 +252,7 @@ void ofApp::draw() {
 			drawInstructions();
 			break;
 		case IN_PROGRESS:
+			// Fallthrough Intended
 		case PAUSED:
 			drawGameBoard();
 			drawMisc();

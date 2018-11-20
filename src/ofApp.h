@@ -76,6 +76,7 @@ class ofApp : public ofBaseApp {
 
 		// Reset Functions
 		void resetLevel();
+		void nextLevel();
 		void resetGame();
 
 	public:

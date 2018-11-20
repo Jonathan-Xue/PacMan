@@ -21,8 +21,15 @@ void Pacman::update(vector<vector<Tile>> &board) {
 }
 
 void Pacman::eat(vector<vector<Tile>> &board) {
-	board[tilePosition[0]][tilePosition[1]].setStandardPellet(false);
-	board[tilePosition[0]][tilePosition[1]].setPowerPellet(false);
+	if (board[tilePosition[0]][tilePosition[1]].isStandardPellet()) {
+		score += 10;
+		board[tilePosition[0]][tilePosition[1]].setStandardPellet(false);
+	}
+	else if (board[tilePosition[0]][tilePosition[1]].isPowerPellet()) {
+		score += 50;
+		board[tilePosition[0]][tilePosition[1]].setPowerPellet(false);
+	}
+	
 }
 
 void Pacman::updateVelocity(vector<vector<Tile>> board) {
@@ -128,9 +135,9 @@ void Pacman::adjustBounds(vector<vector<Tile>> board) {
 // Reset Functions
 void Pacman::resetLevel(int l) {
 	level = l;
-	lives--;
 
 	tilePosition = initialTilePosition;
+	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
 }
 
 void Pacman::resetGame() {
@@ -139,6 +146,7 @@ void Pacman::resetGame() {
 	score = 0;
 
 	tilePosition = initialTilePosition;
+	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
 }
 
 // Getters
