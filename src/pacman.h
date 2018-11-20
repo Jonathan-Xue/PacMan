@@ -65,6 +65,7 @@ class Pacman {
 
 		// Getters
 		int getLives();
+		int getScore();
 
 		vector<double> getPixelPosition();
 		vector<int> getTilePosition();

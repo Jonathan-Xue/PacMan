@@ -154,6 +154,10 @@ int Pacman::getLives() {
 	return lives;
 }
 
+int Pacman::getScore() {
+	return score;
+}
+
 vector<double> Pacman::getPixelPosition() {
 	return vector<double>{ (tilePosition[1] + (currentTick[1] / maxTick)) * tileSize,
 						   (tilePosition[0] + (currentTick[0] / maxTick)) * tileSize };

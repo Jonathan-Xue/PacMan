@@ -130,8 +130,8 @@ ofRectangle ofApp::getBitmapStringBoundingBox(string text) {
 }
 
 // Reset Functions
-void ofApp::resetLevel() {
-	// Reset Level
+void ofApp::resetSprites() {
+	// Reset Sprites
 	pacman.resetLevel(level);
 	blinky.resetLevel(level);
 	pinky.resetLevel(level);
@@ -142,19 +142,12 @@ void ofApp::resetLevel() {
 	currentState = PAUSED;
 }
 
-void ofApp::nextLevel() {
+void ofApp::resetLevel() {
 	// New Board
 	board = Board().getBoard();
 
-	// Reset Level
-	pacman.resetLevel(level);
-	blinky.resetLevel(level);
-	pinky.resetLevel(level);
-	inky.resetLevel(level);
-	clyde.resetLevel(level);
-
-	// Set GameState
-	currentState = PAUSED;
+	// Reset Sprites
+	resetSprites();
 }
 
 void ofApp::resetGame() {
@@ -163,6 +156,9 @@ void ofApp::resetGame() {
 
 	// Set Level To 0
 	level = 0;
+
+	// Set Flags
+	highScoreFlag = true;
 
 	// Reset Game
 	pacman.resetGame();
@@ -218,8 +214,8 @@ void ofApp::update(){
 			// Decrement Lives
 			pacman.decrementLives();
 
-			// Reset Level
-			resetLevel();
+			// Reset Sprites
+			resetSprites();
 		}
 
 		// Check For Next Level
@@ -232,12 +228,18 @@ void ofApp::update(){
 			}
 		}
 		level++;
-		nextLevel();
+		resetLevel();
 		*/
 		 
 		// Check For State Changes
 		if (pacman.getLives() == 0) {
 			currentState = GAME_OVER;
+		}
+	}
+	else if (currentState == GAME_OVER) {
+		if (highScoreFlag) {
+			// Add High Score To File
+			highScoreFlag = false;
 		}
 	}
 }

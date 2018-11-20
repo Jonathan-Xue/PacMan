@@ -56,6 +56,9 @@ class ofApp : public ofBaseApp {
 
 		int level = 0;
 
+		// Flags
+		bool highScoreFlag = true;
+
 		// Helper Methods For Display Render
 		void drawLandingPage();
 		void drawInstructions();
@@ -75,8 +78,8 @@ class ofApp : public ofBaseApp {
 		ofRectangle getBitmapStringBoundingBox(string text);
 
 		// Reset Functions
+		void resetSprites();
 		void resetLevel();
-		void nextLevel();
 		void resetGame();
 
 	public:
