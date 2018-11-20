@@ -248,7 +248,40 @@ void ofApp::update(){
 	}
 	else if (currentState == GAME_OVER) {
 		if (highScoreFlag) {
-			// Add High Score To File
+			// Read highscores From File
+			ifstream inputFile("highscores.txt");
+			if (inputFile.is_open()) {
+				int lineCount = 0;
+				string line;
+				std::cout << "Inside File" << std::endl;
+				while (getline(inputFile, line)) {
+					highScores[lineCount] = std::stoi(line);
+					lineCount++;
+				}
+
+				inputFile.close();
+			}
+			else {
+				std::cerr << "Unable To Open File" << std::endl;
+				std::exit(1);
+			}
+
+			// Reorder highscores
+
+			// Write highscores To File
+			ofstream outputFile("highscores.txt", std::ios::trunc);
+			if (outputFile.is_open()) {
+				for (int i = 0; i < 10; i++) {
+					outputFile << 0 << "\n";
+				}
+				outputFile.close();
+			}
+			else {
+				std::cerr << "Unable To Open File" << std::endl;
+				std::exit(1);
+			}
+
+			// Change Flag
 			highScoreFlag = false;
 		}
 	}

@@ -138,6 +138,9 @@ void Pacman::resetLevel(int l) {
 
 	tilePosition = initialTilePosition;
 	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
+
+	currentVelocity = { 0, 0 };
+	queuedVelocity = { 0, 0 };
 }
 
 void Pacman::resetGame() {
@@ -147,6 +150,9 @@ void Pacman::resetGame() {
 
 	tilePosition = initialTilePosition;
 	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
+
+	currentVelocity = { 0, 0 };
+	queuedVelocity = { 0, 0 };
 }
 
 // Getters

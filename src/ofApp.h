@@ -47,6 +47,8 @@ class ofApp : public ofBaseApp {
 		vector<int> centerOffset{ 0, 0 };
 
 		// Game Variables
+		vector<int> highScores{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
 		vector<vector<Tile>> board = Board().getBoard();
 		Pacman pacman;
 		Blinky blinky;

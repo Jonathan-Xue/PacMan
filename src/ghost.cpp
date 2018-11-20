@@ -154,6 +154,8 @@ void Ghost::resetLevel(int l) {
 
 	tilePosition = initialTilePosition;
 	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
+
+	currentVelocity = { 0, 0 };
 }
 
 void Ghost::resetGame() {
@@ -161,6 +163,8 @@ void Ghost::resetGame() {
 
 	tilePosition = initialTilePosition;
 	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
+
+	currentVelocity = { 0, 0 };
 }
 
 // Getters
