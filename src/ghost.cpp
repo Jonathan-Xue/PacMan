@@ -25,8 +25,8 @@ void Ghost::calculateTargetTile(Pacman pacman) {
 }
 
 void Ghost::updateVelocity(vector<vector<Tile>> board) {
-	// Update currentVelocity To queuedVelocity If Ghost Is In The Center Of The Tile
-	if (abs(currentTick[0] - maxTick / 2) < epsilon && abs(currentTick[1] - maxTick / 2) < epsilon) {
+	// Update currentVelocity To queuedVelocity If Ghost Is Within (Speed / 2) Ticks Of The Center Of The Tile
+	if (abs(currentTick[0] - maxTick / 2) < (epsilon + speed / 2) && abs(currentTick[1] - maxTick / 2) < (epsilon + speed / 2)) {
 		// Retrieve Valid Velocities From queuedVelocity And Append It To possibleVelocity
 		vector<vector<int>> possibleVelocity{};
 
@@ -40,12 +40,11 @@ void Ghost::updateVelocity(vector<vector<Tile>> board) {
 		int minIndex = -1;
 		double minVal = 1000000000.0;
 
-		//std::cout << targetTile.size() << "\t" << targetTile[0] << "\t" << targetTile[1] << std::endl;
 		for (size_t i = 0; i < possibleVelocity.size(); i++) {
 			double distance = calculateDistance(tileSize * (targetTile[0] + 0.5),
-				tileSize * (targetTile[1] + 0.5),
-				tileSize * (tilePosition[0] + (currentTick[0] / maxTick) + possibleVelocity[i][1]),
-				tileSize * (tilePosition[1] + (currentTick[1] / maxTick) + possibleVelocity[i][0]));
+												tileSize * (targetTile[1] + 0.5),
+												tileSize * (tilePosition[0] + (currentTick[0] / maxTick) + possibleVelocity[i][1]),
+												tileSize * (tilePosition[1] + (currentTick[1] / maxTick) + possibleVelocity[i][0]));
 
 			if (distance < minVal) {
 				minIndex = i;
@@ -111,21 +110,21 @@ void Ghost::move() {
 	currentTick[0] += currentVelocity[1] * speed;
 
 	// Horizontal Movement & Tick Bounds
-	if (std::abs(currentTick[1]) < epsilon) {
+	if (std::abs(currentTick[1]) < (epsilon + speed / 2)) {
 		tilePosition[1]--;
 		currentTick[1] = maxTick;
 	}
-	else if (std::abs(currentTick[1] - maxTick) < epsilon) {
+	else if (std::abs(currentTick[1] - maxTick) < (epsilon + speed / 2)) {
 		tilePosition[1]++;
 		currentTick[1] = 0.0;
 	}
 
 	// Vertical Movement & Tick Bounds
-	if (std::abs(currentTick[0]) < epsilon) {
+	if (std::abs(currentTick[0]) < (epsilon + speed / 2)) {
 		tilePosition[0]--;
 		currentTick[0] = maxTick;
 	}
-	else if (std::abs(currentTick[0] - maxTick) < epsilon) {
+	else if (std::abs(currentTick[0] - maxTick) < (epsilon + speed / 2)) {
 		tilePosition[0]++;
 		currentTick[0] = 0.0;
 	}
