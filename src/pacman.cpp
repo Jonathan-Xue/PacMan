@@ -7,29 +7,44 @@ Pacman::~Pacman() {}
 
 // Methods
 void Pacman::update(vector<vector<Tile>> &board) {
-	// Eat Pellet
-	eat(board);
+	if (skipFrames == vector<bool>{ false, false, false }) {
+		// Eat Pellet
+		eat(board);
 
-	// Update currentVelocity
-	updateVelocity(board);
+		// Update currentVelocity
+		updateVelocity(board);
 
-	// Move In The Direction Of currentVelocity
-	move();
+		// Move In The Direction Of currentVelocity
+		move();
 
-	// Adjust tilePosition To Stay In Bounds
-	adjustBounds(board);
+		// Adjust tilePosition To Stay In Bounds
+		adjustBounds(board);
+	}
+	else {
+		for (size_t i = 0; i < skipFrames.size(); i++) {
+			if (skipFrames[i]) {
+				skipFrames[i] = false;
+				break;
+			}
+		}
+	}
 }
 
 void Pacman::eat(vector<vector<Tile>> &board) {
 	if (board[tilePosition[0]][tilePosition[1]].isStandardPellet()) {
 		score += 10;
 		board[tilePosition[0]][tilePosition[1]].setStandardPellet(false);
+
+		// Flag
+		skipFrames = vector<bool>{ true, false, false };
 	}
 	else if (board[tilePosition[0]][tilePosition[1]].isPowerPellet()) {
 		score += 50;
 		board[tilePosition[0]][tilePosition[1]].setPowerPellet(false);
+
+		// Flag
+		skipFrames = vector<bool>{ true, true, true };
 	}
-	
 }
 
 void Pacman::updateVelocity(vector<vector<Tile>> board) {

@@ -38,7 +38,8 @@ class Ghost {
 		vector<double> currentTick = { maxTick / 2, maxTick / 2 };
 
 		// Tiles Per Second
-		int tilesPerSecond = 8;
+		double maxTilesPerSecond = 10;
+		double tilesPerSecond = 7.5;
 
 		// Ticks Per Frame
 		double speed = 0.0;
