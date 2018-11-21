@@ -145,7 +145,7 @@ void Pacman::resetLevel(int l) {
 
 void Pacman::resetGame() {
 	level = 0;
-	lives = 3;
+	lives = maxLives;
 	score = 0;
 
 	tilePosition = initialTilePosition;

@@ -40,6 +40,9 @@ class ofApp : public ofBaseApp {
 		ofSoundPlayer backgroundMusic;
 		GameState currentState;
 
+		ofTrueTypeFont crackman;
+		ofTrueTypeFont emulogic;
+
 		int screenWidth = ofGetWindowWidth();
 		int screenHeight = ofGetWindowHeight();
 		int tileSize;
@@ -70,14 +73,6 @@ class ofApp : public ofBaseApp {
 		void drawGhosts();
 		void drawGameOver();
 		void drawHighScores();
-
-		/*
-			Purpose: Return String Bounding Box
-			Author: roymacdonald
-			Date: February, 2016
-			Link: https://forum.openframeworks.cc/t/how-to-get-size-of-ofdrawbitmapstring/22578/7
-		*/
-		ofRectangle getBitmapStringBoundingBox(string text);
 
 		// Reset Functions
 		void resetSprites();

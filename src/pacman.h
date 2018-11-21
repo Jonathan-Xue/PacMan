@@ -21,8 +21,9 @@ class Pacman {
 		int tileSize;
 
 		// Class Variables
+		const int maxLives = 50;
 		int level = 0;
-		int lives = 3;
+		int lives = 0;
 		int score = 0;
 
 		vector<int> initialTilePosition = { 0, 0 };

@@ -3,7 +3,12 @@
 /* Private Methods */
 // Helper Methods For Display Render
 void ofApp::drawLandingPage() {
-	
+	ofSetColor(255, 255, 100);
+
+	// "PACMAN" Horizontally And Vertically Centered With Respect To The Screen
+	crackman.drawString("PAC-MAN",
+						(screenWidth - crackman.stringWidth("PAC-MAN")) / 2,
+						(screenHeight - crackman.stringHeight("PAC-MAN")) / 2);
 }
 
 void ofApp::drawInstructions() {
@@ -60,14 +65,38 @@ void ofApp::drawGameBoard() {
 }
 
 void ofApp::drawMisc() {
-	// Score
+	ofSetColor(255, 255, 255);
+
+	// Retrieve currentScore
+	string currentScore = std::to_string(pacman.getScore());
+
+	// "HIGH SCORE" Horizontally Centered With Respect To The Screen
+	vector<int> highScoreLabelTilePosition = { 1, int((board[0].size() - string("HIGH SCORE").length()) / 2) };
+
+	// "1UP" Horizontally Centered With Respect To "HIGH SCORE"
+	vector<int> playerLabelTilePosition = { 1, int((highScoreLabelTilePosition[1] - string("1UP").length()) / 2) };
+
+	// "Rightermost Entry Of Score Is One Tile After End Of "1UP"
+	vector<int> currentScoreTilePosition = { 2, int(playerLabelTilePosition[1] + string("1UP").length() + 1 - currentScore.length()) };
+	 
+	// Draw
+	emulogic.drawString("1UP", 
+						playerLabelTilePosition[1] * tileSize + centerOffset[0], 
+						playerLabelTilePosition[0] * tileSize + centerOffset[1]);
+	emulogic.drawString("HIGH SCORE", 
+						highScoreLabelTilePosition[1] * tileSize + centerOffset[0], 
+						highScoreLabelTilePosition[0] * tileSize + centerOffset[1]);
+	emulogic.drawString(currentScore, 
+						currentScoreTilePosition[1] * tileSize + centerOffset[0], 
+						currentScoreTilePosition[0] * tileSize + centerOffset[1]);
 
 	// Lives
 	vector<int> tilePosition{ (int)board.size() - 1, 3 };
 	for (int i = 0; i < pacman.getLives() - 1; i++) {
 		ofSetColor(255, 255, 255);
 		ofDrawCircle((tilePosition[1] + i * 2) * tileSize + centerOffset[0], 
-					 (tilePosition[0]) * tileSize + centerOffset[1], tileSize);
+					 (tilePosition[0]) * tileSize + centerOffset[1], 
+					 tileSize);
 	}
 }
 
@@ -108,35 +137,6 @@ void ofApp::drawGameOver() {
 
 void ofApp::drawHighScores() {
 
-}
-
-ofRectangle ofApp::getBitmapStringBoundingBox(string text) {
-	vector<string> lines = ofSplitString(text, "\n");
-	int maxLineLength = 0;
-
-	for (int i = 0; i < (int)lines.size(); i++) {
-		const string & line(lines[i]);
-		int currentLineLength = 0;
-
-		for (int j = 0; j < (int)line.size(); j++) {
-			if (line[j] == '\t') {
-				currentLineLength += 8 - (currentLineLength % 8);
-			}
-			else {
-				currentLineLength++;
-			}
-		}
-
-		maxLineLength = MAX(maxLineLength, currentLineLength);
-	}
-
-	int padding = 4;
-	int fontSize = 8;
-	float leading = 1.7;
-	int height = lines.size() * fontSize * leading - 1;
-	int width = maxLineLength * fontSize;
-
-	return ofRectangle(0, 0, width, height);
 }
 
 // Reset Functions
@@ -198,6 +198,9 @@ void ofApp::setup(){
 	backgroundMusic.load("temp.mp3");
 	backgroundMusic.setLoop(true);
 	// backgroundMusic.play();
+
+	// Font - Loaded In windowsResized
+	ofTrueTypeFont::setGlobalDpi(72);
 
 	// Set currentState
 	currentState = START;
@@ -389,6 +392,10 @@ void ofApp::windowResized(int w, int h){
 
 	// Tile Size
 	tileSize = min(screenHeight / board.size(), screenWidth / board[0].size());
+
+	// Fonts
+	crackman.load("crackman.ttf", screenHeight / 10, true, true);
+	emulogic.load("emulogic.ttf", tileSize, true, true);
 
 	// Offsets
 	centerOffset[0] = (screenWidth - (board[0].size() * tileSize)) / 2;
