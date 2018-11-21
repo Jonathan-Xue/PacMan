@@ -21,7 +21,7 @@ class Pacman {
 		int tileSize;
 
 		// Class Variables
-		const int maxLives = 50;
+		const int maxLives = 3;
 		int level = 0;
 		int lives = 0;
 		int score = 0;
