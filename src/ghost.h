@@ -27,6 +27,7 @@ class Ghost {
 		SpriteState state = CHASE;
 
 		// Flags
+		bool queuedReverseDirectionFlag = false;
 		bool reverseDirectionFlag = false;
 
 		// Class Variables
@@ -48,7 +49,7 @@ class Ghost {
 
 		// Tiles Per Second
 		double maxTilesPerSecond = 10;
-		double tilesPerSecond = 7.5;
+		double tilesPerSecond = 8;
 
 		// Ticks Per Frame
 		double speed = 0.0;

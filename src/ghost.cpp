@@ -47,6 +47,9 @@ void Ghost::updateVelocity(vector<vector<Tile>> board) {
 	else {
 		// Update currentVelocity To queuedVelocity If Ghost Is Within (Speed / 2) Ticks Of The Center Of The Tile
 		if (abs(currentTick[0] - maxTick / 2) < (epsilon + speed / 2) && abs(currentTick[1] - maxTick / 2) < (epsilon + speed / 2)) {
+			// Center The Ghost In The Tile
+			// currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
+
 			// Retrieve Valid Velocities From queuedVelocity And Append It To possibleVelocity
 			vector<vector<int>> possibleVelocity{};
 
@@ -131,23 +134,47 @@ void Ghost::move() {
 	currentTick[0] += currentVelocity[1] * speed;
 
 	// Horizontal Movement & Tick Bounds
-	if (std::abs(currentTick[1]) < (epsilon + speed / 2)) {
+	if (currentTick[1] < 0) {
 		tilePosition[1]--;
 		currentTick[1] = maxTick;
+
+		// reverseDirectionFlag
+		if (queuedReverseDirectionFlag) {
+			reverseDirectionFlag = true;
+			queuedReverseDirectionFlag = false;
+		}
 	}
-	else if (std::abs(currentTick[1] - maxTick) < (epsilon + speed / 2)) {
+	else if (currentTick[1] > maxTick) {
 		tilePosition[1]++;
 		currentTick[1] = 0.0;
+
+		// reverseDirectionFlag
+		if (queuedReverseDirectionFlag) {
+			reverseDirectionFlag = true;
+			queuedReverseDirectionFlag = false;
+		}
 	}
 
 	// Vertical Movement & Tick Bounds
-	if (std::abs(currentTick[0]) < (epsilon + speed / 2)) {
+	if (currentTick[0] < 0) {
 		tilePosition[0]--;
 		currentTick[0] = maxTick;
+
+		// reverseDirectionFlag
+		if (queuedReverseDirectionFlag) {
+			reverseDirectionFlag = true;
+			queuedReverseDirectionFlag = false;
+		}
 	}
-	else if (std::abs(currentTick[0] - maxTick) < (epsilon + speed / 2)) {
+	else if (currentTick[0] > maxTick) {
 		tilePosition[0]++;
 		currentTick[0] = 0.0;
+
+		// reverseDirectionFlag
+		if (queuedReverseDirectionFlag) {
+			reverseDirectionFlag = true;
+			queuedReverseDirectionFlag = false;
+		}
 	}
 }
 
@@ -208,7 +235,7 @@ vector<int> Ghost::getTargetTile() {
 
 // Setters
 void Ghost::reverseDirection() {
-	reverseDirectionFlag = true;
+	queuedReverseDirectionFlag = true;
 }
 
 void Ghost::setState(SpriteState s) {
