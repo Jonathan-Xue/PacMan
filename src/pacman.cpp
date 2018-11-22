@@ -181,7 +181,7 @@ int Pacman::getScore() {
 
 vector<double> Pacman::getPixelPosition() {
 	return vector<double>{ (tilePosition[1] + (currentTick[1] / maxTick)) * tileSize,
-						   (tilePosition[0] + (currentTick[0] / maxTick)) * tileSize };
+		(tilePosition[0] + (currentTick[0] / maxTick)) * tileSize };
 }
 
 vector<int> Pacman::getTilePosition() {
@@ -193,6 +193,10 @@ vector<int> Pacman::getCurrentVelocity() {
 }
 
 // Setters
+void Pacman::setState(SpriteState s) {
+	state = s;
+}
+
 void Pacman::decrementLives() {
 	lives--;
 }

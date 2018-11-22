@@ -28,15 +28,27 @@ void Clyde::update(vector<vector<Tile>> board, Pacman pacman) {
 			Pacman's tilePosition
 */
 void Clyde::calculateTargetTile(vector<vector<Tile>> board, Pacman pacman) {
-	double distance = calculateDistance(tileSize * (pacman.getTilePosition()[0] + 0.5),
-										tileSize * (pacman.getTilePosition()[1] + 0.5),
-										tileSize * (tilePosition[0] + (currentTick[0] / maxTick)),
-										tileSize * (tilePosition[1] + (currentTick[1] / maxTick)));
+	if (state == CHASE) {
+		double distance = calculateDistance(tileSize * (pacman.getTilePosition()[0] + 0.5),
+			tileSize * (pacman.getTilePosition()[1] + 0.5),
+			tileSize * (tilePosition[0] + (currentTick[0] / maxTick)),
+			tileSize * (tilePosition[1] + (currentTick[1] / maxTick)));
 
-	if (distance < 8.0 * tileSize) {
-		targetTile = { (int)(board.size() - 1), 0 };
+		if (distance < 8.0 * tileSize) {
+			targetTile = { (int)(board.size() - 1), 0 };
+		}
+		else {
+			targetTile = pacman.getTilePosition();
+		}
+	}
+	else if (state == SCATTER) {
+		targetTile = homeTilePosition;
+	}
+	else if (state == FRIGHTENED) {
+
 	}
 	else {
-		targetTile = pacman.getTilePosition();
+		std::cerr << "Error. GhostMode Is Invalid" << std::endl;
+		exit(1);
 	}
 }

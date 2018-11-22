@@ -71,6 +71,9 @@
     <ClInclude Include="src\tile.h">
       <Filter>src\board</Filter>
     </ClInclude>
+    <ClInclude Include="src\enums.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

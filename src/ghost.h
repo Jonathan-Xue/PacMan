@@ -1,5 +1,7 @@
 #pragma once
 
+#include "enums.h"
+
 #include "tile.h"
 #include "pacman.h"
 
@@ -21,9 +23,16 @@ class Ghost {
 		int screenHeight;
 		int tileSize;
 
+		// Enums
+		SpriteState state = CHASE;
+
+		// Flags
+		bool reverseDirectionFlag = false;
+
 		// Class Variables
 		int level = 0;
 
+		vector<int> homeTilePosition = { 0, 0 };
 		vector<int> initialTilePosition = { 0, 0 };
 		vector<int> tilePosition = { 0, 0 };
 		vector<double> pixelPosition = { 0, 0 };
@@ -73,8 +82,11 @@ class Ghost {
 		vector<double> getTargetTilePixelPosition();
 		vector<int> getTargetTile();
 
-		// Setter
-		void setInitialPosition(vector<int> itp);
+		// Setters
+		void reverseDirection();
+		void setState(SpriteState s);
+		void setHomeTilePosition(vector<int> htp);
+		void setInitialTilePosition(vector<int> itp);
 
 		// Resize
 		void resize(int w, int h, int ts);

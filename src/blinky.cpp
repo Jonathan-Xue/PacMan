@@ -25,5 +25,17 @@ void Blinky::update(vector<vector<Tile>> board, Pacman pacman) {
 		Pacman's tilePosition
 */
 void Blinky::calculateTargetTile(Pacman pacman) {
-	targetTile = pacman.getTilePosition();
+	if (state == CHASE) {
+		targetTile = pacman.getTilePosition();
+	}
+	else if (state == SCATTER) {
+		targetTile = homeTilePosition;
+	}
+	else if (state == FRIGHTENED) {
+
+	}
+	else {
+		std::cerr << "Error. State Is Invalid" << std::endl;
+		exit(1);
+	}
 }

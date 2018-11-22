@@ -1,5 +1,7 @@
 #pragma once
 
+#include "enums.h"
+
 #include "tile.h"
 
 #include <iostream>
@@ -19,6 +21,12 @@ class Pacman {
 		int screenWidth;
 		int screenHeight;
 		int tileSize;
+
+		// Enums
+		SpriteState state = CHASE;
+
+		// Flags
+		vector<bool> skipFrames = { false, false, false };
 
 		// Class Variables
 		const int maxLives = 3;
@@ -43,9 +51,6 @@ class Pacman {
 
 		// Ticks Per Frame
 		double speed = 0.0;
-
-		// Flags
-		vector<bool> skipFrames = { false, false, false };
 
 	public:
 		// Constructors
@@ -77,6 +82,7 @@ class Pacman {
 		vector<int> getCurrentVelocity();
 
 		// Setter
+		void setState(SpriteState s);
 		void decrementLives();
 		void setInitialPosition(vector<int> itp);
 		void setQueuedVelocity(vector<int> v);

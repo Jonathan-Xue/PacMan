@@ -21,39 +21,60 @@ void Ghost::update(vector<vector<Tile>> board, Pacman pacman) {
 }
 
 void Ghost::calculateTargetTile(Pacman pacman) {
-	targetTile = pacman.getTilePosition();
+	if (state == CHASE) {
+		targetTile = pacman.getTilePosition();
+	}
+	else if (state == SCATTER) {
+		targetTile = homeTilePosition;
+	}
+	else if (state == FRIGHTENED) {
+
+	}
+	else {
+		std::cerr << "Error. State Is Invalid" << std::endl;
+		exit(1);
+	}
 }
 
 void Ghost::updateVelocity(vector<vector<Tile>> board) {
-	// Update currentVelocity To queuedVelocity If Ghost Is Within (Speed / 2) Ticks Of The Center Of The Tile
-	if (abs(currentTick[0] - maxTick / 2) < (epsilon + speed / 2) && abs(currentTick[1] - maxTick / 2) < (epsilon + speed / 2)) {
-		// Retrieve Valid Velocities From queuedVelocity And Append It To possibleVelocity
-		vector<vector<int>> possibleVelocity{};
+	if (reverseDirectionFlag) {
+		// Reverse Direction Of Travel
+		currentVelocity[0] *= -1;
+		currentVelocity[1] *= -1;
 
-		for (int i = 0; i < 4; i++) {
-			if (checkValidVelocity(board, queuedVelocity[i])) {
-				possibleVelocity.push_back(queuedVelocity[i]);
+		reverseDirectionFlag = false;
+	}
+	else {
+		// Update currentVelocity To queuedVelocity If Ghost Is Within (Speed / 2) Ticks Of The Center Of The Tile
+		if (abs(currentTick[0] - maxTick / 2) < (epsilon + speed / 2) && abs(currentTick[1] - maxTick / 2) < (epsilon + speed / 2)) {
+			// Retrieve Valid Velocities From queuedVelocity And Append It To possibleVelocity
+			vector<vector<int>> possibleVelocity{};
+
+			for (int i = 0; i < 4; i++) {
+				if (checkValidVelocity(board, queuedVelocity[i])) {
+					possibleVelocity.push_back(queuedVelocity[i]);
+				}
 			}
-		}
 
-		// Determine The Velocity Which Yields In Closest Distance To targetTile
-		int minIndex = -1;
-		double minVal = 1000000000.0;
+			// Determine The Velocity Which Yields In Closest Distance To targetTile
+			int minIndex = -1;
+			double minVal = 1000000000.0;
 
-		for (size_t i = 0; i < possibleVelocity.size(); i++) {
-			double distance = calculateDistance(tileSize * (targetTile[0] + 0.5),
-												tileSize * (targetTile[1] + 0.5),
-												tileSize * (tilePosition[0] + (currentTick[0] / maxTick) + possibleVelocity[i][1]),
-												tileSize * (tilePosition[1] + (currentTick[1] / maxTick) + possibleVelocity[i][0]));
+			for (size_t i = 0; i < possibleVelocity.size(); i++) {
+				double distance = calculateDistance(tileSize * (targetTile[0] + 0.5),
+					tileSize * (targetTile[1] + 0.5),
+					tileSize * (tilePosition[0] + (currentTick[0] / maxTick) + possibleVelocity[i][1]),
+					tileSize * (tilePosition[1] + (currentTick[1] / maxTick) + possibleVelocity[i][0]));
 
-			if (distance < minVal) {
-				minIndex = i;
-				minVal = distance;
+				if (distance < minVal) {
+					minIndex = i;
+					minVal = distance;
+				}
 			}
-		}
 
-		// Update currentVelocity
-		currentVelocity = possibleVelocity[minIndex];
+			// Update currentVelocity
+			currentVelocity = possibleVelocity[minIndex];
+		}
 	}
 }
 
@@ -63,21 +84,21 @@ bool Ghost::checkValidVelocity(vector<vector<Tile>> board, vector<int> velocity)
 	}
 	else if (velocity == vector<int>{0, -1}) {
 		// Up
-		if (currentVelocity != vector<int>{0, 1} && 
+		if (currentVelocity != vector<int>{0, 1} &&
 			(tilePosition[0] - 1 < 0 || board[tilePosition[0] - 1][tilePosition[1]].getID() == 1)) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{-1, 0}) {
 		// Left
-		if (currentVelocity != vector<int>{1, 0} && 
+		if (currentVelocity != vector<int>{1, 0} &&
 			(tilePosition[1] - 1 < 0 || board[tilePosition[0]][tilePosition[1] - 1].getID() == 1)) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{0, 1}) {
 		// Down
-		if (currentVelocity != vector<int>{0, -1} && 
+		if (currentVelocity != vector<int>{0, -1} &&
 			(size_t(tilePosition[0] + 1) >= board.size() || board[tilePosition[0] + 1][tilePosition[1]].getID() == 1)) {
 			return true;
 		}
@@ -169,8 +190,8 @@ void Ghost::resetGame() {
 
 // Getters
 vector<double> Ghost::getPixelPosition() {
-	return vector<double>{ (tilePosition[1] + (currentTick[1] / maxTick)) * tileSize, 
-						   (tilePosition[0] + (currentTick[0] / maxTick)) * tileSize };
+	return vector<double>{ (tilePosition[1] + (currentTick[1] / maxTick)) * tileSize,
+		(tilePosition[0] + (currentTick[0] / maxTick)) * tileSize };
 }
 
 vector<int> Ghost::getTilePosition() {
@@ -185,8 +206,20 @@ vector<int> Ghost::getTargetTile() {
 	return targetTile;
 }
 
-// Setter
-void Ghost::setInitialPosition(vector<int> itp) {
+// Setters
+void Ghost::reverseDirection() {
+	reverseDirectionFlag = true;
+}
+
+void Ghost::setState(SpriteState s) {
+	state = s;
+}
+
+void Ghost::setHomeTilePosition(vector<int> htp) {
+	homeTilePosition = htp;
+}
+
+void Ghost::setInitialTilePosition(vector<int> itp) {
 	initialTilePosition = itp;
 	tilePosition = initialTilePosition;
 }

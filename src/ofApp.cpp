@@ -7,8 +7,8 @@ void ofApp::drawLandingPage() {
 
 	// "PACMAN" Horizontally And Vertically Centered With Respect To The Screen
 	crackman.drawString("PAC-MAN",
-						(screenWidth - crackman.stringWidth("PAC-MAN")) / 2,
-						(screenHeight - crackman.stringHeight("PAC-MAN")) / 2);
+		(screenWidth - crackman.stringWidth("PAC-MAN")) / 2,
+		(screenHeight - crackman.stringHeight("PAC-MAN")) / 2);
 }
 
 void ofApp::drawInstructions() {
@@ -27,7 +27,7 @@ void ofApp::drawGameBoard() {
 				// Wall
 				ofSetColor(50, 50, 255);
 				ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
-			} 
+			}
 			else if (board[i][j].getID() == 1) {
 				if (board[i][j].isStandardPellet()) {
 					// Tile
@@ -71,32 +71,32 @@ void ofApp::drawMisc() {
 	string currentScore = std::to_string(pacman.getScore());
 
 	// "HIGH SCORE" Horizontally Centered With Respect To The Screen
-	vector<int> highScoreLabelTilePosition = { 1, int((board[0].size() - string("HIGH SCORE").length()) / 2) };
+	vector<int> highScoreLabelTilePosition = { 1, (int)((board[0].size() - string("HIGH SCORE").length()) / 2) };
 
 	// "1UP" Horizontally Centered With Respect To "HIGH SCORE"
-	vector<int> playerLabelTilePosition = { 1, int((highScoreLabelTilePosition[1] - string("1UP").length()) / 2) };
+	vector<int> playerLabelTilePosition = { 1, (int)((highScoreLabelTilePosition[1] - string("1UP").length()) / 2) };
 
 	// "Rightermost Entry Of Score Is One Tile After End Of "1UP"
-	vector<int> currentScoreTilePosition = { 2, int(playerLabelTilePosition[1] + string("1UP").length() + 1 - currentScore.length()) };
-	 
+	vector<int> currentScoreTilePosition = { 2, (int)(playerLabelTilePosition[1] + string("1UP").length() + 1 - currentScore.length()) };
+
 	// Draw
-	emulogic.drawString("1UP", 
-						playerLabelTilePosition[1] * tileSize + centerOffset[0], 
-						playerLabelTilePosition[0] * tileSize + centerOffset[1]);
-	emulogic.drawString("HIGH SCORE", 
-						highScoreLabelTilePosition[1] * tileSize + centerOffset[0], 
-						highScoreLabelTilePosition[0] * tileSize + centerOffset[1]);
-	emulogic.drawString(currentScore, 
-						currentScoreTilePosition[1] * tileSize + centerOffset[0], 
-						currentScoreTilePosition[0] * tileSize + centerOffset[1]);
+	emulogic.drawString("1UP",
+		playerLabelTilePosition[1] * tileSize + centerOffset[0],
+		playerLabelTilePosition[0] * tileSize + centerOffset[1]);
+	emulogic.drawString("HIGH SCORE",
+		highScoreLabelTilePosition[1] * tileSize + centerOffset[0],
+		highScoreLabelTilePosition[0] * tileSize + centerOffset[1]);
+	emulogic.drawString(currentScore,
+		currentScoreTilePosition[1] * tileSize + centerOffset[0],
+		currentScoreTilePosition[0] * tileSize + centerOffset[1]);
 
 	// Lives
 	vector<int> tilePosition{ (int)board.size() - 1, 3 };
 	for (int i = 0; i < pacman.getLives() - 1; i++) {
 		ofSetColor(255, 255, 255);
-		ofDrawCircle((tilePosition[1] + i * 2) * tileSize + centerOffset[0], 
-					 (tilePosition[0]) * tileSize + centerOffset[1], 
-					 tileSize);
+		ofDrawCircle((tilePosition[1] + i * 2) * tileSize + centerOffset[0],
+			(tilePosition[0]) * tileSize + centerOffset[1],
+			tileSize);
 	}
 }
 
@@ -107,28 +107,28 @@ void ofApp::drawPacMan() {
 
 void ofApp::drawGhosts() {
 	ofSetColor(255, 0, 0);
-	ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);	
-	ofDrawRectangle(blinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4, 
-					blinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-					tileSize / 2, tileSize / 2);
+	ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+	//ofDrawRectangle(blinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4, 
+	//				blinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+	//				tileSize / 2, tileSize / 2);
 
 	ofSetColor(255, 185, 255);
 	ofDrawCircle(pinky.getPixelPosition()[0] + centerOffset[0], pinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-	ofDrawRectangle(pinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-					pinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-					tileSize / 2, tileSize / 2);
+	//ofDrawRectangle(pinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+	//				pinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+	//				tileSize / 2, tileSize / 2);
 
 	ofSetColor(0, 255, 255);
 	ofDrawCircle(inky.getPixelPosition()[0] + centerOffset[0], inky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-	ofDrawRectangle(inky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-					inky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-					tileSize / 2, tileSize / 2);
+	//ofDrawRectangle(inky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+	//				inky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+	//				tileSize / 2, tileSize / 2);
 
 	ofSetColor(255, 185, 80);
 	ofDrawCircle(clyde.getPixelPosition()[0] + centerOffset[0], clyde.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-	ofDrawRectangle(clyde.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-					clyde.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-					tileSize / 2, tileSize / 2);
+	//ofDrawRectangle(clyde.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+	//				clyde.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+	//				tileSize / 2, tileSize / 2);
 }
 
 void ofApp::drawGameOver() {
@@ -183,7 +183,7 @@ void ofApp::resetGame() {
 
 /* Public Methods */
 // Setup Method
-void ofApp::setup(){
+void ofApp::setup() {
 	// Set Window Name
 	ofSetWindowTitle("Pac-Man");
 
@@ -210,7 +210,7 @@ void ofApp::setup(){
 }
 
 // Update Game Information
-void ofApp::update(){
+void ofApp::update() {
 	if (currentState == IN_PROGRESS) {
 		// Update Sprites
 		pacman.update(board);
@@ -241,8 +241,8 @@ void ofApp::update(){
 		}
 		level++;
 		resetLevel();
-		stop:
-		 
+	stop:
+
 		// Check For State Changes
 		if (pacman.getLives() == 0) {
 			currentState = GAME_OVER;
@@ -294,30 +294,30 @@ void ofApp::update(){
 // Draw Game
 void ofApp::draw() {
 	switch (currentState) {
-		case START:
-			drawLandingPage();
-			break;
-		case INSTRUCTIONS:
-			drawInstructions();
-			break;
-		case IN_PROGRESS:
-			// Fallthrough Intended
-		case PAUSED:
-			drawGameBoard();
-			drawMisc();
-			drawPacMan();
-			drawGhosts();
-			break;
-		case GAME_OVER:
-			drawGameOver();
-			break;
-		case HIGH_SCORE:
-			drawHighScores();
-			break;
-		default:
-			// Exit With Error Message
-			std::cerr << "Error. GameState Is Invalid" << std::endl;
-			std::exit(1);
+	case START:
+		drawLandingPage();
+		break;
+	case INSTRUCTIONS:
+		drawInstructions();
+		break;
+	case IN_PROGRESS:
+		// Fallthrough Intended
+	case PAUSED:
+		drawGameBoard();
+		drawMisc();
+		drawPacMan();
+		drawGhosts();
+		break;
+	case GAME_OVER:
+		drawGameOver();
+		break;
+	case HIGH_SCORE:
+		drawHighScores();
+		break;
+	default:
+		// Exit With Error Message
+		std::cerr << "Error. GameState Is Invalid" << std::endl;
+		std::exit(1);
 	}
 }
 
@@ -327,7 +327,7 @@ void ofApp::draw() {
 	P		->	toggle pause
 	WASD	->	directional control
 */
-void ofApp::keyPressed(int key){
+void ofApp::keyPressed(int key) {
 	// TODO: Remove
 	if (key == OF_KEY_CONTROL) {
 		// Flip State
@@ -335,22 +335,34 @@ void ofApp::keyPressed(int key){
 			currentState = INSTRUCTIONS;
 		}
 		else if (currentState = INSTRUCTIONS) {
-			// Set Sprite's initialPosition
+			vector<int> rowBuffer{ 3, 2 };
+			// Set Sprite's homeTilePosition
+			blinky.setHomeTilePosition(vector<int>{ 1 + rowBuffer[1], 1 });
+			pinky.setHomeTilePosition(vector<int>{ (((int)board.size() - 1) - 1) - rowBuffer[1], ((int)board.size() - 1) - 1 });
+			inky.setHomeTilePosition(vector<int>{ 1 + rowBuffer[1], ((int)board.size() - 1) - 1});
+			clyde.setHomeTilePosition(vector<int>{ (((int)board.size() - 1) - 1) - rowBuffer[1], 1 });
+
+			// Set Sprite's initialTilePosition
 			pacman.setInitialPosition(vector<int>{ 26, 14 });
-			blinky.setInitialPosition(vector<int>{ 4, 1 });
-			pinky.setInitialPosition(vector<int>{ 32, 26});
-			inky.setInitialPosition(vector<int>{ 4, 26 });
-			clyde.setInitialPosition(vector<int>{ 32, 1 });
+			blinky.setInitialTilePosition(vector<int>{ 4, 1 });
+			pinky.setInitialTilePosition(vector<int>{ 32, 26});
+			inky.setInitialTilePosition(vector<int>{ 4, 26 });
+			clyde.setInitialTilePosition(vector<int>{ 32, 1 });
 
 			// Reset Game
 			resetGame();
 		}
 	}
+	else if (key == OF_KEY_ALT) {
+		blinky.reverseDirection();
+		inky.reverseDirection();
+		pinky.reverseDirection();
+		clyde.reverseDirection();
+	}
 
 	// Fullscreen
 	if (key == OF_KEY_F12) {
 		ofToggleFullscreen();
-		return;
 	}
 
 	// Pause || WASD
@@ -381,11 +393,11 @@ void ofApp::keyPressed(int key){
 	}
 }
 
-void ofApp::mousePressed(int x, int y, int button){
+void ofApp::mousePressed(int x, int y, int button) {
 
 }
 
-void ofApp::windowResized(int w, int h){
+void ofApp::windowResized(int w, int h) {
 	// Update Width & Height
 	screenWidth = w;
 	screenHeight = h;
@@ -407,5 +419,5 @@ void ofApp::windowResized(int w, int h){
 	pinky.resize(screenWidth, screenHeight, tileSize);
 	inky.resize(screenWidth, screenHeight, tileSize);
 	clyde.resize(screenWidth, screenHeight, tileSize);
-	
+
 }

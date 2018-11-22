@@ -7,6 +7,8 @@
 
 #include "ofMain.h"
 
+#include "enums.h"
+
 #include "board.h"
 #include "tile.h"
 
@@ -21,15 +23,6 @@ using std::ifstream;
 using std::ofstream;
 using std::string;
 using std::vector;
-
-enum GameState {
-	START,
-	INSTRUCTIONS,
-	IN_PROGRESS,
-	PAUSED,
-	GAME_OVER,
-	HIGH_SCORE
-};
 
 class ofApp : public ofBaseApp {
 
