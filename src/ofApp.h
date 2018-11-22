@@ -38,7 +38,7 @@ class ofApp : public ofBaseApp {
 
 		int screenWidth = ofGetWindowWidth();
 		int screenHeight = ofGetWindowHeight();
-		int tileSize;
+		int tileSize = 0;
 
 		vector<int> centerOffset{ 0, 0 };
 

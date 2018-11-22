@@ -3,16 +3,27 @@
 /* Private Methods */
 // Helper Methods For Display Render
 void ofApp::drawLandingPage() {
-	ofSetColor(255, 255, 100);
+	// Reset Canvas
+	ofSetColor(0, 0, 0);
+	ofDrawRectangle(0, 0, screenWidth, screenHeight);
 
 	// "PACMAN" Horizontally And Vertically Centered With Respect To The Screen
+	ofSetColor(255, 255, 100);
 	crackman.drawString("PAC-MAN",
 		(screenWidth - crackman.stringWidth("PAC-MAN")) / 2,
 		(screenHeight - crackman.stringHeight("PAC-MAN")) / 2);
 }
 
 void ofApp::drawInstructions() {
+	// Reset Canvas
+	ofSetColor(0, 0, 0);
+	ofDrawRectangle(0, 0, screenWidth, screenHeight);
 
+	//
+	ofSetColor(255, 255, 255);
+	emulogic.drawString("INSTRUCTIONS",
+		(screenWidth - emulogic.stringWidth("INSTRUCTIONS")) / 2,
+		(screenHeight - emulogic.stringHeight("INSTRUCTIONS")) / 2);
 }
 
 void ofApp::drawGameBoard() {
@@ -359,10 +370,10 @@ void ofApp::keyPressed(int key) {
 	// TODO: Remove
 	if (key == OF_KEY_CONTROL) {
 		// Flip State
-		if (currentState = START) {
+		if (currentState == START) {
 			currentState = INSTRUCTIONS;
 		}
-		else if (currentState = INSTRUCTIONS) {
+		else if (currentState == INSTRUCTIONS) {
 			// Set Sprite's homeTilePosition
 			blinky.setHomeTilePosition(vector<int>{ 0, (int)board[0].size() - 1 - 2 });
 			pinky.setHomeTilePosition(vector<int>{ 0, 2 });
@@ -379,6 +390,7 @@ void ofApp::keyPressed(int key) {
 			// Reset Game
 			resetGame();
 		}
+		
 	}
 	else if (key == OF_KEY_ALT) {
 		blinky.reverseDirection();
