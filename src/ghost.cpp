@@ -200,6 +200,8 @@ void Ghost::adjustBounds(vector<vector<Tile>> board) {
 void Ghost::resetLevel(int l) {
 	level = l;
 
+	mode = SCATTER;
+
 	tilePosition = initialTilePosition;
 	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
 
@@ -208,6 +210,8 @@ void Ghost::resetLevel(int l) {
 
 void Ghost::resetGame() {
 	level = 0;
+
+	mode = SCATTER;
 
 	tilePosition = initialTilePosition;
 	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };

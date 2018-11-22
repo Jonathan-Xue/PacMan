@@ -154,6 +154,8 @@ void Pacman::adjustBounds(vector<vector<Tile>> board) {
 void Pacman::resetLevel(int l) {
 	level = l;
 
+	mode = SCATTER;
+
 	tilePosition = initialTilePosition;
 	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
 
@@ -165,6 +167,8 @@ void Pacman::resetGame() {
 	level = 0;
 	lives = maxLives;
 	score = 0;
+
+	mode = SCATTER;
 
 	tilePosition = initialTilePosition;
 	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };

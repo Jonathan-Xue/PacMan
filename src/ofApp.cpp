@@ -148,6 +148,10 @@ void ofApp::resetSprites() {
 	inky.resetLevel(level);
 	clyde.resetLevel(level);
 
+	// Reset SpriteMode Variables
+	modeStartTime = 0;
+	modeIndex = 0;
+
 	// Set GameState
 	currentState = PAUSED;
 }
@@ -211,7 +215,6 @@ void ofApp::setup() {
 
 // Update Game Information
 void ofApp::update() {
-	// currentState
 	if (currentState == IN_PROGRESS) {
 		// SpriteMode
 		if (modeStartTime == 0) {
