@@ -80,7 +80,7 @@ void Ghost::updateVelocity(vector<vector<Tile>> board) {
 
 bool Ghost::checkValidVelocity(vector<vector<Tile>> board, vector<int> velocity) {
 	if (velocity == vector<int>{0, 0}) {
-		return false;
+		return true;
 	}
 	else if (velocity == vector<int>{0, -1}) {
 		// Up

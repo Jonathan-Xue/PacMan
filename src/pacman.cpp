@@ -61,14 +61,13 @@ void Pacman::updateVelocity(vector<vector<Tile>> board) {
 		// Update currentVelocity To queuedVelocity If PacMan Is Within (Speed / 2) Ticks Of The Center Of The Tile
 		if (abs(currentTick[0] - maxTick / 2) < (epsilon + speed / 2) && abs(currentTick[1] - maxTick / 2) < (epsilon + speed / 2)) {
 			currentVelocity = queuedVelocity;
-			queuedVelocity = { 0, 0 };
 		}
 	}
 }
 
 bool Pacman::checkValidVelocity(vector<vector<Tile>> board, vector<int> velocity) {
 	if (velocity == vector<int>{0, 0}) {
-		return false;
+		return true;
 	}
 	else if (velocity == vector<int>{0, -1}) {
 		// Up
