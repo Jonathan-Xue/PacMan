@@ -44,6 +44,29 @@ void Ghost::updateVelocity(vector<vector<Tile>> board) {
 
 		reverseDirectionFlag = false;
 	}
+	else if (mode == FRIGHTENED) {
+		// Update currentVelocity To queuedVelocity If Ghost Is Within (Speed / 2) Ticks Of The Center Of The Tile
+		if (abs(currentTick[0] - maxTick / 2) < (epsilon + speed / 2) && abs(currentTick[1] - maxTick / 2) < (epsilon + speed / 2)) {
+			int randIndex = rand() % queuedVelocity.size();
+			if (checkValidVelocity(board, queuedVelocity[randIndex])) {
+				currentVelocity = queuedVelocity[randIndex];
+			}
+			else {
+				// Retrieve Valid Velocities From queuedVelocity And Append It To possibleVelocity
+				vector<vector<int>> possibleVelocity{};
+
+				for (int i = 0; i < 4; i++) {
+					if (checkValidVelocity(board, queuedVelocity[i])) {
+						possibleVelocity.push_back(queuedVelocity[i]);
+					}
+				}
+
+				// Update currentVelocity
+				currentVelocity = possibleVelocity[0];
+			}
+		}
+
+	}
 	else {
 		// Update currentVelocity To queuedVelocity If Ghost Is Within (Speed / 2) Ticks Of The Center Of The Tile
 		if (abs(currentTick[0] - maxTick / 2) < (epsilon + speed / 2) && abs(currentTick[1] - maxTick / 2) < (epsilon + speed / 2)) {
