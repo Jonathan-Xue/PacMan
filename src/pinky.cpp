@@ -32,7 +32,7 @@ void Pinky::update(vector<vector<Tile>> board, Pacman pacman) {
 			Four Tiles Right Of Pacman's Current Position
 */
 void Pinky::calculateTargetTile(Pacman pacman) {
-	if (state == CHASE) {
+	if (mode == CHASE) {
 		// Pacman's Velocity Vector
 		vector<int> pacmanVelocity = pacman.getCurrentVelocity();
 
@@ -65,10 +65,10 @@ void Pinky::calculateTargetTile(Pacman pacman) {
 			std::exit(1);
 		}
 	}
-	else if (state == SCATTER) {
+	else if (mode == SCATTER) {
 		targetTile = homeTilePosition;
 	}
-	else if (state == FRIGHTENED) {
+	else if (mode == FRIGHTENED) {
 
 	}
 	else {

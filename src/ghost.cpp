@@ -21,13 +21,13 @@ void Ghost::update(vector<vector<Tile>> board, Pacman pacman) {
 }
 
 void Ghost::calculateTargetTile(Pacman pacman) {
-	if (state == CHASE) {
+	if (mode == CHASE) {
 		targetTile = pacman.getTilePosition();
 	}
-	else if (state == SCATTER) {
+	else if (mode == SCATTER) {
 		targetTile = homeTilePosition;
 	}
-	else if (state == FRIGHTENED) {
+	else if (mode == FRIGHTENED) {
 
 	}
 	else {
@@ -238,8 +238,8 @@ void Ghost::reverseDirection() {
 	queuedReverseDirectionFlag = true;
 }
 
-void Ghost::setState(SpriteState s) {
-	state = s;
+void Ghost::setMode(SpriteMode m) {
+	mode = m;
 }
 
 void Ghost::setHomeTilePosition(vector<int> htp) {

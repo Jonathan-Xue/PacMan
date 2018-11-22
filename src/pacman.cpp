@@ -196,8 +196,8 @@ vector<int> Pacman::getCurrentVelocity() {
 }
 
 // Setters
-void Pacman::setState(SpriteState s) {
-	state = s;
+void Pacman::setMode(SpriteMode m) {
+	mode = m;
 }
 
 void Pacman::decrementLives() {

@@ -9,7 +9,7 @@ enum GameState {
 	HIGH_SCORE
 };
 
-enum SpriteState {
+enum SpriteMode {
 	FRIGHTENED,
 	SCATTER,
 	CHASE

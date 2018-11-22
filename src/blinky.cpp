@@ -25,13 +25,13 @@ void Blinky::update(vector<vector<Tile>> board, Pacman pacman) {
 		Pacman's tilePosition
 */
 void Blinky::calculateTargetTile(Pacman pacman) {
-	if (state == CHASE) {
+	if (mode == CHASE) {
 		targetTile = pacman.getTilePosition();
 	}
-	else if (state == SCATTER) {
+	else if (mode == SCATTER) {
 		targetTile = homeTilePosition;
 	}
-	else if (state == FRIGHTENED) {
+	else if (mode == FRIGHTENED) {
 
 	}
 	else {

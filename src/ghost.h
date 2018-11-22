@@ -24,7 +24,7 @@ class Ghost {
 		int tileSize;
 
 		// Enums
-		SpriteState state = CHASE;
+		SpriteMode mode = SCATTER;
 
 		// Flags
 		bool queuedReverseDirectionFlag = false;
@@ -49,7 +49,7 @@ class Ghost {
 
 		// Tiles Per Second
 		double maxTilesPerSecond = 10;
-		double tilesPerSecond = 8;
+		double tilesPerSecond = 7.5;
 
 		// Ticks Per Frame
 		double speed = 0.0;
@@ -85,7 +85,7 @@ class Ghost {
 
 		// Setters
 		void reverseDirection();
-		void setState(SpriteState s);
+		void setMode(SpriteMode m);
 		void setHomeTilePosition(vector<int> htp);
 		void setInitialTilePosition(vector<int> itp);
 

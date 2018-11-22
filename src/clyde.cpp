@@ -28,7 +28,7 @@ void Clyde::update(vector<vector<Tile>> board, Pacman pacman) {
 			Pacman's tilePosition
 */
 void Clyde::calculateTargetTile(vector<vector<Tile>> board, Pacman pacman) {
-	if (state == CHASE) {
+	if (mode == CHASE) {
 		double distance = calculateDistance(tileSize * (pacman.getTilePosition()[0] + 0.5),
 			tileSize * (pacman.getTilePosition()[1] + 0.5),
 			tileSize * (tilePosition[0] + (currentTick[0] / maxTick)),
@@ -41,10 +41,10 @@ void Clyde::calculateTargetTile(vector<vector<Tile>> board, Pacman pacman) {
 			targetTile = pacman.getTilePosition();
 		}
 	}
-	else if (state == SCATTER) {
+	else if (mode == SCATTER) {
 		targetTile = homeTilePosition;
 	}
-	else if (state == FRIGHTENED) {
+	else if (mode == FRIGHTENED) {
 
 	}
 	else {

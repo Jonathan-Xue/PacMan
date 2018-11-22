@@ -211,7 +211,32 @@ void ofApp::setup() {
 
 // Update Game Information
 void ofApp::update() {
+	// currentState
 	if (currentState == IN_PROGRESS) {
+		// SpriteMode
+		if (modeStartTime == 0) {
+			modeStartTime = ofGetElapsedTimeMillis();
+		}
+
+		if ((ofGetElapsedTimeMillis() - modeStartTime) / 1000 > timeMarkers[modeIndex]) {
+			// Variable Increment/Reset
+			modeIndex++;
+			modeStartTime = 0;
+
+			// Set Mode
+			pacman.setMode(modeMarkers[modeIndex]);
+			blinky.setMode(modeMarkers[modeIndex]);
+			pinky.setMode(modeMarkers[modeIndex]);
+			inky.setMode(modeMarkers[modeIndex]);
+			clyde.setMode(modeMarkers[modeIndex]);
+
+			// Reverse Direction
+			blinky.reverseDirection();
+			pinky.reverseDirection();
+			inky.reverseDirection();
+			clyde.reverseDirection();
+		}
+
 		// Update Sprites
 		pacman.update(board);
 		blinky.update(board, pacman);
@@ -335,12 +360,11 @@ void ofApp::keyPressed(int key) {
 			currentState = INSTRUCTIONS;
 		}
 		else if (currentState = INSTRUCTIONS) {
-			vector<int> rowBuffer{ 3, 2 };
 			// Set Sprite's homeTilePosition
-			blinky.setHomeTilePosition(vector<int>{ 1 + rowBuffer[1], 1 });
-			pinky.setHomeTilePosition(vector<int>{ (((int)board.size() - 1) - 1) - rowBuffer[1], ((int)board.size() - 1) - 1 });
-			inky.setHomeTilePosition(vector<int>{ 1 + rowBuffer[1], ((int)board.size() - 1) - 1});
-			clyde.setHomeTilePosition(vector<int>{ (((int)board.size() - 1) - 1) - rowBuffer[1], 1 });
+			blinky.setHomeTilePosition(vector<int>{ 0, (int)board[0].size() - 1 - 2 });
+			pinky.setHomeTilePosition(vector<int>{ 0, 2 });
+			inky.setHomeTilePosition(vector<int>{ (int)board.size() - 1, (int)board[0].size() - 1 });
+			clyde.setHomeTilePosition(vector<int>{ (int)board.size() - 1, 0 });
 
 			// Set Sprite's initialTilePosition
 			pacman.setInitialPosition(vector<int>{ 26, 14 });

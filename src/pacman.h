@@ -23,7 +23,7 @@ class Pacman {
 		int tileSize;
 
 		// Enums
-		SpriteState state = CHASE;
+		SpriteMode mode = CHASE;
 
 		// Flags
 		vector<bool> skipFrames = { false, false, false };
@@ -82,7 +82,7 @@ class Pacman {
 		vector<int> getCurrentVelocity();
 
 		// Setter
-		void setState(SpriteState s);
+		void setMode(SpriteMode m);
 		void decrementLives();
 		void setInitialPosition(vector<int> itp);
 		void setQueuedVelocity(vector<int> v);

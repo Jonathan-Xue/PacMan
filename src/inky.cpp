@@ -34,7 +34,7 @@ void Inky::update(vector<vector<Tile>> board, Pacman pacman, Blinky blinky) {
 		Double the Corresponding Vector From Blinky To ^^^
 */
 void Inky::calculateTargetTile(Pacman pacman, Blinky blinky) {
-	if (state == CHASE) {
+	if (mode == CHASE) {
 		// Static Variable To Retain Two Tiles Calculation For When Pacman's Velocity = { 0, 0 }
 		static vector<int> tempTile = { 0, 0 };
 
@@ -74,10 +74,10 @@ void Inky::calculateTargetTile(Pacman pacman, Blinky blinky) {
 		targetTile[0] = tempTile[0] + (tempTile[0] - blinky.getTilePosition()[0]);
 		targetTile[1] = tempTile[1] + (tempTile[1] - blinky.getTilePosition()[1]);
 	}
-	else if (state == SCATTER) {
+	else if (mode == SCATTER) {
 		targetTile = homeTilePosition;
 	}
-	else if (state == FRIGHTENED) {
+	else if (mode == FRIGHTENED) {
 
 	}
 	else {
