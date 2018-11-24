@@ -30,12 +30,29 @@ class Board {
 		vector<vector<Tile>> board;
 
 	public:
-		// Constructors
+		// Default Constructor
 		Board();
+
+		// Parameterized Constructor
 		Board(int r, int c, string input);
+
+		// Copy Constructor
+		Board(const Board& other) = default;
+
+		// Transfer Constructor
+		Board(Board&& other) = default;
+
+		// Destructor
 		~Board();
 
-		// Methods
+		/*
+			Fill Board Vector From Default String
+				0: Invalid Block
+				1: Wall
+				2: No Dot
+				3: Regular Dot
+				4: Powerup Dot
+		*/
 		void parseBoard();
 
 		// Getter

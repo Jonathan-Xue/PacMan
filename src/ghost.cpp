@@ -1,11 +1,9 @@
 #include "Ghost.h"
 
-// Constructors
 Ghost::Ghost() {}
 
 Ghost::~Ghost() {}
 
-// Methods
 void Ghost::update(vector<vector<Tile>> board, Pacman pacman) {
 	// Calculate targetTile
 	calculateTargetTile(pacman);
@@ -219,7 +217,6 @@ void Ghost::adjustBounds(vector<vector<Tile>> board) {
 	}
 }
 
-// Reset Functions
 void Ghost::resetLevel(int l) {
 	level = l;
 
@@ -242,7 +239,14 @@ void Ghost::resetGame() {
 	currentVelocity = { 0, 0 };
 }
 
-// Getters
+void Ghost::resize(int w, int h, int ts) {
+	screenWidth = w;
+	screenHeight = h;
+	tileSize = ts;
+
+	speed = maxTick * tilesPerSecond / frameRate;
+}
+
 vector<double> Ghost::getPixelPosition() {
 	return vector<double>{ (tilePosition[1] + (currentTick[1] / maxTick)) * tileSize,
 		(tilePosition[0] + (currentTick[0] / maxTick)) * tileSize };
@@ -260,7 +264,6 @@ vector<int> Ghost::getTargetTile() {
 	return targetTile;
 }
 
-// Setters
 void Ghost::reverseDirection() {
 	queuedReverseDirectionFlag = true;
 }
@@ -276,12 +279,4 @@ void Ghost::setHomeTilePosition(vector<int> htp) {
 void Ghost::setInitialTilePosition(vector<int> itp) {
 	initialTilePosition = itp;
 	tilePosition = initialTilePosition;
-}
-
-void Ghost::resize(int w, int h, int ts) {
-	screenWidth = w;
-	screenHeight = h;
-	tileSize = ts;
-
-	speed = maxTick * tilesPerSecond / frameRate;
 }

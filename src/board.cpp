@@ -49,14 +49,6 @@ Board::Board(int r, int c, string input) {
 
 Board::~Board() {}
 
-/*
-	Fill Board Vector From Default String
-		0	-> Invalid Block
-		1	-> Wall
-		2	-> No Dot
-		3	-> Regular Dot
-		4	-> Powerup Dot
-*/
 void Board::parseBoard() {
 	// Resize Board Vector
 	board.resize(numRows);
@@ -102,7 +94,6 @@ void Board::parseBoard() {
 	}
 }
 
-// Getter
 vector<vector<Tile>> Board::getBoard() {
 	return board;
 }

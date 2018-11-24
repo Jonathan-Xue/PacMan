@@ -8,6 +8,7 @@
 #include "ofMain.h"
 
 #include "enums.h"
+#include "cxxTimer.h"
 
 #include "board.h"
 #include "tile.h"
@@ -26,7 +27,25 @@ using std::vector;
 
 class ofApp : public ofBaseApp {
 
-	private: 
+	public:
+		// Setup
+		void setup();
+
+		// Game Loop
+		void update();
+		void draw();
+
+		// User Actions
+		/*
+			F12->toggle fullscreen
+			P->toggle pause
+			WASD->directional control
+		*/
+		void keyPressed(int key);
+		void mousePressed(int x, int y, int button);
+		void windowResized(int w, int h);	
+
+	private:
 		// OpenFramework Variables
 		const int frameRate = 60;
 
@@ -46,8 +65,8 @@ class ofApp : public ofBaseApp {
 		const vector<SpriteMode> modeMarkers{ SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE };
 		const vector<float> timeMarkers{ 7, 20, 7, 20, 5, 20, 5, std::numeric_limits<float>::infinity() };
 
+		Timer modeTimer;
 		int modeIndex = 0;
-		float modeStartTime = 0;
 
 		vector<int> highScores{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -77,18 +96,5 @@ class ofApp : public ofBaseApp {
 		void resetSprites();
 		void resetLevel();
 		void resetGame();
-
-	public:
-		// Setup
-		void setup();
-
-		// Game Loop
-		void update();
-		void draw();
-
-		// User Actions
-		void keyPressed(int key);
-		void mousePressed(int x, int y, int button);
-		void windowResized(int w, int h);	
 
 };

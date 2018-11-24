@@ -10,7 +10,6 @@ Tile::Tile(int x, bool p, bool pp) {
 
 Tile::~Tile() {}
 
-// Getters
 int Tile::getID() {
 	return id;
 }
@@ -23,7 +22,6 @@ bool Tile::isPowerPellet() {
 	return powerPellet;
 }
 
-// Setters
 void Tile::setStandardPellet(bool sp) {
 	standardPellet = sp;
 }

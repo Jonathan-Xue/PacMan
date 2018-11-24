@@ -17,10 +17,26 @@ class Tile {
 		bool powerPellet;
 
 	public:
-		// Constructors
+		// Default Constructor
 		Tile();
+
+		// Parameterized Constructor
 		Tile(int x, bool sp, bool pp);
+
+		// Copy Constructor
+		Tile(const Tile& other) = default;
+
+		// Transfer Constructor
+		Tile(Tile&& other) = default;
+
+		// Destructor
 		~Tile();
+
+		// Copy Assignment Operator
+		Tile& operator=(const Tile& other) = default;
+
+		// Transfer Assignment Operator
+		Tile& operator=(Tile&& other) = default;
 
 		// Getters
 		int getID();

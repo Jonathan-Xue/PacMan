@@ -74,6 +74,9 @@
     <ClInclude Include="src\enums.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\cxxTimer.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

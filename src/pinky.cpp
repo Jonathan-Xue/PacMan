@@ -1,11 +1,9 @@
 #include "pinky.h"
 
-// Constructors
 Pinky::Pinky() {}
 
 Pinky::~Pinky() {}
 
-// Methods
 void Pinky::update(vector<vector<Tile>> board, Pacman pacman) {
 	// Calculate targetTile
 	calculateTargetTile(pacman);
@@ -20,17 +18,6 @@ void Pinky::update(vector<vector<Tile>> board, Pacman pacman) {
 	adjustBounds(board);
 }
 
-/*
-	Set targetTile
-		Pacman Moving Up:
-			Four Tiles Up And Four Tiles Left Of Pacman's Current Position
-		Pacman Moving Left
-			Four Tiles Left Of Pacman's Current Position
-		Pacman Moving Down
-			Four Tiles Down Of Pacman's Current Position
-		Pacman Moving Right
-			Four Tiles Right Of Pacman's Current Position
-*/
 void Pinky::calculateTargetTile(Pacman pacman) {
 	if (mode == CHASE) {
 		// Pacman's Velocity Vector

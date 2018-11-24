@@ -1,11 +1,9 @@
 #include "inky.h"
 
-// Constructors
 Inky::Inky() {}
 
 Inky::~Inky() {}
 
-// Methods
 void Inky::update(vector<vector<Tile>> board, Pacman pacman, Blinky blinky) {
 	// Calculate targetTile
 	calculateTargetTile(pacman, blinky);
@@ -20,19 +18,6 @@ void Inky::update(vector<vector<Tile>> board, Pacman pacman, Blinky blinky) {
 	adjustBounds(board);
 }
 
-/*
-	Set targetTile
-		Pacman Moving Up:
-			Two Tiles Up And Two Tiles Left Of Pacman's Current Position
-		Pacman Moving Left
-			Two Tiles Left Of Pacman's Current Position
-		Pacman Moving Down
-			Two Tiles Down Of Pacman's Current Position
-		Pacman Moving Right
-			Two Tiles Right Of Pacman's Current Position
-
-		Double the Corresponding Vector From Blinky To ^^^
-*/
 void Inky::calculateTargetTile(Pacman pacman, Blinky blinky) {
 	if (mode == CHASE) {
 		// Static Variable To Retain Two Tiles Calculation For When Pacman's Velocity = { 0, 0 }

@@ -1,11 +1,9 @@
 #include "pacman.h"
 
-// Constructors
 Pacman::Pacman() {}
 
 Pacman::~Pacman() {}
 
-// Methods
 void Pacman::update(vector<vector<Tile>> &board) {
 	if (skipFrames == vector<bool>{ false, false, false }) {
 		// Eat Pellet
@@ -150,7 +148,6 @@ void Pacman::adjustBounds(vector<vector<Tile>> board) {
 	}
 }
 
-// Reset Functions
 void Pacman::resetLevel(int l) {
 	level = l;
 
@@ -177,7 +174,6 @@ void Pacman::resetGame() {
 	queuedVelocity = { -1, 0 };
 }
 
-// Getters
 int Pacman::getLives() {
 	return lives;
 }
@@ -199,7 +195,6 @@ vector<int> Pacman::getCurrentVelocity() {
 	return currentVelocity;
 }
 
-// Setters
 void Pacman::setMode(SpriteMode m) {
 	mode = m;
 }
@@ -217,7 +212,6 @@ void Pacman::setQueuedVelocity(vector<int> v) {
 	queuedVelocity = v;
 }
 
-// Resize
 void Pacman::resize(int w, int h, int ts) {
 	screenWidth = w;
 	screenHeight = h;

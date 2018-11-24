@@ -1,11 +1,9 @@
 #include "blinky.h"
 
-// Constructors
 Blinky::Blinky() {}
 
 Blinky::~Blinky() {}
 
-// Methods
 void Blinky::update(vector<vector<Tile>> board, Pacman pacman) {
 	// Calculate targetTile
 	calculateTargetTile(pacman);
@@ -20,10 +18,6 @@ void Blinky::update(vector<vector<Tile>> board, Pacman pacman) {
 	adjustBounds(board);
 }
 
-/*
-	Set targetTile
-		Pacman's tilePosition
-*/
 void Blinky::calculateTargetTile(Pacman pacman) {
 	if (mode == CHASE) {
 		targetTile = pacman.getTilePosition();

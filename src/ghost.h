@@ -55,26 +55,85 @@ class Ghost {
 		double speed = 0.0;
 
 	public:
-		// Constructors
+		// Default
 		Ghost();
+		
+		// Copy Constructor
+		Ghost(const Ghost& other) = default;
+
+		// Transfer Constructor
+		Ghost(Ghost&& other) = default;
+
+		// Destructor
 		~Ghost();
 
-		// Methods
+		// Copy Assignment Operator
+		Ghost& operator=(const Ghost& other) = default;
+
+		// Transfer Assignment Operator
+		Ghost& operator=(Ghost&& other) = default;
+
+		/*
+			Update
+				@param: board
+		*/
 		void update(vector<vector<Tile>> board, Pacman pacman);
 
+		/*
+			Set The targetTile
+				Default: Pacman's Current tilePosition
+		*/
 		void calculateTargetTile(Pacman pacman);
 
+		/*
+			Update Velocity
+				@param: board
+		*/
 		void updateVelocity(vector<vector<Tile>> board);
+
+		/*
+			Update Velocity
+				@param: board
+				@param: velocity
+				@return: Boolean Detailing If The Input Velocity Is Valid
+		*/
 		bool checkValidVelocity(vector<vector<Tile>> board, vector<int> velocity);
+
+		/*
+			Calculate Euclidean Distance
+				@param: xi
+				@param: yi
+				@param: x2
+				@param: y2
+				@return: Euclidean Distance Between (x1, y1) and (x2, y2)
+		*/
 		double calculateDistance(double x1, double y1, double x2, double y2);
 
+		/*
+			Move Ghost In The Direction Of CurrentVelocity
+		*/
 		void move();
 
+		/*
+			Wraparound The Board
+				@param: board
+		*/
 		void adjustBounds(vector<vector<Tile>> board);
 
 		// Reset Functions
 		void resetLevel(int l);
 		void resetGame();
+
+		/*
+			Adjust The Sprite Size
+				@param: w
+					The width of the window
+				@param: h
+					The height of the window
+				@param: ts
+					The width/height of each tile on the board
+		*/
+		void resize(int w, int h, int ts);
 
 		// Getters
 		vector<double> getPixelPosition();
@@ -88,8 +147,5 @@ class Ghost {
 		void setMode(SpriteMode m);
 		void setHomeTilePosition(vector<int> htp);
 		void setInitialTilePosition(vector<int> itp);
-
-		// Resize
-		void resize(int w, int h, int ts);
 
 };

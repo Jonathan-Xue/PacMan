@@ -1,11 +1,9 @@
 #include "clyde.h"
 
-// Constructors
 Clyde::Clyde() {}
 
 Clyde::~Clyde() {}
 
-// Methods
 void Clyde::update(vector<vector<Tile>> board, Pacman pacman) {
 	// Calculate targetTile
 	calculateTargetTile(board, pacman);
@@ -20,13 +18,6 @@ void Clyde::update(vector<vector<Tile>> board, Pacman pacman) {
 	adjustBounds(board);
 }
 
-/*
-	Set targetTile
-		Within 8 Units Of Pacman
-			Bottom Left Corner
-		Else
-			Pacman's tilePosition
-*/
 void Clyde::calculateTargetTile(vector<vector<Tile>> board, Pacman pacman) {
 	if (mode == CHASE) {
 		double distance = calculateDistance(tileSize * (pacman.getTilePosition()[0] + 0.5),
