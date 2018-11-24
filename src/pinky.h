@@ -2,13 +2,19 @@
 
 #include "ghost.h"
 
+#include "pacman.h"
+
 class Pinky : public Ghost {
 
 	private:
+		Pacman *pacman;
 		
 	public:
-		// Constructors
+		// Default Constructor
 		Pinky();
+
+		// Parameterized Constructor
+		Pinky(Pacman *p);
 
 		// Copy Constructor
 		Pinky(const Pinky& other) = default;
@@ -28,9 +34,8 @@ class Pinky : public Ghost {
 		/*
 			Update
 				@param: board
-				@param: pacman
 		*/
-		void update(vector<vector<Tile>> board, Pacman pacman);
+		void update(vector<vector<Tile>> board);
 
 		/*
 			Set The targetTile
@@ -38,9 +43,7 @@ class Pinky : public Ghost {
 				Pacman Moving Left Four Tiles Left Of Pacman's Current Position
 				Pacman Moving Down: Four Tiles Down Of Pacman's Current Position
 				Pacman Moving Right: Four Tiles Right Of Pacman's Current Position
-
-			@param: pacman
 		*/
-		void calculateTargetTile(Pacman pacman);
+		void calculateTargetTile();
 
 };

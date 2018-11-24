@@ -55,10 +55,10 @@ void ofApp::update() {
 
 		// Update Sprites
 		pacman.update(board);
-		blinky.update(board, pacman);
-		pinky.update(board, pacman);
-		inky.update(board, pacman, blinky);
-		clyde.update(board, pacman);
+		blinky.update(board);
+		pinky.update(board);
+		inky.update(board);
+		clyde.update(board);
 
 		// Check For Pacman - Ghost Collision
 		if (pacman.getTilePosition() == blinky.getTilePosition() ||
@@ -82,7 +82,7 @@ void ofApp::update() {
 		}
 		level++;
 		resetLevel();
-	stop:
+		stop:
 
 		// Check For State Changes
 		if (pacman.getLives() == 0) {
@@ -374,27 +374,27 @@ void ofApp::drawPacMan() {
 void ofApp::drawGhosts() {
 	ofSetColor(255, 0, 0);
 	ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-	//ofDrawRectangle(blinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4, 
-	//				blinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-	//				tileSize / 2, tileSize / 2);
+	ofDrawRectangle(blinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4, 
+					blinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+					tileSize / 2, tileSize / 2);
 
 	ofSetColor(255, 185, 255);
 	ofDrawCircle(pinky.getPixelPosition()[0] + centerOffset[0], pinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-	//ofDrawRectangle(pinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-	//				pinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-	//				tileSize / 2, tileSize / 2);
+	ofDrawRectangle(pinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+					pinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+					tileSize / 2, tileSize / 2);
 
 	ofSetColor(0, 255, 255);
 	ofDrawCircle(inky.getPixelPosition()[0] + centerOffset[0], inky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-	//ofDrawRectangle(inky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-	//				inky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-	//				tileSize / 2, tileSize / 2);
+	ofDrawRectangle(inky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+					inky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+					tileSize / 2, tileSize / 2);
 
 	ofSetColor(255, 185, 80);
 	ofDrawCircle(clyde.getPixelPosition()[0] + centerOffset[0], clyde.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-	//ofDrawRectangle(clyde.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-	//				clyde.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-	//				tileSize / 2, tileSize / 2);
+	ofDrawRectangle(clyde.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+					clyde.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+					tileSize / 2, tileSize / 2);
 }
 
 void ofApp::drawGameOver() {

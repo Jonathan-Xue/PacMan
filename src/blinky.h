@@ -2,13 +2,19 @@
 
 #include "ghost.h"
 
+#include "pacman.h"
+
 class Blinky : public Ghost {
 
 	private:
+		Pacman *pacman;
 		
 	public:
 		// Default Constructor
 		Blinky();
+
+		// Parameterized Constructor
+		Blinky(Pacman *p);
 
 		// Copy Constructor
 		Blinky(const Blinky& other) = default;
@@ -28,16 +34,13 @@ class Blinky : public Ghost {
 		/*
 			Update
 				@param: board
-				@param: pacman
 		*/
-		void update(vector<vector<Tile>> board, Pacman pacman);
+		void update(vector<vector<Tile>> board);
 
 		/*
 			Set The targetTile
 				Pacman's Current tilePosition
-
-			@param: pacman
 		*/
-		void calculateTargetTile(Pacman pacman);
+		void calculateTargetTile();
 
 };

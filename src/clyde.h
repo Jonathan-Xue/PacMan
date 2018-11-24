@@ -2,13 +2,19 @@
 
 #include "ghost.h"
 
+#include "pacman.h"
+
 class Clyde : public Ghost {
 
 	private:
+		Pacman *pacman;
 		
 	public:
 		// Default Constructor
 		Clyde();
+
+		// Parameterized Constructor
+		Clyde(Pacman *p);
 		
 		// Copy Constructor
 		Clyde(const Clyde& other) = default;
@@ -28,9 +34,8 @@ class Clyde : public Ghost {
 		/*
 			Update
 				@param: board
-				@param: pacman
 		*/
-		void update(vector<vector<Tile>> board, Pacman pacman);
+		void update(vector<vector<Tile>> board);
 
 		/*
 			Set The targetTile
@@ -38,8 +43,7 @@ class Clyde : public Ghost {
 				Otherwise: Pacman's tilePosition
 
 			@param: board
-			@param: pacman
 		*/
-		void calculateTargetTile(vector<vector<Tile>> board, Pacman pacman);
+		void calculateTargetTile(vector<vector<Tile>> board);
 
 };

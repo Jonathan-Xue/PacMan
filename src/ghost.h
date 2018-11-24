@@ -3,7 +3,6 @@
 #include "enums.h"
 
 #include "tile.h"
-#include "pacman.h"
 
 #include <iostream>
 #include <string>
@@ -77,13 +76,15 @@ class Ghost {
 			Update
 				@param: board
 		*/
-		void update(vector<vector<Tile>> board, Pacman pacman);
+		void update(vector<vector<Tile>> board);
 
 		/*
 			Set The targetTile
-				Default: Pacman's Current tilePosition
+				Default: Center Of The Board
+
+			@param: board
 		*/
-		void calculateTargetTile(Pacman pacman);
+		void calculateTargetTile(vector<vector<Tile>> board);
 
 		/*
 			Update Velocity

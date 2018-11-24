@@ -2,11 +2,15 @@
 
 Blinky::Blinky() {}
 
+Blinky::Blinky(Pacman *p) {
+	pacman = p;
+}
+
 Blinky::~Blinky() {}
 
-void Blinky::update(vector<vector<Tile>> board, Pacman pacman) {
+void Blinky::update(vector<vector<Tile>> board) {
 	// Calculate targetTile
-	calculateTargetTile(pacman);
+	calculateTargetTile();
 
 	// Update currentVelocity
 	updateVelocity(board);
@@ -18,9 +22,9 @@ void Blinky::update(vector<vector<Tile>> board, Pacman pacman) {
 	adjustBounds(board);
 }
 
-void Blinky::calculateTargetTile(Pacman pacman) {
+void Blinky::calculateTargetTile() {
 	if (mode == CHASE) {
-		targetTile = pacman.getTilePosition();
+		targetTile = (*pacman).getTilePosition();
 	}
 	else if (mode == SCATTER) {
 		targetTile = homeTilePosition;

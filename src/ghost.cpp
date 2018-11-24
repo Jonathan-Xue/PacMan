@@ -4,9 +4,9 @@ Ghost::Ghost() {}
 
 Ghost::~Ghost() {}
 
-void Ghost::update(vector<vector<Tile>> board, Pacman pacman) {
+void Ghost::update(vector<vector<Tile>> board) {
 	// Calculate targetTile
-	calculateTargetTile(pacman);
+	calculateTargetTile(board);
 
 	// Update currentVelocity
 	updateVelocity(board);
@@ -18,9 +18,9 @@ void Ghost::update(vector<vector<Tile>> board, Pacman pacman) {
 	adjustBounds(board);
 }
 
-void Ghost::calculateTargetTile(Pacman pacman) {
+void Ghost::calculateTargetTile(vector<vector<Tile>> board) {
 	if (mode == CHASE) {
-		targetTile = pacman.getTilePosition();
+		targetTile = vector<int>{ (int)board.size() / 2, (int)board[0].size() / 2 };
 	}
 	else if (mode == SCATTER) {
 		targetTile = homeTilePosition;

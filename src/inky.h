@@ -1,15 +1,22 @@
 #pragma once
 
 #include "ghost.h"
+
+#include "pacman.h"
 #include "blinky.h"
 
 class Inky : public Ghost {
 
 	private:
+		Pacman *pacman;
+		Blinky *blinky;
 		
 	public:
 		// Default Constructor
 		Inky();
+
+		// Parameterized Constructor
+		Inky(Pacman *p, Blinky *b);
 		
 		// Copy Constructor
 		Inky(const Inky& other) = default;
@@ -29,10 +36,8 @@ class Inky : public Ghost {
 		/*
 			Update
 				@param: board
-				@param: pacman
-				@param: blinky
 		*/
-		void update(vector<vector<Tile>> board, Pacman pacman, Blinky blinky);
+		void update(vector<vector<Tile>> board);
 
 		/*
 			Set The targetTile
@@ -42,9 +47,6 @@ class Inky : public Ghost {
 				Pacman Moving Right:Two Tiles Right Of Pacman's Current Position
 			
 				Double the Corresponding Vector From Blinky To ^^^
-
-			@param: pacman
-			@param: blinky
 		*/
-		void calculateTargetTile(Pacman pacman, Blinky blinky);
+		void calculateTargetTile();
 };
