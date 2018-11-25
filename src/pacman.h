@@ -17,6 +17,9 @@ class Pacman {
 		// Default Constructor
 		Pacman();
 
+		// Parameterized Constructor
+		Pacman(vector<vector<Tile>> *b);
+
 		// Transfer Constructor
 		Pacman(const Pacman& other) = default;
 
@@ -36,19 +39,19 @@ class Pacman {
 			Update
 				@param: board
 		*/
-		void update(vector<vector<Tile>> &board);
+		void update();
 
 		/*
 			Eat Pellets
 				@param: board
 		*/
-		void eat(vector<vector<Tile>> &board);
+		void eat();
 
 		/*
 			Update Velocity
 				@param: board
 		*/
-		void updateVelocity(vector<vector<Tile>> board);
+		void updateVelocity();
 
 		/*
 			Update Velocity
@@ -56,7 +59,7 @@ class Pacman {
 				@param: velocity
 				@return: Boolean Detailing If The Input Velocity Is Valid
 		*/
-		bool checkValidVelocity(vector<vector<Tile>> board, vector<int> velocity);
+		bool checkValidVelocity(vector<int> velocity);
 
 		/*
 			Move Pacman In The Direction Of CurrentVelocity
@@ -67,7 +70,7 @@ class Pacman {
 			Wraparound The Board
 				@param: board
 		*/
-		void adjustBounds(vector<vector<Tile>> board);
+		void adjustBounds();
 
 		// Reset Functions
 		void resetLevel(int l);
@@ -112,6 +115,9 @@ class Pacman {
 
 		// Flags
 		vector<bool> skipFrames = { false, false, false };
+
+		// Game Variables
+		vector<vector<Tile>> *board;
 
 		// Class Variables
 		const int maxLives = 3;

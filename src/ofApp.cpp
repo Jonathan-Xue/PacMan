@@ -54,7 +54,7 @@ void ofApp::update() {
 		}
 
 		// Update Sprites
-		pacman.update(board);
+		pacman.update();
 		blinky.update();
 		pinky.update();
 		inky.update();

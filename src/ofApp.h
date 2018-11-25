@@ -71,7 +71,7 @@ class ofApp : public ofBaseApp {
 		vector<int> highScores{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 		vector<vector<Tile>> board = Board().getBoard();
-		Pacman pacman = Pacman();
+		Pacman pacman = Pacman(&board);
 		Blinky blinky = Blinky(&board, &pacman);
 		Clyde clyde = Clyde(&board, &pacman);
 		Inky inky = Inky(&board, &pacman, &blinky);

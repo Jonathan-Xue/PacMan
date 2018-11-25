@@ -82,7 +82,7 @@ class Ghost {
 
 		/*
 			Set The targetTile
-				Pure Virtual Class: Must Be Defined In Subclass/Child
+				Pure Virtual Function: Must Be Defined In Subclass/Child
 		*/
 		virtual void calculateTargetTile() = 0;
 
