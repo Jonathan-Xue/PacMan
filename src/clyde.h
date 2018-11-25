@@ -32,15 +32,10 @@ class Clyde : public Ghost {
 		Clyde& operator=(Clyde&& other) = default;
 
 		/*
-			Update
-		*/
-		void update();
-
-		/*
 			Set The targetTile
 				Within 8 Units Of Pacman: homeTilePosition
 				Otherwise: Pacman's tilePosition
 		*/
-		void calculateTargetTile();
+		void calculateTargetTile() override;
 
 };

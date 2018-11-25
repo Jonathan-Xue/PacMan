@@ -9,20 +9,6 @@ Pinky::Pinky(vector<vector<Tile>> *b, Pacman *p) {
 
 Pinky::~Pinky() {}
 
-void Pinky::update() {
-	// Calculate targetTile
-	calculateTargetTile();
-
-	// Update currentVelocity
-	updateVelocity();
-
-	// Move In The Direction Of currentVelocity
-	move();
-
-	// Adjust tilePosition To Stay In Bounds
-	adjustBounds();
-}
-
 void Pinky::calculateTargetTile() {
 	if (mode == CHASE) {
 		// Pacman's Velocity Vector
@@ -61,7 +47,7 @@ void Pinky::calculateTargetTile() {
 		targetTile = homeTilePosition;
 	}
 	else if (mode == FRIGHTENED) {
-
+		// Do Nothing
 	}
 	else {
 		std::cerr << "Error. State Is Invalid" << std::endl;

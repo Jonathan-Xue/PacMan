@@ -32,14 +32,9 @@ class Blinky : public Ghost {
 		Blinky& operator=(Blinky&& other) = default;
 
 		/*
-			Update
-		*/
-		void update();
-
-		/*
 			Set The targetTile
 				Pacman's Current tilePosition
 		*/
-		void calculateTargetTile();
+		void calculateTargetTile() override;
 
 };

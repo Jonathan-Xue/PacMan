@@ -10,20 +10,6 @@ Inky::Inky(vector<vector<Tile>> *bo, Pacman *p, Blinky *bl) {
 
 Inky::~Inky() {}
 
-void Inky::update() {
-	// Calculate targetTile
-	calculateTargetTile();
-
-	// Update currentVelocity
-	updateVelocity();
-
-	// Move In The Direction Of currentVelocity
-	move();
-
-	// Adjust tilePosition To Stay In Bounds
-	adjustBounds();
-}
-
 void Inky::calculateTargetTile() {
 	if (mode == CHASE) {
 		// Static Variable To Retain Two Tiles Calculation For When Pacman's Velocity = { 0, 0 }
@@ -69,7 +55,7 @@ void Inky::calculateTargetTile() {
 		targetTile = homeTilePosition;
 	}
 	else if (mode == FRIGHTENED) {
-
+		// Do Nothing
 	}
 	else {
 		std::cerr << "Error. State Is Invalid" << std::endl;

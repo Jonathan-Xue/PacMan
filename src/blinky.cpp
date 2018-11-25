@@ -9,20 +9,6 @@ Blinky::Blinky(vector<vector<Tile>> *b, Pacman *p) {
 
 Blinky::~Blinky() {}
 
-void Blinky::update() {
-	// Calculate targetTile
-	calculateTargetTile();
-
-	// Update currentVelocity
-	updateVelocity();
-
-	// Move In The Direction Of currentVelocity
-	move();
-
-	// Adjust tilePosition To Stay In Bounds
-	adjustBounds();
-}
-
 void Blinky::calculateTargetTile() {
 	if (mode == CHASE) {
 		targetTile = (*pacman).getTilePosition();
@@ -31,7 +17,7 @@ void Blinky::calculateTargetTile() {
 		targetTile = homeTilePosition;
 	}
 	else if (mode == FRIGHTENED) {
-
+		// Do Nothing
 	}
 	else {
 		std::cerr << "Error. State Is Invalid" << std::endl;

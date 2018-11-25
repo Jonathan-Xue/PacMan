@@ -34,11 +34,6 @@ class Inky : public Ghost {
 		Inky& operator=(Inky&& other) = default;
 
 		/*
-			Update
-		*/
-		void update();
-
-		/*
 			Set The targetTile
 				Pacman Moving Up: Two Tiles Up And Two Tiles Left Of Pacman's Current Position
 				Pacman Moving Left: Two Tiles Left Of Pacman's Current Position
@@ -47,5 +42,5 @@ class Inky : public Ghost {
 			
 				Double the Corresponding Vector From Blinky To ^^^
 		*/
-		void calculateTargetTile();
+		void calculateTargetTile() override;
 };

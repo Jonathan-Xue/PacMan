@@ -18,22 +18,6 @@ void Ghost::update() {
 	adjustBounds();
 }
 
-void Ghost::calculateTargetTile() {
-	if (mode == CHASE) {
-		targetTile = vector<int>{ (int)(*board).size() / 2, (int)(*board)[0].size() / 2 };
-	}
-	else if (mode == SCATTER) {
-		targetTile = homeTilePosition;
-	}
-	else if (mode == FRIGHTENED) {
-
-	}
-	else {
-		std::cerr << "Error. State Is Invalid" << std::endl;
-		exit(1);
-	}
-}
-
 void Ghost::updateVelocity() {
 	if (reverseDirectionFlag) {
 		// Reverse Direction Of Travel

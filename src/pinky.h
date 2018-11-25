@@ -32,17 +32,12 @@ class Pinky : public Ghost {
 		Pinky& operator=(Pinky&& other) = default;
 
 		/*
-			Update
-		*/
-		void update();
-
-		/*
 			Set The targetTile
 				Pacman Moving Up: Four Tiles Up And Four Tiles Left Of Pacman's Current Position
 				Pacman Moving Left Four Tiles Left Of Pacman's Current Position
 				Pacman Moving Down: Four Tiles Down Of Pacman's Current Position
 				Pacman Moving Right: Four Tiles Right Of Pacman's Current Position
 		*/
-		void calculateTargetTile();
+		void calculateTargetTile() override;
 
 };

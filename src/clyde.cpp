@@ -9,20 +9,6 @@ Clyde::Clyde(vector<vector<Tile>> *b, Pacman *p) {
 
 Clyde::~Clyde() {}
 
-void Clyde::update() {
-	// Calculate targetTile
-	calculateTargetTile();
-
-	// Update currentVelocity
-	updateVelocity();
-
-	// Move In The Direction Of currentVelocity
-	move();
-
-	// Adjust tilePosition To Stay In Bounds
-	adjustBounds();
-}
-
 void Clyde::calculateTargetTile() {
 	if (mode == CHASE) {
 		double distance = calculateDistance(tileSize * ((*pacman).getTilePosition()[0] + 0.5),
@@ -41,7 +27,7 @@ void Clyde::calculateTargetTile() {
 		targetTile = homeTilePosition;
 	}
 	else if (mode == FRIGHTENED) {
-
+		// Do Nothing
 	}
 	else {
 		std::cerr << "Error. GhostMode Is Invalid" << std::endl;

@@ -263,7 +263,7 @@ void ofApp::drawLandingPage() {
 	ofDrawRectangle(0, 0, screenWidth, screenHeight);
 
 	// "PACMAN" Horizontally And Vertically Centered With Respect To The Screen
-	ofSetColor(255, 255, 100);
+	ofSetColor(255, 255, 0);
 	crackman.drawString("PAC-MAN",
 		(screenWidth - crackman.stringWidth("PAC-MAN")) / 2,
 		(screenHeight - crackman.stringHeight("PAC-MAN")) / 2);
@@ -301,7 +301,7 @@ void ofApp::drawGameBoard() {
 					ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
 
 					// Standard Pellet
-					ofSetColor(255, 255, 100);
+					ofSetColor(255, 255, 0);
 					ofDrawCircle((j + 0.5) * tileSize + centerOffset[0], (i + 0.5) * tileSize + centerOffset[1], tileSize / 8);
 				}
 				else if (board[i][j].isPowerPellet()) {
@@ -310,7 +310,7 @@ void ofApp::drawGameBoard() {
 					ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
 
 					// Power Pellet
-					ofSetColor(255, 255, 100);
+					ofSetColor(255, 255, 0);
 					ofDrawCircle((j + 0.5) * tileSize + centerOffset[0], (i + 0.5) * tileSize + centerOffset[1], tileSize / 2.5);
 				}
 				else {
@@ -359,7 +359,7 @@ void ofApp::drawMisc() {
 	// Lives
 	vector<int> tilePosition{ (int)board.size() - 1, 3 };
 	for (int i = 0; i < pacman.getLives() - 1; i++) {
-		ofSetColor(255, 255, 255);
+		ofSetColor(255, 255, 0);
 		ofDrawCircle((tilePosition[1] + i * 2) * tileSize + centerOffset[0],
 			(tilePosition[0]) * tileSize + centerOffset[1],
 			tileSize);
@@ -367,7 +367,7 @@ void ofApp::drawMisc() {
 }
 
 void ofApp::drawPacMan() {
-	ofSetColor(255, 255, 100);
+	ofSetColor(255, 255, 0);
 	ofDrawCircle(pacman.getPixelPosition()[0] + centerOffset[0], pacman.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
 }
 

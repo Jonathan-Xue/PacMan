@@ -82,9 +82,9 @@ class Ghost {
 
 		/*
 			Set The targetTile
-				Default: Center Of The Board
+				Pure Virtual Class: Must Be Defined In Subclass/Child
 		*/
-		void calculateTargetTile();
+		virtual void calculateTargetTile() = 0;
 
 		/*
 			Update Velocity
