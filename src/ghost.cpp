@@ -5,11 +5,6 @@ Ghost::Ghost() {}
 Ghost::~Ghost() {}
 
 void Ghost::update() {
-	// Check For Mode Changes
-	if ((*pacman).getMode() == FRIGHTENED) {
-		mode = FRIGHTENED;
-	}
-
 	// Calculate targetTile
 	calculateTargetTile();
 

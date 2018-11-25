@@ -90,6 +90,7 @@ class Pacman {
 		vector<double> getPixelPosition();
 		vector<int> getTilePosition();
 		vector<int> getCurrentVelocity();
+		bool hasEatenPowerPellet();
 
 		// Setters
 		void setMode(SpriteMode m);
@@ -111,6 +112,7 @@ class Pacman {
 
 		// Flags
 		vector<bool> skipFrames = { false, false, false };
+		bool eatenPowerPellet = false;
 
 		// Game Variables
 		vector<vector<Tile>> *board;

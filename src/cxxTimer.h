@@ -72,8 +72,9 @@ class Timer {
 		template <class duration_t = std::chrono::milliseconds>
 		typename duration_t::rep count() const;
 
-		// Getter
+		// Getters
 		bool isStarted();
+		bool isPaused();
 
 	private:
 		bool started_ = false;
@@ -144,4 +145,8 @@ typename duration_t::rep Timer::count() const {
 
 inline bool Timer::isStarted() {
 	return started_;
+}
+
+inline bool Timer::isPaused() {
+	return paused_;
 }

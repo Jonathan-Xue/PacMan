@@ -33,6 +33,7 @@ void Pacman::update() {
 }
 
 void Pacman::eat() {
+	eatenPowerPellet = false;
 	if ((*board)[tilePosition[0]][tilePosition[1]].isStandardPellet()) {
 		score += 10;
 		(*board)[tilePosition[0]][tilePosition[1]].setStandardPellet(false);
@@ -45,7 +46,7 @@ void Pacman::eat() {
 		(*board)[tilePosition[0]][tilePosition[1]].setPowerPellet(false);
 
 		// Mode
-		mode = FRIGHTENED;
+		eatenPowerPellet = true;
 
 		// Flag
 		skipFrames = vector<bool>{ true, true, true };
@@ -204,6 +205,10 @@ vector<int> Pacman::getTilePosition() {
 
 vector<int> Pacman::getCurrentVelocity() {
 	return currentVelocity;
+}
+
+bool Pacman::hasEatenPowerPellet() {
+	return eatenPowerPellet;
 }
 
 void Pacman::setMode(SpriteMode m) {

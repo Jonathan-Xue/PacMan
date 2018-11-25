@@ -30,46 +30,22 @@ void ofApp::setup() {
 void ofApp::update() {
 	if (currentState == IN_PROGRESS) {
 		// SpriteMode
-		if (pacman.getMode() == FRIGHTENED) {
-			if (!(blinky.getMode() == FRIGHTENED &&
-				pinky.getMode() == FRIGHTENED &&
-				inky.getMode() == FRIGHTENED &&
-				clyde.getMode() == FRIGHTENED)) {
-				std::cerr << "Error. Pacman's SpriteMode (FRIGHTENED) Doesn't Match All Of The Ghost's SpriteMode" << std::endl;
-			}
+		if (frightenedTimer.count<std::chrono::seconds>() >= frightenedTimeMarker) {
+			// Reset frightenedTimer
+			frightenedTimer.reset();
 
-			if (!frightenedTimer.isStarted()) {
-				// Start frightenedTimer
-				frightenedTimer.start();
+			// Set Mode
+			pacman.setMode(modeMarkers[modeIndex]);
+			blinky.setMode(modeMarkers[modeIndex]);
+			pinky.setMode(modeMarkers[modeIndex]);
+			inky.setMode(modeMarkers[modeIndex]);
+			clyde.setMode(modeMarkers[modeIndex]);
 
-				// Reverse Direction
-				blinky.reverseDirection();
-				pinky.reverseDirection();
-				inky.reverseDirection();
-				clyde.reverseDirection();
-
-				// Stop modeTimer
-				modeTimer.stop();
-			}
-
-			if (frightenedTimer.count<std::chrono::seconds>() >= frightenedTimeMarker) {
-				// Reset frightenedTimer
-				frightenedTimer.reset();
-
-				// Set Mode
-				pacman.setMode(modeMarkers[modeIndex]);
-				blinky.setMode(modeMarkers[modeIndex]);
-				pinky.setMode(modeMarkers[modeIndex]);
-				inky.setMode(modeMarkers[modeIndex]);
-				clyde.setMode(modeMarkers[modeIndex]);
-
-				// Continue modeTimer
-				modeTimer.start();
-			}
+			// Continue modeTimer
+			modeTimer.start();
 		}
 		else {
 			if (!modeTimer.isStarted()) {
-				// Start Timer
 				modeTimer.start();
 			}
 
@@ -78,7 +54,7 @@ void ofApp::update() {
 				modeIndex++;
 				modeTimer.reset();
 
-				// Set Mode
+				// Set SpriteModes
 				pacman.setMode(modeMarkers[modeIndex]);
 				blinky.setMode(modeMarkers[modeIndex]);
 				pinky.setMode(modeMarkers[modeIndex]);
@@ -99,6 +75,33 @@ void ofApp::update() {
 		pinky.update();
 		inky.update();
 		clyde.update();
+
+		// Check For PowerPellet Consumption
+		if (pacman.hasEatenPowerPellet()) {
+			// Set SpriteModes
+			pacman.setMode(FRIGHTENED);
+			blinky.setMode(FRIGHTENED);
+			pinky.setMode(FRIGHTENED);
+			inky.setMode(FRIGHTENED);
+			clyde.setMode(FRIGHTENED);
+
+			// Check To See If It's A Change From ___ To FRIGHTENED Or FRIGHTENED To FRIGHTENED
+			if (!frightenedTimer.isStarted()) {
+				blinky.reverseDirection();
+				pinky.reverseDirection();
+				inky.reverseDirection();
+				clyde.reverseDirection();
+
+				frightenedTimer.start();
+			}
+			else {
+				frightenedTimer.reset();
+				frightenedTimer.start();
+			}
+
+			// Stop modeTimer
+			modeTimer.stop();
+		}
 
 		// Check For Pacman - Ghost Collision
 		if (pacman.getTilePosition() == blinky.getTilePosition() ||
@@ -225,13 +228,6 @@ void ofApp::keyPressed(int key) {
 			// Reset Game
 			resetGame();
 		}
-
-	}
-	else if (key == OF_KEY_ALT) {
-		blinky.reverseDirection();
-		inky.reverseDirection();
-		pinky.reverseDirection();
-		clyde.reverseDirection();
 	}
 
 	// Fullscreen
