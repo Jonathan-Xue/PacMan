@@ -72,10 +72,13 @@ class ofApp : public ofBaseApp {
 
 		vector<vector<Tile>> board = Board().getBoard();
 		Pacman pacman = Pacman();
-		Blinky blinky = Blinky(&pacman);
-		Clyde clyde = Clyde(&pacman);
-		Inky inky = Inky(&pacman, &blinky);
-		Pinky pinky = Pinky(&pacman);
+		Blinky blinky = Blinky(&board, &pacman);
+		//Blinky clyde = Blinky(&board, &pacman);
+		//Blinky inky = Blinky(&board, &pacman);
+		//Blinky pinky = Blinky(&board, &pacman);
+		Clyde clyde = Clyde(&board, &pacman);
+		Inky inky = Inky(&board, &pacman, &blinky);
+		Pinky pinky = Pinky(&board, &pacman);
 
 		int level = 0;
 

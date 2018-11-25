@@ -55,10 +55,10 @@ void ofApp::update() {
 
 		// Update Sprites
 		pacman.update(board);
-		blinky.update(board);
-		pinky.update(board);
-		inky.update(board);
-		clyde.update(board);
+		blinky.update();
+		pinky.update();
+		inky.update();
+		clyde.update();
 
 		// Check For Pacman - Ghost Collision
 		if (pacman.getTilePosition() == blinky.getTilePosition() ||

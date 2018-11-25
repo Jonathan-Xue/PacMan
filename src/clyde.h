@@ -14,7 +14,7 @@ class Clyde : public Ghost {
 		Clyde();
 
 		// Parameterized Constructor
-		Clyde(Pacman *p);
+		Clyde(vector<vector<Tile>> *b, Pacman *p);
 		
 		// Copy Constructor
 		Clyde(const Clyde& other) = default;
@@ -33,17 +33,14 @@ class Clyde : public Ghost {
 
 		/*
 			Update
-				@param: board
 		*/
-		void update(vector<vector<Tile>> board);
+		void update();
 
 		/*
 			Set The targetTile
 				Within 8 Units Of Pacman: homeTilePosition
 				Otherwise: Pacman's tilePosition
-
-			@param: board
 		*/
-		void calculateTargetTile(vector<vector<Tile>> board);
+		void calculateTargetTile();
 
 };

@@ -16,7 +16,7 @@ class Inky : public Ghost {
 		Inky();
 
 		// Parameterized Constructor
-		Inky(Pacman *p, Blinky *b);
+		Inky(vector<vector<Tile>> *bo, Pacman *p, Blinky *bl);
 		
 		// Copy Constructor
 		Inky(const Inky& other) = default;
@@ -35,9 +35,8 @@ class Inky : public Ghost {
 
 		/*
 			Update
-				@param: board
 		*/
-		void update(vector<vector<Tile>> board);
+		void update();
 
 		/*
 			Set The targetTile

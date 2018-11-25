@@ -2,27 +2,28 @@
 
 Clyde::Clyde() {}
 
-Clyde::Clyde(Pacman *p) {
+Clyde::Clyde(vector<vector<Tile>> *b, Pacman *p) {
+	board = b;
 	pacman = p;
 }
 
 Clyde::~Clyde() {}
 
-void Clyde::update(vector<vector<Tile>> board) {
+void Clyde::update() {
 	// Calculate targetTile
-	calculateTargetTile(board);
+	calculateTargetTile();
 
 	// Update currentVelocity
-	updateVelocity(board);
+	updateVelocity();
 
 	// Move In The Direction Of currentVelocity
 	move();
 
 	// Adjust tilePosition To Stay In Bounds
-	adjustBounds(board);
+	adjustBounds();
 }
 
-void Clyde::calculateTargetTile(vector<vector<Tile>> board) {
+void Clyde::calculateTargetTile() {
 	if (mode == CHASE) {
 		double distance = calculateDistance(tileSize * ((*pacman).getTilePosition()[0] + 0.5),
 			tileSize * ((*pacman).getTilePosition()[1] + 0.5),
@@ -30,7 +31,7 @@ void Clyde::calculateTargetTile(vector<vector<Tile>> board) {
 			tileSize * (tilePosition[1] + (currentTick[1] / maxTick)));
 
 		if (distance < 8.0 * tileSize) {
-			targetTile = { (int)(board.size() - 1), 0 };
+			targetTile = { (int)((*board).size() - 1), 0 };
 		}
 		else {
 			targetTile = (*pacman).getTilePosition();

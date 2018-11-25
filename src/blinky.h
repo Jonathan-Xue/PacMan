@@ -14,7 +14,7 @@ class Blinky : public Ghost {
 		Blinky();
 
 		// Parameterized Constructor
-		Blinky(Pacman *p);
+		Blinky(vector<vector<Tile>> *b, Pacman *p);
 
 		// Copy Constructor
 		Blinky(const Blinky& other) = default;
@@ -33,9 +33,8 @@ class Blinky : public Ghost {
 
 		/*
 			Update
-				@param: board
 		*/
-		void update(vector<vector<Tile>> board);
+		void update();
 
 		/*
 			Set The targetTile

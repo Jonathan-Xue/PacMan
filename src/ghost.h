@@ -29,6 +29,9 @@ class Ghost {
 		bool queuedReverseDirectionFlag = false;
 		bool reverseDirectionFlag = false;
 
+		// Game Variables
+		vector<vector<Tile>> *board;
+
 		// Class Variables
 		int level = 0;
 
@@ -74,31 +77,26 @@ class Ghost {
 
 		/*
 			Update
-				@param: board
 		*/
-		void update(vector<vector<Tile>> board);
+		void update();
 
 		/*
 			Set The targetTile
 				Default: Center Of The Board
-
-			@param: board
 		*/
-		void calculateTargetTile(vector<vector<Tile>> board);
+		void calculateTargetTile();
 
 		/*
 			Update Velocity
-				@param: board
 		*/
-		void updateVelocity(vector<vector<Tile>> board);
+		void updateVelocity();
 
 		/*
 			Update Velocity
-				@param: board
 				@param: velocity
 				@return: Boolean Detailing If The Input Velocity Is Valid
 		*/
-		bool checkValidVelocity(vector<vector<Tile>> board, vector<int> velocity);
+		bool checkValidVelocity(vector<int> velocity);
 
 		/*
 			Calculate Euclidean Distance
@@ -117,9 +115,8 @@ class Ghost {
 
 		/*
 			Wraparound The Board
-				@param: board
 		*/
-		void adjustBounds(vector<vector<Tile>> board);
+		void adjustBounds();
 
 		// Reset Functions
 		void resetLevel(int l);

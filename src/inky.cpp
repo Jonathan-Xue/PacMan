@@ -2,25 +2,26 @@
 
 Inky::Inky() {}
 
-Inky::Inky(Pacman *p, Blinky *b) {
+Inky::Inky(vector<vector<Tile>> *bo, Pacman *p, Blinky *bl) {
+	board = bo;
 	pacman = p;
-	blinky = b;
+	blinky = bl;
 }
 
 Inky::~Inky() {}
 
-void Inky::update(vector<vector<Tile>> board) {
+void Inky::update() {
 	// Calculate targetTile
 	calculateTargetTile();
 
 	// Update currentVelocity
-	updateVelocity(board);
+	updateVelocity();
 
 	// Move In The Direction Of currentVelocity
 	move();
 
 	// Adjust tilePosition To Stay In Bounds
-	adjustBounds(board);
+	adjustBounds();
 }
 
 void Inky::calculateTargetTile() {

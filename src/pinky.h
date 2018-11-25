@@ -14,7 +14,7 @@ class Pinky : public Ghost {
 		Pinky();
 
 		// Parameterized Constructor
-		Pinky(Pacman *p);
+		Pinky(vector<vector<Tile>> *b, Pacman *p);
 
 		// Copy Constructor
 		Pinky(const Pinky& other) = default;
@@ -33,9 +33,8 @@ class Pinky : public Ghost {
 
 		/*
 			Update
-				@param: board
 		*/
-		void update(vector<vector<Tile>> board);
+		void update();
 
 		/*
 			Set The targetTile

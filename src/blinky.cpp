@@ -2,24 +2,25 @@
 
 Blinky::Blinky() {}
 
-Blinky::Blinky(Pacman *p) {
+Blinky::Blinky(vector<vector<Tile>> *b, Pacman *p) {
+	board = b;
 	pacman = p;
 }
 
 Blinky::~Blinky() {}
 
-void Blinky::update(vector<vector<Tile>> board) {
+void Blinky::update() {
 	// Calculate targetTile
 	calculateTargetTile();
 
 	// Update currentVelocity
-	updateVelocity(board);
+	updateVelocity();
 
 	// Move In The Direction Of currentVelocity
 	move();
 
 	// Adjust tilePosition To Stay In Bounds
-	adjustBounds(board);
+	adjustBounds();
 }
 
 void Blinky::calculateTargetTile() {

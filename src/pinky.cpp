@@ -2,24 +2,25 @@
 
 Pinky::Pinky() {}
 
-Pinky::Pinky(Pacman *p) {
+Pinky::Pinky(vector<vector<Tile>> *b, Pacman *p) {
+	board = b;
 	pacman = p;
 }
 
 Pinky::~Pinky() {}
 
-void Pinky::update(vector<vector<Tile>> board) {
+void Pinky::update() {
 	// Calculate targetTile
 	calculateTargetTile();
 
 	// Update currentVelocity
-	updateVelocity(board);
+	updateVelocity();
 
 	// Move In The Direction Of currentVelocity
 	move();
 
 	// Adjust tilePosition To Stay In Bounds
-	adjustBounds(board);
+	adjustBounds();
 }
 
 void Pinky::calculateTargetTile() {

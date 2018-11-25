@@ -4,23 +4,23 @@ Ghost::Ghost() {}
 
 Ghost::~Ghost() {}
 
-void Ghost::update(vector<vector<Tile>> board) {
+void Ghost::update() {
 	// Calculate targetTile
-	calculateTargetTile(board);
+	calculateTargetTile();
 
 	// Update currentVelocity
-	updateVelocity(board);
+	updateVelocity();
 
 	// Move In The Direction Of currentVelocity
 	move();
 
 	// Adjust tilePosition To Stay In Bounds
-	adjustBounds(board);
+	adjustBounds();
 }
 
-void Ghost::calculateTargetTile(vector<vector<Tile>> board) {
+void Ghost::calculateTargetTile() {
 	if (mode == CHASE) {
-		targetTile = vector<int>{ (int)board.size() / 2, (int)board[0].size() / 2 };
+		targetTile = vector<int>{ (int)(*board).size() / 2, (int)(*board)[0].size() / 2 };
 	}
 	else if (mode == SCATTER) {
 		targetTile = homeTilePosition;
@@ -34,7 +34,7 @@ void Ghost::calculateTargetTile(vector<vector<Tile>> board) {
 	}
 }
 
-void Ghost::updateVelocity(vector<vector<Tile>> board) {
+void Ghost::updateVelocity() {
 	if (reverseDirectionFlag) {
 		// Reverse Direction Of Travel
 		currentVelocity[0] *= -1;
@@ -46,7 +46,7 @@ void Ghost::updateVelocity(vector<vector<Tile>> board) {
 		// Update currentVelocity To queuedVelocity If Ghost Is Within (Speed / 2) Ticks Of The Center Of The Tile
 		if (abs(currentTick[0] - maxTick / 2) < (epsilon + speed / 2) && abs(currentTick[1] - maxTick / 2) < (epsilon + speed / 2)) {
 			int randIndex = rand() % queuedVelocity.size();
-			if (checkValidVelocity(board, queuedVelocity[randIndex])) {
+			if (checkValidVelocity(queuedVelocity[randIndex])) {
 				currentVelocity = queuedVelocity[randIndex];
 			}
 			else {
@@ -54,7 +54,7 @@ void Ghost::updateVelocity(vector<vector<Tile>> board) {
 				vector<vector<int>> possibleVelocity{};
 
 				for (int i = 0; i < 4; i++) {
-					if (checkValidVelocity(board, queuedVelocity[i])) {
+					if (checkValidVelocity(queuedVelocity[i])) {
 						possibleVelocity.push_back(queuedVelocity[i]);
 					}
 				}
@@ -75,7 +75,7 @@ void Ghost::updateVelocity(vector<vector<Tile>> board) {
 			vector<vector<int>> possibleVelocity{};
 
 			for (int i = 0; i < 4; i++) {
-				if (checkValidVelocity(board, queuedVelocity[i])) {
+				if (checkValidVelocity(queuedVelocity[i])) {
 					possibleVelocity.push_back(queuedVelocity[i]);
 				}
 			}
@@ -102,35 +102,35 @@ void Ghost::updateVelocity(vector<vector<Tile>> board) {
 	}
 }
 
-bool Ghost::checkValidVelocity(vector<vector<Tile>> board, vector<int> velocity) {
+bool Ghost::checkValidVelocity(vector<int> velocity) {
 	if (velocity == vector<int>{0, 0}) {
 		return true;
 	}
 	else if (velocity == vector<int>{0, -1}) {
 		// Up
 		if (currentVelocity != vector<int>{0, 1} &&
-			(tilePosition[0] - 1 < 0 || board[tilePosition[0] - 1][tilePosition[1]].getID() == 1)) {
+			(tilePosition[0] - 1 < 0 || (*board)[tilePosition[0] - 1][tilePosition[1]].getID() == 1)) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{-1, 0}) {
 		// Left
 		if (currentVelocity != vector<int>{1, 0} &&
-			(tilePosition[1] - 1 < 0 || board[tilePosition[0]][tilePosition[1] - 1].getID() == 1)) {
+			(tilePosition[1] - 1 < 0 || (*board)[tilePosition[0]][tilePosition[1] - 1].getID() == 1)) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{0, 1}) {
 		// Down
 		if (currentVelocity != vector<int>{0, -1} &&
-			(size_t(tilePosition[0] + 1) >= board.size() || board[tilePosition[0] + 1][tilePosition[1]].getID() == 1)) {
+			(size_t(tilePosition[0] + 1) >= (*board).size() || (*board)[tilePosition[0] + 1][tilePosition[1]].getID() == 1)) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{1, 0}) {
 		// Right
 		if (currentVelocity != vector<int>{-1, 0} &&
-			(size_t(tilePosition[1] + 1) >= board[0].size() || board[tilePosition[0]][tilePosition[1] + 1].getID() == 1)) {
+			(size_t(tilePosition[1] + 1) >= (*board)[0].size() || (*board)[tilePosition[0]][tilePosition[1] + 1].getID() == 1)) {
 			return true;
 		}
 	}
@@ -199,20 +199,20 @@ void Ghost::move() {
 	}
 }
 
-void Ghost::adjustBounds(vector<vector<Tile>> board) {
+void Ghost::adjustBounds() {
 	// Vertical OutOfBounds
 	if (tilePosition[0] < 0) {
-		tilePosition[0] = board.size() - 1;
+		tilePosition[0] = (*board).size() - 1;
 	}
-	else if (size_t(tilePosition[0]) >= board.size()) {
+	else if (size_t(tilePosition[0]) >= (*board).size()) {
 		tilePosition[0] = 0;
 	}
 
 	// Horizontal OutOfBounds
 	if (tilePosition[1] < 0) {
-		tilePosition[1] = board[0].size() - 1;
+		tilePosition[1] = (*board)[0].size() - 1;
 	}
-	else if (size_t(tilePosition[1]) >= board[0].size()) {
+	else if (size_t(tilePosition[1]) >= (*board)[0].size()) {
 		tilePosition[1] = 0;
 	}
 }
