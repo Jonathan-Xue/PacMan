@@ -4,6 +4,8 @@
 
 #include "tile.h"
 
+#include "pacman.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -31,6 +33,7 @@ class Ghost {
 
 		// Game Variables
 		vector<vector<Tile>> *board;
+		Pacman *pacman;
 
 		// Class Variables
 		int level = 0;
@@ -134,6 +137,8 @@ class Ghost {
 		void resize(int w, int h, int ts);
 
 		// Getters
+		SpriteMode getMode();
+
 		vector<double> getPixelPosition();
 		vector<int> getTilePosition();
 

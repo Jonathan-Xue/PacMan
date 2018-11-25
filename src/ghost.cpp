@@ -5,6 +5,11 @@ Ghost::Ghost() {}
 Ghost::~Ghost() {}
 
 void Ghost::update() {
+	// Check For Mode Changes
+	if ((*pacman).getMode() == FRIGHTENED) {
+		mode = FRIGHTENED;
+	}
+
 	// Calculate targetTile
 	calculateTargetTile();
 
@@ -31,6 +36,7 @@ void Ghost::updateVelocity() {
 		if (abs(currentTick[0] - maxTick / 2) < (epsilon + speed / 2) && abs(currentTick[1] - maxTick / 2) < (epsilon + speed / 2)) {
 			int randIndex = rand() % queuedVelocity.size();
 			if (checkValidVelocity(queuedVelocity[randIndex])) {
+				// Tries To Move In A Random Velocity
 				currentVelocity = queuedVelocity[randIndex];
 			}
 			else {
@@ -229,6 +235,10 @@ void Ghost::resize(int w, int h, int ts) {
 	tileSize = ts;
 
 	speed = maxTick * tilesPerSecond / frameRate;
+}
+
+SpriteMode Ghost::getMode() {
+	return mode;
 }
 
 vector<double> Ghost::getPixelPosition() {

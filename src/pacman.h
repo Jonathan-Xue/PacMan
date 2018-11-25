@@ -37,25 +37,21 @@ class Pacman {
 
 		/*
 			Update
-				@param: board
 		*/
 		void update();
 
 		/*
 			Eat Pellets
-				@param: board
 		*/
 		void eat();
 
 		/*
 			Update Velocity
-				@param: board
 		*/
 		void updateVelocity();
 
 		/*
 			Update Velocity
-				@param: board
 				@param: velocity
 				@return: Boolean Detailing If The Input Velocity Is Valid
 		*/
@@ -68,7 +64,6 @@ class Pacman {
 
 		/*
 			Wraparound The Board
-				@param: board
 		*/
 		void adjustBounds();
 
@@ -88,6 +83,7 @@ class Pacman {
 		void resize(int w, int h, int ts);
 
 		// Getters
+		SpriteMode getMode();
 		int getLives();
 		int getScore();
 

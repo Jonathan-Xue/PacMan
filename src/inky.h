@@ -2,13 +2,11 @@
 
 #include "ghost.h"
 
-#include "pacman.h"
 #include "blinky.h"
 
 class Inky : public Ghost {
 
 	private:
-		Pacman *pacman;
 		Blinky *blinky;
 		
 	public:

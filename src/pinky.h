@@ -2,12 +2,9 @@
 
 #include "ghost.h"
 
-#include "pacman.h"
-
 class Pinky : public Ghost {
 
 	private:
-		Pacman *pacman;
 		
 	public:
 		// Default Constructor

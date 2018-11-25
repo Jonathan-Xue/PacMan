@@ -44,6 +44,9 @@ void Pacman::eat() {
 		score += 50;
 		(*board)[tilePosition[0]][tilePosition[1]].setPowerPellet(false);
 
+		// Mode
+		mode = FRIGHTENED;
+
 		// Flag
 		skipFrames = vector<bool>{ true, true, true };
 	}
@@ -176,6 +179,10 @@ void Pacman::resetGame() {
 
 	currentVelocity = { 0, 0 };
 	queuedVelocity = { -1, 0 };
+}
+
+SpriteMode Pacman::getMode() {
+	return mode;
 }
 
 int Pacman::getLives() {

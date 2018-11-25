@@ -61,13 +61,17 @@ class ofApp : public ofBaseApp {
 
 		vector<int> centerOffset{ 0, 0 };
 
-		// Game Variables
+		// Timers
 		const vector<SpriteMode> modeMarkers{ SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE };
-		const vector<float> timeMarkers{ 7, 20, 7, 20, 5, 20, 5, std::numeric_limits<float>::infinity() };
+		const vector<float> modeTimeMarkers{ 7, 20, 7, 20, 5, 20, 5, std::numeric_limits<float>::infinity() };
 
 		Timer modeTimer;
 		int modeIndex = 0;
 
+		const int frightenedTimeMarker = 5;
+		Timer frightenedTimer;
+
+		// Game Variables
 		vector<int> highScores{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 		vector<vector<Tile>> board = Board().getBoard();

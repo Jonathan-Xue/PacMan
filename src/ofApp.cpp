@@ -30,27 +30,67 @@ void ofApp::setup() {
 void ofApp::update() {
 	if (currentState == IN_PROGRESS) {
 		// SpriteMode
-		if (!modeTimer.isStarted()) {
-			modeTimer.start();
+		if (pacman.getMode() == FRIGHTENED) {
+			if (!(blinky.getMode() == FRIGHTENED &&
+				pinky.getMode() == FRIGHTENED &&
+				inky.getMode() == FRIGHTENED &&
+				clyde.getMode() == FRIGHTENED)) {
+				std::cerr << "Error. Pacman's SpriteMode (FRIGHTENED) Doesn't Match All Of The Ghost's SpriteMode" << std::endl;
+			}
+
+			if (!frightenedTimer.isStarted()) {
+				// Start frightenedTimer
+				frightenedTimer.start();
+
+				// Reverse Direction
+				blinky.reverseDirection();
+				pinky.reverseDirection();
+				inky.reverseDirection();
+				clyde.reverseDirection();
+
+				// Stop modeTimer
+				modeTimer.stop();
+			}
+
+			if (frightenedTimer.count<std::chrono::seconds>() >= frightenedTimeMarker) {
+				// Reset frightenedTimer
+				frightenedTimer.reset();
+
+				// Set Mode
+				pacman.setMode(modeMarkers[modeIndex]);
+				blinky.setMode(modeMarkers[modeIndex]);
+				pinky.setMode(modeMarkers[modeIndex]);
+				inky.setMode(modeMarkers[modeIndex]);
+				clyde.setMode(modeMarkers[modeIndex]);
+
+				// Continue modeTimer
+				modeTimer.start();
+			}
 		}
+		else {
+			if (!modeTimer.isStarted()) {
+				// Start Timer
+				modeTimer.start();
+			}
 
-		if (modeTimer.count<std::chrono::seconds>() >= timeMarkers[modeIndex]) {
-			// Variable Increment/Reset
-			modeIndex++;
-			modeTimer.reset();
+			if (modeTimer.count<std::chrono::seconds>() >= modeTimeMarkers[modeIndex]) {
+				// Variable Increment/Reset
+				modeIndex++;
+				modeTimer.reset();
 
-			// Set Mode
-			pacman.setMode(modeMarkers[modeIndex]);
-			blinky.setMode(modeMarkers[modeIndex]);
-			pinky.setMode(modeMarkers[modeIndex]);
-			inky.setMode(modeMarkers[modeIndex]);
-			clyde.setMode(modeMarkers[modeIndex]);
+				// Set Mode
+				pacman.setMode(modeMarkers[modeIndex]);
+				blinky.setMode(modeMarkers[modeIndex]);
+				pinky.setMode(modeMarkers[modeIndex]);
+				inky.setMode(modeMarkers[modeIndex]);
+				clyde.setMode(modeMarkers[modeIndex]);
 
-			// Reverse Direction
-			blinky.reverseDirection();
-			pinky.reverseDirection();
-			inky.reverseDirection();
-			clyde.reverseDirection();
+				// Reverse Direction
+				blinky.reverseDirection();
+				pinky.reverseDirection();
+				inky.reverseDirection();
+				clyde.reverseDirection();
+			}
 		}
 
 		// Update Sprites
@@ -82,7 +122,7 @@ void ofApp::update() {
 		}
 		level++;
 		resetLevel();
-		stop:
+	stop:
 
 		// Check For State Changes
 		if (pacman.getLives() == 0) {
@@ -104,7 +144,7 @@ void ofApp::update() {
 				inputFile.close();
 			}
 			else {
-				std::cerr << "Unable To Open File" << std::endl;
+				std::cerr << "Error. Unable To Open File" << std::endl;
 				std::exit(1);
 			}
 
@@ -122,7 +162,7 @@ void ofApp::update() {
 				outputFile.close();
 			}
 			else {
-				std::cerr << "Unable To Open File" << std::endl;
+				std::cerr << "Error. Unable To Open File" << std::endl;
 				std::exit(1);
 			}
 
@@ -185,7 +225,7 @@ void ofApp::keyPressed(int key) {
 			// Reset Game
 			resetGame();
 		}
-		
+
 	}
 	else if (key == OF_KEY_ALT) {
 		blinky.reverseDirection();
@@ -372,29 +412,43 @@ void ofApp::drawPacMan() {
 }
 
 void ofApp::drawGhosts() {
-	ofSetColor(255, 0, 0);
-	ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-	ofDrawRectangle(blinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4, 
-					blinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-					tileSize / 2, tileSize / 2);
+	if (blinky.getMode() == FRIGHTENED) {
+		if (frightenedTimer.count<std::chrono::milliseconds>() / 250 % 2) {
+			ofSetColor(25, 25, 255);
+		}
+		else {
+			ofSetColor(255, 255, 255);
+		}
+		ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+		ofDrawCircle(pinky.getPixelPosition()[0] + centerOffset[0], pinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+		ofDrawCircle(inky.getPixelPosition()[0] + centerOffset[0], inky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+		ofDrawCircle(clyde.getPixelPosition()[0] + centerOffset[0], clyde.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+	}
+	else {
+		ofSetColor(255, 0, 0);
+		ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+		//ofDrawRectangle(blinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+		//	blinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+		//	tileSize / 2, tileSize / 2);
 
-	ofSetColor(255, 185, 255);
-	ofDrawCircle(pinky.getPixelPosition()[0] + centerOffset[0], pinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-	ofDrawRectangle(pinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-					pinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-					tileSize / 2, tileSize / 2);
+		ofSetColor(255, 185, 255);
+		ofDrawCircle(pinky.getPixelPosition()[0] + centerOffset[0], pinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+		//ofDrawRectangle(pinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+		//	pinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+		//	tileSize / 2, tileSize / 2);
 
-	ofSetColor(0, 255, 255);
-	ofDrawCircle(inky.getPixelPosition()[0] + centerOffset[0], inky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-	ofDrawRectangle(inky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-					inky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-					tileSize / 2, tileSize / 2);
+		ofSetColor(0, 255, 255);
+		ofDrawCircle(inky.getPixelPosition()[0] + centerOffset[0], inky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+		//ofDrawRectangle(inky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+		//	inky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+		//	tileSize / 2, tileSize / 2);
 
-	ofSetColor(255, 185, 80);
-	ofDrawCircle(clyde.getPixelPosition()[0] + centerOffset[0], clyde.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-	ofDrawRectangle(clyde.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-					clyde.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-					tileSize / 2, tileSize / 2);
+		ofSetColor(255, 185, 80);
+		ofDrawCircle(clyde.getPixelPosition()[0] + centerOffset[0], clyde.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+		//ofDrawRectangle(clyde.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+		//	clyde.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+		//	tileSize / 2, tileSize / 2);
+	}
 }
 
 void ofApp::drawGameOver() {
@@ -416,6 +470,8 @@ void ofApp::resetSprites() {
 	// Reset SpriteMode Variables
 	modeTimer.reset();
 	modeIndex = 0;
+
+	frightenedTimer.reset();
 
 	// Set GameState
 	currentState = PAUSED;
