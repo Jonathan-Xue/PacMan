@@ -63,7 +63,7 @@ void ofApp::update() {
 						(*g).reverseDirection();
 					}
 				}
-				
+
 			}
 		}
 
@@ -228,6 +228,13 @@ void ofApp::keyPressed(int key) {
 
 			// Reset Game
 			resetGame();
+		}
+		else if (currentState == GAME_OVER) {
+			currentState = HIGH_SCORE;
+		}
+		else if (currentState == HIGH_SCORE) {
+			resetGame();
+			currentState = START;
 		}
 	}
 
@@ -447,7 +454,25 @@ void ofApp::drawGameOver() {
 }
 
 void ofApp::drawHighScores() {
+	ofSetColor(255, 255, 255);
 
+	// Draw "HIGH SCORES"
+	string str = "HIGH SCORES";
+	vector<int> initialTilePosition = { (int)(board.size() - (highScores.size() + 1)) / 2 + 1,
+										(int)((board[0].size() - str.length()) / 2) };
+	emulogic.drawString(str,
+		initialTilePosition[1] * tileSize + centerOffset[0],
+		initialTilePosition[0] * tileSize + centerOffset[1]);
+
+	// Draw Scores
+	for (int score : highScores) {
+		str = std::to_string(score);
+		initialTilePosition = vector<int>{ initialTilePosition[0] + 1,
+										   (int)((board[0].size() - str.length()) / 2) };
+		emulogic.drawString(str,
+			initialTilePosition[1] * tileSize + centerOffset[0],
+			initialTilePosition[0] * tileSize + centerOffset[1]);
+	}
 }
 
 void ofApp::resetSprites() {
