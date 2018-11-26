@@ -6,7 +6,12 @@ Ghost::~Ghost() {}
 
 void Ghost::update() {
 	// Calculate targetTile
-	calculateTargetTile();
+	if (alive) {
+		calculateTargetTile();
+	}
+	else {
+		targetTile = initialTilePosition;
+	}
 
 	// Update currentVelocity
 	updateVelocity();
@@ -16,6 +21,11 @@ void Ghost::update() {
 
 	// Adjust tilePosition To Stay In Bounds
 	adjustBounds();
+
+	// Check To See If Ghost Should Be Alive
+	if (!alive && tilePosition == targetTile) {
+		alive = true;
+	}
 }
 
 void Ghost::updateVelocity() {
@@ -203,6 +213,7 @@ void Ghost::adjustBounds() {
 }
 
 void Ghost::resetLevel(int l) {
+	alive = true;
 	level = l;
 
 	mode = SCATTER;
@@ -214,6 +225,7 @@ void Ghost::resetLevel(int l) {
 }
 
 void Ghost::resetGame() {
+	alive = true;
 	level = 0;
 
 	mode = SCATTER;
@@ -230,6 +242,10 @@ void Ghost::resize(int w, int h, int ts) {
 	tileSize = ts;
 
 	speed = maxTick * tilesPerSecond / frameRate;
+}
+
+bool Ghost::isAlive() {
+	return alive;
 }
 
 SpriteMode Ghost::getMode() {
@@ -255,6 +271,10 @@ vector<int> Ghost::getTargetTile() {
 
 void Ghost::reverseDirection() {
 	queuedReverseDirectionFlag = true;
+}
+
+void Ghost::setAlive(bool a) {
+	alive = a;
 }
 
 void Ghost::setMode(SpriteMode m) {

@@ -36,6 +36,7 @@ class Ghost {
 		Pacman *pacman;
 
 		// Class Variables
+		bool alive = true;
 		int level = 0;
 
 		vector<int> homeTilePosition = { 0, 0 };
@@ -137,6 +138,7 @@ class Ghost {
 		void resize(int w, int h, int ts);
 
 		// Getters
+		bool isAlive();
 		SpriteMode getMode();
 
 		vector<double> getPixelPosition();
@@ -147,6 +149,7 @@ class Ghost {
 
 		// Setters
 		void reverseDirection();
+		void setAlive(bool a);
 		void setMode(SpriteMode m);
 		void setHomeTilePosition(vector<int> htp);
 		void setInitialTilePosition(vector<int> itp);

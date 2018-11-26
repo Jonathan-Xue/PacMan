@@ -104,15 +104,32 @@ void ofApp::update() {
 		}
 
 		// Check For Pacman - Ghost Collision
-		if (pacman.getTilePosition() == blinky.getTilePosition() ||
-			pacman.getTilePosition() == pinky.getTilePosition() ||
-			pacman.getTilePosition() == inky.getTilePosition() ||
-			pacman.getTilePosition() == clyde.getTilePosition()) {
-			// Decrement Lives
-			pacman.decrementLives();
+		if ((pacman.getTilePosition() == blinky.getTilePosition() && blinky.isAlive()) ||
+			(pacman.getTilePosition() == pinky.getTilePosition() && pinky.isAlive()) ||
+			(pacman.getTilePosition() == inky.getTilePosition() && inky.isAlive()) ||
+			(pacman.getTilePosition() == clyde.getTilePosition() && clyde.isAlive())) {
 
-			// Reset Sprites
-			resetSprites();
+			if (pacman.getMode() == FRIGHTENED) {
+				if (pacman.getTilePosition() == blinky.getTilePosition()) {
+					blinky.setAlive(false);
+				}
+				else if (pacman.getTilePosition() == pinky.getTilePosition()) {
+					pinky.setAlive(false);
+				}
+				else if (pacman.getTilePosition() == inky.getTilePosition()) {
+					inky.setAlive(false);
+				}
+				else if (pacman.getTilePosition() == clyde.getTilePosition()) {
+					clyde.setAlive(false);
+				}
+			}
+			else {
+				// Decrement Lives
+				pacman.decrementLives();
+
+				// Reset Sprites
+				resetSprites();
+			}
 		}
 
 		// Check For Next Level
@@ -409,41 +426,64 @@ void ofApp::drawPacMan() {
 
 void ofApp::drawGhosts() {
 	if (blinky.getMode() == FRIGHTENED) {
+		// Blue-White Flickering
 		if (frightenedTimer.count<std::chrono::milliseconds>() / 250 % 2) {
 			ofSetColor(25, 25, 255);
 		}
 		else {
 			ofSetColor(255, 255, 255);
 		}
-		ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-		ofDrawCircle(pinky.getPixelPosition()[0] + centerOffset[0], pinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-		ofDrawCircle(inky.getPixelPosition()[0] + centerOffset[0], inky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-		ofDrawCircle(clyde.getPixelPosition()[0] + centerOffset[0], clyde.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+		
+		// Draw Ghosts
+		if (blinky.isAlive()) {
+			ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+		}
+
+		if (pinky.isAlive()) {
+			ofDrawCircle(pinky.getPixelPosition()[0] + centerOffset[0], pinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+		}
+
+		if (inky.isAlive()) {
+			ofDrawCircle(inky.getPixelPosition()[0] + centerOffset[0], inky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+		}
+
+		if (clyde.isAlive()) {
+			ofDrawCircle(clyde.getPixelPosition()[0] + centerOffset[0], clyde.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+		}
 	}
 	else {
-		ofSetColor(255, 0, 0);
-		ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-		//ofDrawRectangle(blinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-		//	blinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-		//	tileSize / 2, tileSize / 2);
+		// Draw Ghosts
+		if (blinky.isAlive()) {
+			ofSetColor(255, 0, 0);
+			ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+			//ofDrawRectangle(blinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+			//	blinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+			//	tileSize / 2, tileSize / 2);
+		}
 
-		ofSetColor(255, 185, 255);
-		ofDrawCircle(pinky.getPixelPosition()[0] + centerOffset[0], pinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-		//ofDrawRectangle(pinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-		//	pinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-		//	tileSize / 2, tileSize / 2);
+		if (pinky.isAlive()) {
+			ofSetColor(255, 185, 255);
+			ofDrawCircle(pinky.getPixelPosition()[0] + centerOffset[0], pinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+			//ofDrawRectangle(pinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+			//	pinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+			//	tileSize / 2, tileSize / 2);
+		}
 
-		ofSetColor(0, 255, 255);
-		ofDrawCircle(inky.getPixelPosition()[0] + centerOffset[0], inky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-		//ofDrawRectangle(inky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-		//	inky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-		//	tileSize / 2, tileSize / 2);
+		if (inky.isAlive()) {
+			ofSetColor(0, 255, 255);
+			ofDrawCircle(inky.getPixelPosition()[0] + centerOffset[0], inky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+			//ofDrawRectangle(inky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+			//	inky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+			//	tileSize / 2, tileSize / 2);
+		}
 
-		ofSetColor(255, 185, 80);
-		ofDrawCircle(clyde.getPixelPosition()[0] + centerOffset[0], clyde.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-		//ofDrawRectangle(clyde.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-		//	clyde.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-		//	tileSize / 2, tileSize / 2);
+		if (clyde.isAlive()) {
+			ofSetColor(255, 185, 80);
+			ofDrawCircle(clyde.getPixelPosition()[0] + centerOffset[0], clyde.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+			//ofDrawRectangle(clyde.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+			//	clyde.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+			//	tileSize / 2, tileSize / 2);
+		}
 	}
 }
 
