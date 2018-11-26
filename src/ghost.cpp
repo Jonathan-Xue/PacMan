@@ -36,7 +36,7 @@ void Ghost::updateVelocity() {
 
 		reverseDirectionFlag = false;
 	}
-	else if (mode == FRIGHTENED) {
+	else if (mode == FRIGHTENED && alive) {
 		// Update currentVelocity To queuedVelocity If Ghost Is Within (Speed / 2) Ticks Of The Center Of The Tile
 		if (abs(currentTick[0] - maxTick / 2) < (epsilon + speed / 2) && abs(currentTick[1] - maxTick / 2) < (epsilon + speed / 2)) {
 			int randIndex = rand() % queuedVelocity.size();
