@@ -454,6 +454,9 @@ void ofApp::drawGameOver() {
 }
 
 void ofApp::drawHighScores() {
+	ofSetColor(0, 0, 0);
+	ofDrawRectangle(0, 0, screenWidth, screenHeight);
+
 	ofSetColor(255, 255, 255);
 
 	// Draw "HIGH SCORES"
