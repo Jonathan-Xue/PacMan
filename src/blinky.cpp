@@ -3,6 +3,7 @@
 Blinky::Blinky() {}
 
 Blinky::Blinky(vector<vector<Tile>> *b, Pacman *p) {
+	ghostType = BLINKY;
 	color = vector<int>{255, 0, 0};
 	board = b;
 	pacman = p;

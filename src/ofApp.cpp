@@ -216,18 +216,32 @@ void ofApp::keyPressed(int key) {
 			currentState = INSTRUCTIONS;
 		}
 		else if (currentState == INSTRUCTIONS) {
-			// Set Sprite's homeTilePosition
-			blinky.setHomeTilePosition(vector<int>{ 0, (int)board[0].size() - 1 - 2 });
-			pinky.setHomeTilePosition(vector<int>{ 0, 2 });
-			inky.setHomeTilePosition(vector<int>{ (int)board.size() - 1, (int)board[0].size() - 1 });
-			clyde.setHomeTilePosition(vector<int>{ (int)board.size() - 1, 0 });
-
-			// Set Sprite's initialTilePosition
+			// Set Sprites' homeTilePosition && initialTilePosition
 			pacman.setInitialPosition(vector<int>{ 26, 14 });
-			blinky.setInitialTilePosition(vector<int>{ 4, 1 });
-			pinky.setInitialTilePosition(vector<int>{ 32, 26});
-			inky.setInitialTilePosition(vector<int>{ 4, 26 });
-			clyde.setInitialTilePosition(vector<int>{ 32, 1 });
+			for (Ghost *g : ghostsVector) {
+				if ((*g).getGhostType() == BLINKY) {
+					(*g).setHomeTilePosition(vector<int>{ 0, (int)board[0].size() - 1 - 2 });
+					(*g).setInitialTilePosition(vector<int>{ 4, 1 });
+				}
+				else if ((*g).getGhostType() == PINKY) {
+					(*g).setHomeTilePosition(vector<int>{ 0, 2 });
+					(*g).setInitialTilePosition(vector<int>{ 32, 26});
+				}
+				else if ((*g).getGhostType() == INKY) {
+					(*g).setHomeTilePosition(vector<int>{ (int)board.size() - 1, (int)board[0].size() - 1 });
+					(*g).setInitialTilePosition(vector<int>{ 4, 26 });
+				}
+				else if ((*g).getGhostType() == CLYDE) {
+					(*g).setHomeTilePosition(vector<int>{ (int)board.size() - 1, 0 });
+					(*g).setInitialTilePosition(vector<int>{ 32, 1 });
+				}
+			}
+
+			// Set Sprites' initialTilePosition
+			vector<vector<int>> ghostInitialTilePositions = vector<vector<int>>{ {4, 1}, {32, 26}, {4, 26}, {32, 1} };
+			for (size_t i = 0; i < ghostsVector.size(); i++) {
+				(*(ghostsVector[i])).setInitialTilePosition(ghostInitialTilePositions[i]);
+			}
 
 			// Reset Game
 			resetGame();

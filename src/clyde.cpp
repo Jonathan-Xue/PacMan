@@ -3,6 +3,7 @@
 Clyde::Clyde() {}
 
 Clyde::Clyde(vector<vector<Tile>> *b, Pacman *p) {
+	ghostType = CLYDE;
 	color = vector<int>{255, 185, 80};
 	board = b;
 	pacman = p;

@@ -9,6 +9,14 @@ enum GameState {
 	HIGH_SCORE
 };
 
+enum GhostType {
+	UNDEFINED,
+	BLINKY,
+	PINKY,
+	INKY,
+	CLYDE
+};
+
 enum SpriteMode {
 	FRIGHTENED,
 	SCATTER,

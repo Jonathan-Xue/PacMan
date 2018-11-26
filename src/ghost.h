@@ -25,6 +25,7 @@ class Ghost {
 		int tileSize;
 
 		// Enums
+		GhostType ghostType = UNDEFINED;
 		SpriteMode mode = SCATTER;
 
 		// Flags
@@ -91,7 +92,7 @@ class Ghost {
 			Set The targetTile
 				Virtual Function: Defined In Subclass/Child
 		*/
-		virtual void calculateTargetTile() {};
+		virtual void calculateTargetTile();
 
 		/*
 			Update Velocity
@@ -141,6 +142,7 @@ class Ghost {
 		void resize(int w, int h, int ts);
 
 		// Getters
+		GhostType getGhostType();
 		vector<int> getColor();
 
 		bool isAlive();

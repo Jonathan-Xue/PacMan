@@ -29,6 +29,8 @@ void Ghost::update() {
 	}
 }
 
+void Ghost::calculateTargetTile() {}
+
 void Ghost::updateVelocity() {
 	if (reverseDirectionFlag) {
 		// Reverse Direction Of Travel
@@ -245,6 +247,10 @@ void Ghost::resize(int w, int h, int ts) {
 	tileSize = ts;
 
 	speed = maxTick * tilesPerSecond / frameRate;
+}
+
+GhostType Ghost::getGhostType() {
+	return ghostType;
 }
 
 vector<int> Ghost::getColor() {

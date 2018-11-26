@@ -3,6 +3,7 @@
 Inky::Inky() {}
 
 Inky::Inky(vector<vector<Tile>> *bo, Pacman *p, Ghost *bl) {
+	ghostType = INKY;
 	color = vector<int>{0, 255, 255};
 	board = bo;
 	pacman = p;
