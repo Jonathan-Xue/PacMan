@@ -138,23 +138,6 @@ void ofApp::update() {
 	}
 	else if (currentState == GAME_OVER) {
 		if (highScoreFlag) {
-			// Read highscores From File
-			ifstream inputFile("highscores.txt");
-			if (inputFile.is_open()) {
-				int lineCount = 0;
-				string line;
-				while (getline(inputFile, line)) {
-					highScores[lineCount] = std::stoi(line);
-					lineCount++;
-				}
-
-				inputFile.close();
-			}
-			else {
-				std::cerr << "Error. Unable To Open File" << std::endl;
-				std::exit(1);
-			}
-
 			// Reorder highscores
 			highScores.push_back(pacman.getScore());
 			std::sort(highScores.begin(), highScores.end(), std::greater<>());
@@ -385,25 +368,37 @@ void ofApp::drawGameBoard() {
 void ofApp::drawMisc() {
 	ofSetColor(255, 255, 255);
 
-	// Retrieve currentScore
-	string currentScore = std::to_string(pacman.getScore());
-
 	// "HIGH SCORE" Horizontally Centered With Respect To The Screen
 	vector<int> highScoreLabelTilePosition = { 1, (int)((board[0].size() - string("HIGH SCORE").length()) / 2) };
+
+	// High Score Horizontally Centered With Respect To The Screen
+	string highScore;
+	if (pacman.getScore() > highScores[0]) {
+		highScore = std::to_string(pacman.getScore());
+	}
+	else {
+		highScore = std::to_string(highScores[0]);
+	}
+	vector<int> highScoreTilePosition = { 2,  (int)((board[0].size() - highScore.length()) / 2) };
 
 	// "1UP" Horizontally Centered With Respect To "HIGH SCORE"
 	vector<int> playerLabelTilePosition = { 1, (int)((highScoreLabelTilePosition[1] - string("1UP").length()) / 2) };
 
 	// "Rightermost Entry Of Score Is One Tile After End Of "1UP"
+	string currentScore = std::to_string(pacman.getScore());
 	vector<int> currentScoreTilePosition = { 2, (int)(playerLabelTilePosition[1] + string("1UP").length() + 1 - currentScore.length()) };
 
 	// Draw
-	emulogic.drawString("1UP",
-		playerLabelTilePosition[1] * tileSize + centerOffset[0],
-		playerLabelTilePosition[0] * tileSize + centerOffset[1]);
 	emulogic.drawString("HIGH SCORE",
 		highScoreLabelTilePosition[1] * tileSize + centerOffset[0],
 		highScoreLabelTilePosition[0] * tileSize + centerOffset[1]);
+	emulogic.drawString(highScore,
+		highScoreTilePosition[1] * tileSize + centerOffset[0],
+		highScoreTilePosition[0] * tileSize + centerOffset[1]);
+
+	emulogic.drawString("1UP",
+		playerLabelTilePosition[1] * tileSize + centerOffset[0],
+		playerLabelTilePosition[0] * tileSize + centerOffset[1]);
 	emulogic.drawString(currentScore,
 		currentScoreTilePosition[1] * tileSize + centerOffset[0],
 		currentScoreTilePosition[0] * tileSize + centerOffset[1]);
@@ -481,6 +476,23 @@ void ofApp::resetLevel() {
 }
 
 void ofApp::resetGame() {
+	// Read highscores From File
+	ifstream inputFile("highscores.txt");
+	if (inputFile.is_open()) {
+		int lineCount = 0;
+		string line;
+		while (getline(inputFile, line)) {
+			highScores[lineCount] = std::stoi(line);
+			lineCount++;
+		}
+
+		inputFile.close();
+	}
+	else {
+		std::cerr << "Error. Unable To Open File" << std::endl;
+		std::exit(1);
+	}
+
 	// Create A New Board
 	board = Board().getBoard();
 

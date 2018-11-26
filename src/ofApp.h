@@ -71,6 +71,9 @@ class ofApp : public ofBaseApp {
 		const int frightenedTimeMarker = 7;
 		Timer frightenedTimer;
 
+		// Flags
+		bool highScoreFlag = true;
+
 		// Game Variables
 		vector<int> highScores{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -83,9 +86,6 @@ class ofApp : public ofBaseApp {
 		vector<Ghost*> ghostsVector = vector<Ghost*>{&blinky, &pinky, &inky, &clyde };
 
 		int level = 0;
-
-		// Flags
-		bool highScoreFlag = true;
 
 		// Helper Methods For Display Render
 		void drawLandingPage();
