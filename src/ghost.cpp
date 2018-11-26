@@ -247,6 +247,10 @@ void Ghost::resize(int w, int h, int ts) {
 	speed = maxTick * tilesPerSecond / frameRate;
 }
 
+vector<int> Ghost::getColor() {
+	return color;
+}
+
 bool Ghost::isAlive() {
 	return alive;
 }

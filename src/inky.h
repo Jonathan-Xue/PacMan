@@ -7,14 +7,14 @@
 class Inky : public Ghost {
 
 	private:
-		Blinky *blinky;
+		Ghost *blinky;
 		
 	public:
 		// Default Constructor
 		Inky();
 
 		// Parameterized Constructor
-		Inky(vector<vector<Tile>> *bo, Pacman *p, Blinky *bl);
+		Inky(vector<vector<Tile>> *bo, Pacman *p, Ghost *bl);
 		
 		// Copy Constructor
 		Inky(const Inky& other) = default;

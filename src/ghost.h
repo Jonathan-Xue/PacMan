@@ -36,6 +36,8 @@ class Ghost {
 		Pacman *pacman;
 
 		// Class Variables
+		vector<int> color = { 255, 255, 255 };
+
 		bool alive = true;
 		bool edible = false;
 		int level = 0;
@@ -87,9 +89,9 @@ class Ghost {
 
 		/*
 			Set The targetTile
-				Pure Virtual Function: Must Be Defined In Subclass/Child
+				Virtual Function: Defined In Subclass/Child
 		*/
-		virtual void calculateTargetTile() = 0;
+		virtual void calculateTargetTile() {};
 
 		/*
 			Update Velocity
@@ -139,6 +141,8 @@ class Ghost {
 		void resize(int w, int h, int ts);
 
 		// Getters
+		vector<int> getColor();
+
 		bool isAlive();
 		bool isEdible();
 		SpriteMode getMode();

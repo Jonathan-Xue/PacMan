@@ -3,6 +3,7 @@
 Clyde::Clyde() {}
 
 Clyde::Clyde(vector<vector<Tile>> *b, Pacman *p) {
+	color = vector<int>{255, 185, 80};
 	board = b;
 	pacman = p;
 }
@@ -27,7 +28,8 @@ void Clyde::calculateTargetTile() {
 		targetTile = homeTilePosition;
 	}
 	else if (mode == FRIGHTENED) {
-		// Do Nothing
+		// Do Nothing (targetTile Adjustment Is For Display Debugging Purposes)
+		targetTile = vector<int>{ 0, 0 };
 	}
 	else {
 		std::cerr << "Error. GhostMode Is Invalid" << std::endl;

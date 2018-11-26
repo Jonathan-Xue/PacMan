@@ -3,6 +3,7 @@
 Blinky::Blinky() {}
 
 Blinky::Blinky(vector<vector<Tile>> *b, Pacman *p) {
+	color = vector<int>{255, 0, 0};
 	board = b;
 	pacman = p;
 }
@@ -17,7 +18,8 @@ void Blinky::calculateTargetTile() {
 		targetTile = homeTilePosition;
 	}
 	else if (mode == FRIGHTENED) {
-		// Do Nothing
+		// Do Nothing (targetTile Adjustment Is For Display Debugging Purposes)
+		targetTile = vector<int>{ 0, 0 };
 	}
 	else {
 		std::cerr << "Error. State Is Invalid" << std::endl;

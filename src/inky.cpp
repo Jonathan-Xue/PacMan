@@ -2,7 +2,8 @@
 
 Inky::Inky() {}
 
-Inky::Inky(vector<vector<Tile>> *bo, Pacman *p, Blinky *bl) {
+Inky::Inky(vector<vector<Tile>> *bo, Pacman *p, Ghost *bl) {
+	color = vector<int>{0, 255, 255};
 	board = bo;
 	pacman = p;
 	blinky = bl;
@@ -55,7 +56,8 @@ void Inky::calculateTargetTile() {
 		targetTile = homeTilePosition;
 	}
 	else if (mode == FRIGHTENED) {
-		// Do Nothing
+		// Do Nothing (targetTile Adjustment Is For Display Debugging Purposes)
+		targetTile = vector<int>{ 0, 0 };
 	}
 	else {
 		std::cerr << "Error. State Is Invalid" << std::endl;

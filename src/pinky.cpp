@@ -3,6 +3,7 @@
 Pinky::Pinky() {}
 
 Pinky::Pinky(vector<vector<Tile>> *b, Pacman *p) {
+	color = vector<int>{255, 185, 255};
 	board = b;
 	pacman = p;
 }
@@ -47,7 +48,8 @@ void Pinky::calculateTargetTile() {
 		targetTile = homeTilePosition;
 	}
 	else if (mode == FRIGHTENED) {
-		// Do Nothing
+		// Do Nothing (targetTile Adjustment Is For Display Debugging Purposes)
+		targetTile = vector<int>{ 0, 0 };
 	}
 	else {
 		std::cerr << "Error. State Is Invalid" << std::endl;
