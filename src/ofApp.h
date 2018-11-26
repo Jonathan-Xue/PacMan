@@ -68,7 +68,7 @@ class ofApp : public ofBaseApp {
 		Timer modeTimer;
 		int modeIndex = 0;
 
-		const int frightenedTimeMarker = 5;
+		const int frightenedTimeMarker = 7;
 		Timer frightenedTimer;
 
 		// Game Variables

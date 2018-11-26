@@ -37,6 +37,7 @@ class Ghost {
 
 		// Class Variables
 		bool alive = true;
+		bool edible = false;
 		int level = 0;
 
 		vector<int> homeTilePosition = { 0, 0 };
@@ -139,6 +140,7 @@ class Ghost {
 
 		// Getters
 		bool isAlive();
+		bool isEdible();
 		SpriteMode getMode();
 
 		vector<double> getPixelPosition();
@@ -150,6 +152,7 @@ class Ghost {
 		// Setters
 		void reverseDirection();
 		void setAlive(bool a);
+		void setEdible(bool e);
 		void setMode(SpriteMode m);
 		void setHomeTilePosition(vector<int> htp);
 		void setInitialTilePosition(vector<int> itp);

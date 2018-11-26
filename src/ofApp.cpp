@@ -41,6 +41,12 @@ void ofApp::update() {
 			inky.setMode(modeMarkers[modeIndex]);
 			clyde.setMode(modeMarkers[modeIndex]);
 
+			// Edible
+			blinky.setEdible(false);
+			pinky.setEdible(false);
+			inky.setEdible(false);
+			clyde.setEdible(false);
+
 			// Continue modeTimer
 			modeTimer.start();
 		}
@@ -81,9 +87,13 @@ void ofApp::update() {
 			// Set SpriteModes
 			pacman.setMode(FRIGHTENED);
 			blinky.setMode(FRIGHTENED);
+			blinky.setEdible(true);
 			pinky.setMode(FRIGHTENED);
+			pinky.setEdible(true);
 			inky.setMode(FRIGHTENED);
+			inky.setEdible(true);
 			clyde.setMode(FRIGHTENED);
+			clyde.setEdible(true);
 
 			// Check To See If It's A Change From ___ To FRIGHTENED Or FRIGHTENED To FRIGHTENED
 			if (!frightenedTimer.isStarted()) {
@@ -109,19 +119,33 @@ void ofApp::update() {
 			(pacman.getTilePosition() == inky.getTilePosition() && inky.isAlive()) ||
 			(pacman.getTilePosition() == clyde.getTilePosition() && clyde.isAlive())) {
 
-			if (pacman.getMode() == FRIGHTENED) {
-				if (pacman.getTilePosition() == blinky.getTilePosition()) {
-					blinky.setAlive(false);
+			if (pacman.getTilePosition() == blinky.getTilePosition() && blinky.isEdible()) {
+				if (blinky.getMode() != FRIGHTENED) {
+					std::cerr << "Error. Blinky Is Edible But Not In FRIGHTENED Mode." << std::endl;
+					std::exit(1);
 				}
-				else if (pacman.getTilePosition() == pinky.getTilePosition()) {
-					pinky.setAlive(false);
+				blinky.setAlive(false);
+			}
+			else if (pacman.getTilePosition() == pinky.getTilePosition() && pinky.isEdible()) {
+				if (pinky.getMode() != FRIGHTENED) {
+					std::cerr << "Error. Pinky Is Edible But Not In FRIGHTENED Mode." << std::endl;
+					std::exit(1);
 				}
-				else if (pacman.getTilePosition() == inky.getTilePosition()) {
-					inky.setAlive(false);
+				pinky.setAlive(false);
+			}
+			else if (pacman.getTilePosition() == inky.getTilePosition() && inky.isEdible()) {
+				if (inky.getMode() != FRIGHTENED) {
+					std::cerr << "Error. Inky Is Edible But Not In FRIGHTENED Mode." << std::endl;
+					std::exit(1);
 				}
-				else if (pacman.getTilePosition() == clyde.getTilePosition()) {
-					clyde.setAlive(false);
+				inky.setAlive(false);
+			}
+			else if (pacman.getTilePosition() == clyde.getTilePosition() && clyde.isEdible()) {
+				if (clyde.getMode() != FRIGHTENED) {
+					std::cerr << "Error. Clyde Is Edible But Not In FRIGHTENED Mode." << std::endl;
+					std::exit(1);
 				}
+				clyde.setAlive(false);
 			}
 			else {
 				// Decrement Lives
@@ -425,66 +449,81 @@ void ofApp::drawPacMan() {
 }
 
 void ofApp::drawGhosts() {
-	if (blinky.getMode() == FRIGHTENED) {
-		// Blue-White Flickering
-		if (frightenedTimer.count<std::chrono::milliseconds>() / 250 % 2) {
-			ofSetColor(25, 25, 255);
-		}
-		else {
-			ofSetColor(255, 255, 255);
-		}
-		
-		// Draw Ghosts
-		if (blinky.isAlive()) {
-			ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-		}
-
-		if (pinky.isAlive()) {
-			ofDrawCircle(pinky.getPixelPosition()[0] + centerOffset[0], pinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-		}
-
-		if (inky.isAlive()) {
-			ofDrawCircle(inky.getPixelPosition()[0] + centerOffset[0], inky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-		}
-
-		if (clyde.isAlive()) {
-			ofDrawCircle(clyde.getPixelPosition()[0] + centerOffset[0], clyde.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+	if (blinky.isAlive()) {
+		ofSetColor(255, 0, 0);
+		if (blinky.isEdible()) {
+			if (frightenedTimer.count<std::chrono::milliseconds>() / 250 % 2) {
+				ofSetColor(25, 25, 255);
+			}
+			else {
+				ofSetColor(255, 255, 255);
+			}
 		}
 	}
 	else {
-		// Draw Ghosts
-		if (blinky.isAlive()) {
-			ofSetColor(255, 0, 0);
-			ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-			//ofDrawRectangle(blinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-			//	blinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-			//	tileSize / 2, tileSize / 2);
-		}
+		ofSetColor(255, 255, 255);
+	}
+	ofDrawCircle(blinky.getPixelPosition()[0] + centerOffset[0], blinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+	//ofDrawRectangle(blinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+	//	blinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+	//	tileSize / 2, tileSize / 2);
 
-		if (pinky.isAlive()) {
-			ofSetColor(255, 185, 255);
-			ofDrawCircle(pinky.getPixelPosition()[0] + centerOffset[0], pinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-			//ofDrawRectangle(pinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-			//	pinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-			//	tileSize / 2, tileSize / 2);
-		}
-
-		if (inky.isAlive()) {
-			ofSetColor(0, 255, 255);
-			ofDrawCircle(inky.getPixelPosition()[0] + centerOffset[0], inky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-			//ofDrawRectangle(inky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-			//	inky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-			//	tileSize / 2, tileSize / 2);
-		}
-
-		if (clyde.isAlive()) {
-			ofSetColor(255, 185, 80);
-			ofDrawCircle(clyde.getPixelPosition()[0] + centerOffset[0], clyde.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-			//ofDrawRectangle(clyde.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-			//	clyde.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-			//	tileSize / 2, tileSize / 2);
+	if (pinky.isAlive()) {
+		ofSetColor(255, 185, 255);
+		if (pinky.isEdible()) {
+			if (frightenedTimer.count<std::chrono::milliseconds>() / 250 % 2) {
+				ofSetColor(25, 25, 255);
+			}
+			else {
+				ofSetColor(255, 255, 255);
+			}
 		}
 	}
+	else {
+		ofSetColor(255, 255, 255);
+	}
+	ofDrawCircle(pinky.getPixelPosition()[0] + centerOffset[0], pinky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+	//ofDrawRectangle(pinky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+	//	pinky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+	//	tileSize / 2, tileSize / 2);
+
+	if (inky.isAlive()) {
+		ofSetColor(0, 255, 255);
+		if (inky.isEdible()) {
+			if (frightenedTimer.count<std::chrono::milliseconds>() / 250 % 2) {
+				ofSetColor(25, 25, 255);
+			}
+			else {
+				ofSetColor(255, 255, 255);
+			}
+		}
+	}
+	else {
+		ofSetColor(255, 255, 255);
+	}
+	ofDrawCircle(inky.getPixelPosition()[0] + centerOffset[0], inky.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+	//ofDrawRectangle(inky.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+	//	inky.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+	//	tileSize / 2, tileSize / 2);
+
+	if (clyde.isAlive()) {
+		ofSetColor(255, 185, 80);
+		if (clyde.isEdible()) {
+			if (frightenedTimer.count<std::chrono::milliseconds>() / 250 % 2) {
+				ofSetColor(25, 25, 255);
+			}
+			else {
+				ofSetColor(255, 255, 255);
+			}
+		}
+	}
+	else {
+		ofSetColor(255, 255, 255);
+	}
+	ofDrawCircle(clyde.getPixelPosition()[0] + centerOffset[0], clyde.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+	//ofDrawRectangle(clyde.getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+	//	clyde.getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+	//	tileSize / 2, tileSize / 2);
 }
 
 void ofApp::drawGameOver() {

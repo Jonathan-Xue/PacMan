@@ -25,6 +25,7 @@ void Ghost::update() {
 	// Check To See If Ghost Should Be Alive
 	if (!alive && tilePosition == targetTile) {
 		alive = true;
+		edible = false;
 	}
 }
 
@@ -214,6 +215,7 @@ void Ghost::adjustBounds() {
 
 void Ghost::resetLevel(int l) {
 	alive = true;
+	edible = false;
 	level = l;
 
 	mode = SCATTER;
@@ -226,6 +228,7 @@ void Ghost::resetLevel(int l) {
 
 void Ghost::resetGame() {
 	alive = true;
+	edible = false;
 	level = 0;
 
 	mode = SCATTER;
@@ -246,6 +249,10 @@ void Ghost::resize(int w, int h, int ts) {
 
 bool Ghost::isAlive() {
 	return alive;
+}
+
+bool Ghost::isEdible() {
+	return edible;
 }
 
 SpriteMode Ghost::getMode() {
@@ -275,6 +282,10 @@ void Ghost::reverseDirection() {
 
 void Ghost::setAlive(bool a) {
 	alive = a;
+}
+
+void Ghost::setEdible(bool e) {
+	edible = e;
 }
 
 void Ghost::setMode(SpriteMode m) {
