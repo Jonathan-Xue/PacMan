@@ -1,13 +1,23 @@
+#include <SoftwareSerial.h>
+
+// Bluetooth Vars
+const int txPin = 2;
+const int rxPin = 3;
+SoftwareSerial BTSerial(rxPin, txPin);
+
+// Joystick Vars
 int xPin = A1;
 int yPin = A0;
 
+// Output Vars
 String message = "";
 int xVal = 0;
 int yVal = 0;
 
 void setup() {
   // initialize serial communications at 9600 bps:
-  Serial.begin(9600); 
+  Serial.begin(4800);
+  BTSerial.begin(9600); 
   
   pinMode(xPin, INPUT);
   pinMode(yPin, INPUT);  
@@ -33,7 +43,8 @@ void loop() {
       }
     }
 
-    Serial.println(message);  
+    Serial.println(message);
+    BTSerial.println(message);
     delay(50);
   }
 }

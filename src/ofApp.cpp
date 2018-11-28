@@ -43,7 +43,7 @@ void ofApp::update() {
 		}
 
 		// Force Entire Message To Be Read
-		while (incomingMessage) {
+		if (incomingMessage) {
 			while (serial.available()) {
 				char character = (char)serial.readByte();
 				if (character == '\n') {
@@ -65,8 +65,10 @@ void ofApp::update() {
 	// Handle serialMessage
 	if (currentState == IN_PROGRESS) {
 		if (serialMessage != "") {
-			keyPressed(std::stoul(serialMessage, nullptr, 16));
-			serialMessage = "";
+			if (!incomingMessage) {
+				keyPressed(std::stoul(serialMessage, nullptr, 16));
+				serialMessage = "";
+			}
 		}
 	}
 

@@ -63,7 +63,7 @@ class ofApp : public ofBaseApp {
 		vector<int> centerOffset{ 0, 0 };
 
 		// OfSerial
-		const string port = "COM4";
+		const string port = "COM5";
 		const int baudRate = 9600;
 		ofSerial serial;
 		string serialMessage = "";
