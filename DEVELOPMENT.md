@@ -11,6 +11,7 @@
 	* Frightened Phase
 
 ### Optional Enhancements
+* Arduino Joystick Control
 * Highscore File
 * Music Framework
 
@@ -21,7 +22,6 @@
 	* Staggered Release
 
 ### Optional Enhancements
-* Arduino Joystick Control
 
 ## TODO: Long-Term
 ### Optional Enhancements

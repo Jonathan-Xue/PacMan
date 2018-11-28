@@ -19,15 +19,58 @@ void ofApp::setup() {
 
 	// Font - Loaded In windowsResized
 	ofTrueTypeFont::setGlobalDpi(72);
-
+	
 	// Set currentState
 	currentState = START;
 
 	// Resize
 	windowResized(screenWidth, screenHeight);
+
+	// Setup Arduino
+	setupSerial();
+}
+
+void ofApp::setupSerial() {
+	serial.listDevices();
+	serial.setup(port, baudRate);
 }
 
 void ofApp::update() {
+	// Read Message From Serial
+	if (serial.isInitialized()) {
+		if (serial.available()) {
+			incomingMessage = true;
+		}
+
+		// Force Entire Message To Be Read
+		while (incomingMessage) {
+			while (serial.available()) {
+				char character = (char)serial.readByte();
+				if (character == '\n') {
+					incomingMessage = false;
+					break;
+				}
+				else {
+					if (character != '\r' || character != '\t') {
+						serialMessage += character;
+					}
+				}
+			}
+		}
+	}
+	else {
+		setupSerial();
+	}
+
+	// Handle serialMessage
+	if (currentState == IN_PROGRESS) {
+		if (serialMessage != "") {
+			keyPressed(std::stoul(serialMessage, nullptr, 16));
+			serialMessage = "";
+		}
+	}
+
+	// Game Logic
 	if (currentState == IN_PROGRESS) {
 		// SpriteMode
 		if (frightenedTimer.count<std::chrono::seconds>() >= frightenedTimeMarker) {

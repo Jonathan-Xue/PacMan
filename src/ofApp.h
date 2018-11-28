@@ -30,6 +30,7 @@ class ofApp : public ofBaseApp {
 	public:
 		// Setup
 		void setup();
+		void setupSerial();
 
 		// Game Loop
 		void update();
@@ -60,6 +61,13 @@ class ofApp : public ofBaseApp {
 		int tileSize = 0;
 
 		vector<int> centerOffset{ 0, 0 };
+
+		// OfSerial
+		const string port = "COM4";
+		const int baudRate = 9600;
+		ofSerial serial;
+		string serialMessage = "";
+		bool incomingMessage = false;
 
 		// Timers
 		const vector<SpriteMode> modeMarkers{ SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE };
