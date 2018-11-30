@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "ofMain.h"
+#include "button.h"
 
 #include "enums.h"
 #include "cxxTimer.h"
