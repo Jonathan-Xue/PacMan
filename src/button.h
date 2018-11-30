@@ -11,6 +11,8 @@ using std::vector;
 class Button {
 
 	public:
+		ofEvent<ofVec2f> clicked;
+		
 		// Default constructor
 		Button();
 
@@ -38,7 +40,7 @@ class Button {
 		// Getters
 		string getName();
 		vector<int> getPosition();
-		vector<int> getSize();
+		vector<int> getSize();\
 
 		// Setters
 		void setBackgroundColor(const ofColor &bColor);
@@ -52,6 +54,16 @@ class Button {
 		void setPosition(int x, int y);
 		void setSize(int w, int h);
 
+		void setVisible(bool v);
+
+		// Events
+		void mouseMoved(ofMouseEventArgs & args);
+		void mouseDragged(ofMouseEventArgs & args);
+		void mousePressed(ofMouseEventArgs & args);
+		void mouseReleased(ofMouseEventArgs & args);
+		void mouseScrolled(ofMouseEventArgs & args);
+		void mouseEntered(ofMouseEventArgs & args);
+		void mouseExited(ofMouseEventArgs & args);
 
 	private:
 		ofColor backgroundColor = ofColor(255, 255, 255);
@@ -66,5 +78,7 @@ class Button {
 		int yPos = 0;
 		int width = 0;
 		int height = 0;
+
+		bool visible = false;
 
 };

@@ -182,6 +182,7 @@
   <ItemGroup>
     <ClCompile Include="src\blinky.cpp" />
     <ClCompile Include="src\board.cpp" />
+    <ClCompile Include="src\button.cpp" />
     <ClCompile Include="src\clyde.cpp" />
     <ClCompile Include="src\ghost.cpp" />
     <ClCompile Include="src\inky.cpp" />
@@ -194,6 +195,7 @@
   <ItemGroup>
     <ClInclude Include="src\blinky.h" />
     <ClInclude Include="src\board.h" />
+    <ClInclude Include="src\button.h" />
     <ClInclude Include="src\clyde.h" />
     <ClInclude Include="src\cxxTimer.h" />
     <ClInclude Include="src\enums.h" />

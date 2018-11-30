@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "ofMain.h"
+#include "ofEvents.h"
 #include "button.h"
 
 #include "enums.h"
@@ -44,8 +45,11 @@ class ofApp : public ofBaseApp {
 			WASD->directional control
 		*/
 		void keyPressed(int key);
-		void mousePressed(int x, int y, int button);
-		void windowResized(int w, int h);	
+		void windowResized(int w, int h);
+
+		// Event Listeners
+		void startButtonListener(ofVec2f &e);
+		void instructionsButtonListener(ofVec2f &e);
 
 	private:
 		// OpenFramework Variables
@@ -64,11 +68,15 @@ class ofApp : public ofBaseApp {
 		vector<int> centerOffset{ 0, 0 };
 
 		// OfSerial
-		const string port = "COM5";
+		const string port = "COM6";
 		const int baudRate = 9600;
 		ofSerial serial;
 		string serialMessage = "";
 		bool incomingMessage = false;
+		
+		// Buttons
+		Button startButton;
+		Button instructionsButton;
 
 		// Timers
 		const vector<SpriteMode> modeMarkers{ SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE };

@@ -8,6 +8,14 @@ void ofApp::setup() {
 	// Set frameRate
 	ofSetFrameRate(frameRate);
 
+	// Set currentState
+	currentState = START;
+
+	// Font
+	ofTrueTypeFont::setGlobalDpi(72);
+	crackman.load("crackman.ttf", 12, true, true);
+	emulogic.load("emulogic.ttf", 12, true, true);
+
 	// Background Color
 	ofBackground(0, 0, 0);
 	ofSetBackgroundAuto(false);
@@ -17,21 +25,27 @@ void ofApp::setup() {
 	backgroundMusic.setLoop(true);
 	// backgroundMusic.play();
 
-	// Font - Loaded In windowsResized
-	ofTrueTypeFont::setGlobalDpi(72);
-	
-	// Set currentState
-	currentState = START;
+	// Setup Arduino
+	setupSerial();
+
+	// Setup Buttons
+	startButton.setup("Start", ofColor(255, 255, 255), "emulogic.ttf", ofColor(0, 0, 0), 12);
+	ofAddListener(startButton.clicked, this, &ofApp::startButtonListener);
+
+	instructionsButton.setup("Instructions", ofColor(255, 255, 255), "emulogic.ttf", ofColor(0, 0, 0), 12);
+	ofAddListener(instructionsButton.clicked, this, &ofApp::instructionsButtonListener);
 
 	// Resize
 	windowResized(screenWidth, screenHeight);
-
-	// Setup Arduino
-	setupSerial();
 }
 
 void ofApp::setupSerial() {
 	serial.listDevices();
+	for (ofSerialDeviceInfo device : serial.getDeviceList()) {
+		std::cout << "Device Name: " << device.getDeviceName() << 
+			"        Device ID: " << device.getDeviceID() << 
+			"        Device Path: " << device.getDevicePath() << std::endl;
+	}
 	serial.setup(port, baudRate);
 }
 
@@ -48,6 +62,7 @@ void ofApp::update() {
 				char character = (char)serial.readByte();
 				if (character == '\n') {
 					incomingMessage = false;
+					std::cout << serialMessage << std::endl;
 					break;
 				}
 				else {
@@ -57,9 +72,6 @@ void ofApp::update() {
 				}
 			}
 		}
-	}
-	else {
-		setupSerial();
 	}
 
 	// Handle serialMessage
@@ -208,6 +220,11 @@ void ofApp::update() {
 }
 
 void ofApp::draw() {
+	// Set All Button's Visibility To False
+	startButton.setVisible(false);
+	instructionsButton.setVisible(false);
+
+	// State-Based Drawing Calls
 	switch (currentState) {
 	case START:
 		drawLandingPage();
@@ -316,10 +333,6 @@ void ofApp::keyPressed(int key) {
 	}
 }
 
-void ofApp::mousePressed(int x, int y, int button) {
-
-}
-
 void ofApp::windowResized(int w, int h) {
 	// Update Width & Height
 	screenWidth = w;
@@ -336,11 +349,57 @@ void ofApp::windowResized(int w, int h) {
 	centerOffset[0] = (screenWidth - (board[0].size() * tileSize)) / 2;
 	centerOffset[1] = (screenHeight - (board.size() * tileSize)) / 2;
 
-	// Resize
+	// Button Resize
+	startButton.setPosition(0, 0);
+	startButton.setSize(250, 100);
+	startButton.setFontSize(12);
+
+	instructionsButton.setPosition(0, 150);
+	instructionsButton.setSize(250, 100);
+	instructionsButton.setFontSize(12);
+
+	// Sprite Resize
 	pacman.resize(screenWidth, screenHeight, tileSize);
 	for (Ghost *g : ghostsVector) {
 		(*g).resize(screenWidth, screenHeight, tileSize);
 	}
+}
+
+void ofApp::startButtonListener(ofVec2f &e) {
+	// Set Sprites' homeTilePosition && initialTilePosition
+	pacman.setInitialPosition(vector<int>{ 26, 14 });
+	for (Ghost *g : ghostsVector) {
+		if ((*g).getGhostType() == BLINKY) {
+			(*g).setHomeTilePosition(vector<int>{ 0, (int)board[0].size() - 1 - 2 });
+			(*g).setInitialTilePosition(vector<int>{ 4, 1 });
+		}
+		else if ((*g).getGhostType() == PINKY) {
+			(*g).setHomeTilePosition(vector<int>{ 0, 2 });
+			(*g).setInitialTilePosition(vector<int>{ 32, 26});
+		}
+		else if ((*g).getGhostType() == INKY) {
+			(*g).setHomeTilePosition(vector<int>{ (int)board.size() - 1, (int)board[0].size() - 1 });
+			(*g).setInitialTilePosition(vector<int>{ 4, 26 });
+		}
+		else if ((*g).getGhostType() == CLYDE) {
+			(*g).setHomeTilePosition(vector<int>{ (int)board.size() - 1, 0 });
+			(*g).setInitialTilePosition(vector<int>{ 32, 1 });
+		}
+	}
+
+	// Set Sprites' initialTilePosition
+	vector<vector<int>> ghostInitialTilePositions = vector<vector<int>>{ {4, 1}, {32, 26}, {4, 26}, {32, 1} };
+	for (size_t i = 0; i < ghostsVector.size(); i++) {
+		(*(ghostsVector[i])).setInitialTilePosition(ghostInitialTilePositions[i]);
+	}
+
+	// Reset Game
+	resetGame();
+}
+
+void ofApp::instructionsButtonListener(ofVec2f &e) {
+	std::cout << "HI" << std::endl;
+	currentState = INSTRUCTIONS;
 }
 
 // Private Methods
@@ -354,6 +413,13 @@ void ofApp::drawLandingPage() {
 	crackman.drawString("PAC-MAN",
 		(screenWidth - crackman.stringWidth("PAC-MAN")) / 2,
 		(screenHeight - crackman.stringHeight("PAC-MAN")) / 2);
+
+	// Buttons
+	startButton.setVisible(true);
+	startButton.draw();
+
+	instructionsButton.setVisible(false);
+	instructionsButton.draw();
 }
 
 void ofApp::drawInstructions() {
@@ -488,9 +554,9 @@ void ofApp::drawGhosts() {
 			//ofSetColor((*g).getColor()[0] * 0.75, (*g).getColor()[1] * 0.75, (*g).getColor()[2] * 0.75);
 		}
 		ofDrawCircle((*g).getPixelPosition()[0] + centerOffset[0], (*g).getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-		ofDrawRectangle((*g).getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-			(*g).getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-			tileSize / 2, tileSize / 2);
+		//ofDrawRectangle((*g).getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+		//	(*g).getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+		//	tileSize / 2, tileSize / 2);
 	}
 }
 

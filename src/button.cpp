@@ -5,6 +5,7 @@ Button::Button(){}
 Button::~Button(){}
 
 void Button::setup(string n, const ofColor &bColor, const std::string& fFile, const ofColor &fColor, int fSize) {
+	ofRegisterMouseEvents(this);
 	name = n;
 	backgroundColor = bColor;
 
@@ -22,7 +23,7 @@ void Button::draw() {
 	ofSetColor(fontColor);
 	fontType.drawString(name, 
 		(width - fontType.stringWidth(name)) / 2 + xPos,
-		(height - fontType.stringHeight(name)) / 2 + yPos);
+		(height - fontType.stringHeight(name)) / 2 + fontType.stringHeight(name) + yPos);
 }
 
 string Button::getName() {
@@ -78,3 +79,28 @@ void Button::setSize(int w, int h) {
 	width = w;
 	height = h;
 }
+
+void Button::setVisible(bool v) {
+	visible = v;
+}
+
+void Button::mouseMoved(ofMouseEventArgs & args) {}
+
+void Button::mouseDragged(ofMouseEventArgs & args) {}
+
+void Button::mousePressed(ofMouseEventArgs & args) {
+	if (visible) {
+		if (args.x > xPos && args.x < xPos + width && args.y > yPos && args.y < yPos + width) {
+			ofVec2f mousePos = ofVec2f(args.x, args.y);
+			ofNotifyEvent(clicked, mousePos, this);
+		}
+	}
+}
+
+void Button::mouseReleased(ofMouseEventArgs & args) {}
+
+void Button::mouseScrolled(ofMouseEventArgs & args) {}
+
+void Button::mouseEntered(ofMouseEventArgs & args) {}
+
+void Button::mouseExited(ofMouseEventArgs & args) {}
