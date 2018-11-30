@@ -62,7 +62,6 @@ void ofApp::update() {
 				char character = (char)serial.readByte();
 				if (character == '\n') {
 					incomingMessage = false;
-					std::cout << serialMessage << std::endl;
 					break;
 				}
 				else {
@@ -398,7 +397,6 @@ void ofApp::startButtonListener(ofVec2f &e) {
 }
 
 void ofApp::instructionsButtonListener(ofVec2f &e) {
-	std::cout << "HI" << std::endl;
 	currentState = INSTRUCTIONS;
 }
 
