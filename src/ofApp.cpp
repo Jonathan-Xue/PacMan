@@ -39,8 +39,8 @@ void ofApp::setup() {
 void ofApp::setupSerial() {
 	serial.listDevices();
 	for (ofSerialDeviceInfo device : serial.getDeviceList()) {
-		std::cout << "Device Name: " << device.getDeviceName() << 
-			"        Device ID: " << device.getDeviceID() << 
+		std::cout << "Device Name: " << device.getDeviceName() <<
+			"        Device ID: " << device.getDeviceID() <<
 			"        Device Path: " << device.getDevicePath() << std::endl;
 	}
 	serial.setup(port, baudRate);
@@ -309,7 +309,7 @@ void ofApp::windowResized(int w, int h) {
 	// Button Resize
 	startButton.setPosition(0, 0);
 	startButton.setSize(200, 75);
-	startButton.setFontSize(75/4);
+	startButton.setFontSize(75 / 4);
 
 	// Sprite Resize
 	pacman.resize(screenWidth, screenHeight, tileSize);
@@ -368,7 +368,7 @@ void ofApp::drawLandingPage() {
 	// Buttons
 	startButton.setVisible(true);
 	startButton.setPosition(
-		(screenWidth - startButton.getSize()[0]) / 2, 
+		(screenWidth - startButton.getSize()[0]) / 2,
 		(screenHeight - sumOfElementHeights) / 2 + crackman.stringHeight("PAC-MAN") + verticalButtonBuffer);
 	startButton.draw();
 }
@@ -471,7 +471,7 @@ void ofApp::drawMisc() {
 }
 
 void ofApp::drawPacMan() {
-	ofSetColor(255, 255, 0);
+	ofSetColor(pacman.getDefaultColor());
 	ofDrawCircle(pacman.getPixelPosition()[0] + centerOffset[0], pacman.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
 }
 

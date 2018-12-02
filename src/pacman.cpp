@@ -182,6 +182,10 @@ void Pacman::resetGame() {
 	queuedVelocity = { -1, 0 };
 }
 
+ofColor Pacman::getDefaultColor() {
+	return defaultColor;
+}
+
 SpriteMode Pacman::getMode() {
 	return mode;
 }

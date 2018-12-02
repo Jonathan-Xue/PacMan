@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ofMain.h"
+
 #include "enums.h"
 
 #include "tile.h"
@@ -83,6 +85,8 @@ class Pacman {
 		void resize(int w, int h, int ts);
 
 		// Getters
+		ofColor getDefaultColor();
+
 		SpriteMode getMode();
 		int getLives();
 		int getScore();
@@ -118,6 +122,8 @@ class Pacman {
 		vector<vector<Tile>> *board;
 
 		// Class Variables
+		ofColor defaultColor = ofColor(255, 255, 0);
+
 		const int maxLives = 3;
 		int level = 0;
 		int lives = 0;
