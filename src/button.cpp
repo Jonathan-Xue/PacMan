@@ -90,7 +90,7 @@ void Button::mouseDragged(ofMouseEventArgs & args) {}
 
 void Button::mousePressed(ofMouseEventArgs & args) {
 	if (visible) {
-		if (args.x > xPos && args.x < xPos + width && args.y > yPos && args.y < yPos + width) {
+		if (args.x > xPos && args.x < xPos + width && args.y > yPos && args.y < yPos + height) {
 			ofVec2f mousePos = ofVec2f(args.x, args.y);
 			ofNotifyEvent(clicked, mousePos, this);
 		}
