@@ -253,8 +253,8 @@ GhostType Ghost::getGhostType() {
 	return ghostType;
 }
 
-vector<int> Ghost::getColor() {
-	return color;
+ofColor Ghost::getDefaultColor() {
+	return defaultColor;
 }
 
 bool Ghost::isAlive() {

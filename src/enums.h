@@ -2,7 +2,6 @@
 
 enum GameState {
 	START,
-	INSTRUCTIONS,
 	IN_PROGRESS,
 	PAUSED,
 	GAME_OVER,

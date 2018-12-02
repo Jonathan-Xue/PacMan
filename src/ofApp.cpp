@@ -32,9 +32,6 @@ void ofApp::setup() {
 	startButton.setup("Start", ofColor(255, 255, 255), "emulogic.ttf", ofColor(0, 0, 0), 12);
 	ofAddListener(startButton.clicked, this, &ofApp::startButtonListener);
 
-	instructionsButton.setup("Instructions", ofColor(255, 255, 255), "emulogic.ttf", ofColor(0, 0, 0), 12);
-	ofAddListener(instructionsButton.clicked, this, &ofApp::instructionsButtonListener);
-
 	// Resize
 	windowResized(screenWidth, screenHeight);
 }
@@ -221,15 +218,11 @@ void ofApp::update() {
 void ofApp::draw() {
 	// Set All Button's Visibility To False
 	startButton.setVisible(false);
-	instructionsButton.setVisible(false);
 
 	// State-Based Drawing Calls
 	switch (currentState) {
 	case START:
 		drawLandingPage();
-		break;
-	case INSTRUCTIONS:
-		drawInstructions();
 		break;
 	case IN_PROGRESS:
 		// Fallthrough Intended
@@ -255,42 +248,7 @@ void ofApp::draw() {
 void ofApp::keyPressed(int key) {
 	// TODO: Remove
 	if (key == OF_KEY_CONTROL) {
-		// Flip State
-		if (currentState == START) {
-			currentState = INSTRUCTIONS;
-		}
-		else if (currentState == INSTRUCTIONS) {
-			// Set Sprites' homeTilePosition && initialTilePosition
-			pacman.setInitialPosition(vector<int>{ 26, 14 });
-			for (Ghost *g : ghostsVector) {
-				if ((*g).getGhostType() == BLINKY) {
-					(*g).setHomeTilePosition(vector<int>{ 0, (int)board[0].size() - 1 - 2 });
-					(*g).setInitialTilePosition(vector<int>{ 4, 1 });
-				}
-				else if ((*g).getGhostType() == PINKY) {
-					(*g).setHomeTilePosition(vector<int>{ 0, 2 });
-					(*g).setInitialTilePosition(vector<int>{ 32, 26});
-				}
-				else if ((*g).getGhostType() == INKY) {
-					(*g).setHomeTilePosition(vector<int>{ (int)board.size() - 1, (int)board[0].size() - 1 });
-					(*g).setInitialTilePosition(vector<int>{ 4, 26 });
-				}
-				else if ((*g).getGhostType() == CLYDE) {
-					(*g).setHomeTilePosition(vector<int>{ (int)board.size() - 1, 0 });
-					(*g).setInitialTilePosition(vector<int>{ 32, 1 });
-				}
-			}
-
-			// Set Sprites' initialTilePosition
-			vector<vector<int>> ghostInitialTilePositions = vector<vector<int>>{ {4, 1}, {32, 26}, {4, 26}, {32, 1} };
-			for (size_t i = 0; i < ghostsVector.size(); i++) {
-				(*(ghostsVector[i])).setInitialTilePosition(ghostInitialTilePositions[i]);
-			}
-
-			// Reset Game
-			resetGame();
-		}
-		else if (currentState == GAME_OVER) {
+		if (currentState == GAME_OVER) {
 			currentState = HIGH_SCORE;
 		}
 		else if (currentState == HIGH_SCORE) {
@@ -350,12 +308,8 @@ void ofApp::windowResized(int w, int h) {
 
 	// Button Resize
 	startButton.setPosition(0, 0);
-	startButton.setSize(250, 100);
-	startButton.setFontSize(12);
-
-	instructionsButton.setPosition(0, 150);
-	instructionsButton.setSize(250, 100);
-	instructionsButton.setFontSize(12);
+	startButton.setSize(200, 75);
+	startButton.setFontSize(75/4);
 
 	// Sprite Resize
 	pacman.resize(screenWidth, screenHeight, tileSize);
@@ -396,10 +350,6 @@ void ofApp::startButtonListener(ofVec2f &e) {
 	resetGame();
 }
 
-void ofApp::instructionsButtonListener(ofVec2f &e) {
-	currentState = INSTRUCTIONS;
-}
-
 // Private Methods
 void ofApp::drawLandingPage() {
 	// Reset Canvas
@@ -407,29 +357,20 @@ void ofApp::drawLandingPage() {
 	ofDrawRectangle(0, 0, screenWidth, screenHeight);
 
 	// "PACMAN" Horizontally And Vertically Centered With Respect To The Screen
+	int verticalButtonBuffer = 25;
+	int sumOfElementHeights = crackman.stringHeight("PAC-MAN") + startButton.getSize()[1] + verticalButtonBuffer;
+
 	ofSetColor(255, 255, 0);
 	crackman.drawString("PAC-MAN",
 		(screenWidth - crackman.stringWidth("PAC-MAN")) / 2,
-		(screenHeight - crackman.stringHeight("PAC-MAN")) / 2);
+		(screenHeight - sumOfElementHeights) / 2 + crackman.stringHeight("PAC-MAN"));
 
 	// Buttons
 	startButton.setVisible(true);
+	startButton.setPosition(
+		(screenWidth - startButton.getSize()[0]) / 2, 
+		(screenHeight - sumOfElementHeights) / 2 + crackman.stringHeight("PAC-MAN") + verticalButtonBuffer);
 	startButton.draw();
-
-	instructionsButton.setVisible(false);
-	instructionsButton.draw();
-}
-
-void ofApp::drawInstructions() {
-	// Reset Canvas
-	ofSetColor(0, 0, 0);
-	ofDrawRectangle(0, 0, screenWidth, screenHeight);
-
-	// "INSTRUCTIONS"
-	ofSetColor(255, 255, 255);
-	emulogic.drawString("INSTRUCTIONS",
-		(screenWidth - emulogic.stringWidth("INSTRUCTIONS")) / 2,
-		(screenHeight - emulogic.stringHeight("INSTRUCTIONS")) / 2);
 }
 
 void ofApp::drawGameBoard() {
@@ -537,7 +478,7 @@ void ofApp::drawPacMan() {
 void ofApp::drawGhosts() {
 	for (Ghost *g : ghostsVector) {
 		if ((*g).isAlive()) {
-			ofSetColor((*g).getColor()[0], (*g).getColor()[1], (*g).getColor()[2]);
+			ofSetColor((*g).getDefaultColor());
 			if ((*g).isEdible()) {
 				if (frightenedTimer.count<std::chrono::milliseconds>() / 250 % 2) {
 					ofSetColor(25, 25, 255);

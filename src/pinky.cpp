@@ -4,7 +4,7 @@ Pinky::Pinky() {}
 
 Pinky::Pinky(vector<vector<Tile>> *b, Pacman *p) {
 	ghostType = PINKY;
-	color = vector<int>{255, 185, 255};
+	defaultColor = ofColor(255, 185, 255);
 	board = b;
 	pacman = p;
 }

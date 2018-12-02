@@ -12,6 +12,7 @@
 
 ### Optional Enhancements
 * Arduino Joystick Control
+	* Bluetooth
 * Highscore File
 * Music Framework
 

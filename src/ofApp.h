@@ -17,6 +17,7 @@
 
 #include "pacman.h"
 
+#include "ghost.h"
 #include "blinky.h"
 #include "clyde.h"
 #include "inky.h"
@@ -49,7 +50,6 @@ class ofApp : public ofBaseApp {
 
 		// Event Listeners
 		void startButtonListener(ofVec2f &e);
-		void instructionsButtonListener(ofVec2f &e);
 
 	private:
 		// OpenFramework Variables
@@ -68,7 +68,7 @@ class ofApp : public ofBaseApp {
 		vector<int> centerOffset{ 0, 0 };
 
 		// OfSerial
-		const string port = "COM6";
+		const string port = "COM5";
 		const int baudRate = 9600;
 		ofSerial serial;
 		string serialMessage = "";
@@ -76,7 +76,6 @@ class ofApp : public ofBaseApp {
 		
 		// Buttons
 		Button startButton;
-		Button instructionsButton;
 
 		// Timers
 		const vector<SpriteMode> modeMarkers{ SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE };
@@ -106,7 +105,6 @@ class ofApp : public ofBaseApp {
 
 		// Helper Methods For Display Render
 		void drawLandingPage();
-		void drawInstructions();
 		void drawGameBoard();
 		void drawMisc();
 		void drawPacMan();

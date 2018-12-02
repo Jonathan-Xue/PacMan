@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ofMain.h"
+
 #include "enums.h"
 
 #include "tile.h"
@@ -37,7 +39,7 @@ class Ghost {
 		Pacman *pacman;
 
 		// Class Variables
-		vector<int> color = { 255, 255, 255 };
+		ofColor defaultColor = ofColor(255, 255, 255);
 
 		bool alive = true;
 		bool edible = false;
@@ -143,7 +145,7 @@ class Ghost {
 
 		// Getters
 		GhostType getGhostType();
-		vector<int> getColor();
+		ofColor getDefaultColor();
 
 		bool isAlive();
 		bool isEdible();
