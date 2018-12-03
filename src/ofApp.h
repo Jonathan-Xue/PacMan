@@ -54,6 +54,7 @@ class ofApp : public ofBaseApp {
 	private:
 		// OpenFramework Variables
 		const int frameRate = 60;
+		int currentFrame = 0;
 
 		ofSoundPlayer backgroundMusic;
 		GameState currentState;
@@ -102,6 +103,16 @@ class ofApp : public ofBaseApp {
 		vector<Ghost*> ghostsVector = vector<Ghost*>{&blinky, &pinky, &inky, &clyde };
 
 		int level = 0;
+
+		// drawPacMan Variables
+		int angleDisplacement = 0;
+		
+		const int maxDegree = 60;
+		int pacmanDegree = 0;
+
+		const int cyclesPerSecond = 5;
+		const int degreeIncrement = (2 * cyclesPerSecond) * (maxDegree / frameRate);
+		bool degreeFlag = true;
 
 		// Helper Methods For Display Render
 		void drawLandingPage();
