@@ -54,7 +54,6 @@ class ofApp : public ofBaseApp {
 	private:
 		// OpenFramework Variables
 		const int frameRate = 60;
-		int currentFrame = 0;
 
 		ofSoundPlayer backgroundMusic;
 		GameState currentState;

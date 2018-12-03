@@ -47,13 +47,6 @@ void ofApp::setupSerial() {
 }
 
 void ofApp::update() {
-	// Adjust currentFrame
-	currentFrame++;
-	if (currentFrame % frameRate == 0) {
-		currentFrame = 0;
-		std::cout << currentFrame << std::endl;
-	}
-
 	// Read Message From Serial
 	if (serial.isInitialized()) {
 		if (serial.available()) {
@@ -269,7 +262,6 @@ void ofApp::keyPressed(int key) {
 
 	// Pause || WASD
 	int upper_key = toupper(key);
-	std::cout << char(upper_key) << std::endl;
 	if (upper_key == 'P') {
 		// Flip current_state_
 		if (currentState == IN_PROGRESS) {
