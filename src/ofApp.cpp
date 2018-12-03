@@ -71,12 +71,10 @@ void ofApp::update() {
 	}
 
 	// Handle serialMessage
-	if (currentState == IN_PROGRESS) {
-		if (serialMessage != "") {
-			if (!incomingMessage) {
-				keyPressed(std::stoul(serialMessage, nullptr, 16));
-				serialMessage = "";
-			}
+	if (serialMessage != "") {
+		if (!incomingMessage) {
+			keyPressed(std::stoul(serialMessage, nullptr, 16));
+			serialMessage = "";
 		}
 	}
 
@@ -264,6 +262,7 @@ void ofApp::keyPressed(int key) {
 
 	// Pause || WASD
 	int upper_key = toupper(key);
+	std::cout << char(upper_key) << std::endl;
 	if (upper_key == 'P') {
 		// Flip current_state_
 		if (currentState == IN_PROGRESS) {

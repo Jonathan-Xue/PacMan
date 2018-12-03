@@ -1,13 +1,16 @@
 #include <SoftwareSerial.h>
 
-// Debug
-bool debugMode = false;
-
 // Bluetooth Pins
 const int rxPin = 2;
 const int txPin = 3;
 const int statePin = 4;
-//SoftwareSerial BTSerial(rxPin, txPin);
+SoftwareSerial BTSerial(rxPin, txPin);
+
+// Button Pins
+const int topButtonPin = A0;
+const int leftButtonPin = A1;
+const int bottomButtonPin = A2;
+const int rightButtonPin = A3;
 
 // Joystick Pins
 const int xPin = A1; // Rotated 90 Degrees CCW
@@ -26,17 +29,14 @@ bool rotated = true; // Standard VS 90 Degrees CW
 int xVal = 0;
 int yVal = 0;
 
-// Output Vars
-String message = "";
-
 void setup() {
-  // initialize serial communications at 9600 bps:
-  if (debugMode){
-    Serial.begin(9600);
-  } else {
-    //BTSerial.begin(9600); 
-    Serial1.begin(9600);
-  }
+  // Initialize Serial Communication At 9600 Baud Rate
+  BTSerial.begin(9600);
+
+  pinMode (topButtonPin, INPUT);
+  pinMode (leftButtonPin, INPUT);
+  pinMode (bottomButtonPin, INPUT);
+  pinMode (rightButtonPin, INPUT);
 
   pinMode (statePin, INPUT);
   pinMode(xPin, INPUT);
@@ -61,6 +61,24 @@ void loop() {
     analogWrite(bLEDPin, 0);
   }
 
+  // Buttons
+  if (digitalRead(topButtonPin) == HIGH){
+    delay(100);
+    
+    BTSerial.println("0x50"); // "P"
+  } else if (digitalRead(leftButtonPin) == HIGH){
+    delay(100);
+    
+    BTSerial.println("0x50"); // "P"
+  } else if (digitalRead(bottomButtonPin) == HIGH){
+    delay(100);
+    
+    BTSerial.println("0x50"); // "P"
+  } else if (digitalRead(rightButtonPin) == HIGH){
+    delay(100);
+    
+    BTSerial.println("0x50"); // "P"
+  }
   
   // Joystick
   xVal = map(analogRead(xPin), 0, 1023, -100, 100);
@@ -70,45 +88,32 @@ void loop() {
     if (abs(xVal) > abs(yVal)){
       if (xVal > 0){
         if (!rotated){
-          message = "0x44"; //"D"
+          BTSerial.println("0x44"); // "D"
         } else {
-          message = "0x44"; //"D"
+          BTSerial.println("0x44"); // "D"
         }
       } else {
         if (!rotated){
-          message = "0x41"; //"A"
+          BTSerial.println("0x41"); // "A"
         } else {
-          message = "0x41"; //"A"
+          BTSerial.println("0x41"); // "A"
         }
       }
     } else {
       if (yVal > 0){
         if (!rotated){
-          message = "0x57"; //"W"
+          BTSerial.println("0x57"); // "W"
         } else {
-          message = "0x53"; //"S"
+          BTSerial.println("0x53"); // "S"
         }
       } else {
         if (!rotated){
-          message = "0x53"; //"S";
+          BTSerial.println("0x53"); // "S"
         } else {
-          message = "0x57"; //"W"
+          BTSerial.println("0x57"); // "W"
         }
       }
     }
-  }
-
-  // Transmit Message
-  if (message != ""){
-    if (debugMode){
-      Serial.println(message);
-    }
-    else {
-      //BTSerial.println(message);
-      Serial1.println(message);
-    }
-
-    message = "";
   }
 
   // Delay
