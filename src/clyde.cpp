@@ -13,16 +13,16 @@ Clyde::~Clyde() {}
 
 void Clyde::calculateTargetTile() {
 	if (mode == CHASE) {
-		double distance = calculateDistance(tileSize * ((*pacman).getTilePosition()[0] + 0.5),
-			tileSize * ((*pacman).getTilePosition()[1] + 0.5),
+		double distance = calculateDistance(tileSize * (pacman->getTilePosition()[0] + 0.5),
+			tileSize * (pacman->getTilePosition()[1] + 0.5),
 			tileSize * (tilePosition[0] + (currentTick[0] / maxTick)),
 			tileSize * (tilePosition[1] + (currentTick[1] / maxTick)));
 
 		if (distance < 8.0 * tileSize) {
-			targetTile = { (int)((*board).size() - 1), 0 };
+			targetTile = { (int)(board->size() - 1), 0 };
 		}
 		else {
-			targetTile = (*pacman).getTilePosition();
+			targetTile = pacman->getTilePosition();
 		}
 	}
 	else if (mode == SCATTER) {

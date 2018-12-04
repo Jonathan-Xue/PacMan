@@ -34,16 +34,16 @@ void Pacman::update() {
 
 void Pacman::eat() {
 	eatenPowerPellet = false;
-	if ((*board)[tilePosition[0]][tilePosition[1]].isStandardPellet()) {
+	if (board->[tilePosition[0]][tilePosition[1]].isStandardPellet()) {
 		score += 10;
-		(*board)[tilePosition[0]][tilePosition[1]].setStandardPellet(false);
+		board->[tilePosition[0]][tilePosition[1]].setStandardPellet(false);
 
 		// Flag
 		skipFrames = vector<bool>{ true, false, false };
 	}
-	else if ((*board)[tilePosition[0]][tilePosition[1]].isPowerPellet()) {
+	else if (board->[tilePosition[0]][tilePosition[1]].isPowerPellet()) {
 		score += 50;
-		(*board)[tilePosition[0]][tilePosition[1]].setPowerPellet(false);
+		board->[tilePosition[0]][tilePosition[1]].setPowerPellet(false);
 
 		// Mode
 		eatenPowerPellet = true;
@@ -81,25 +81,25 @@ bool Pacman::checkValidVelocity(vector<int> velocity) {
 	}
 	else if (velocity == vector<int>{0, -1}) {
 		// Up
-		if (tilePosition[0] - 1 < 0 || (*board)[tilePosition[0] - 1][tilePosition[1]].getID() == 1) {
+		if (tilePosition[0] - 1 < 0 || board->[tilePosition[0] - 1][tilePosition[1]].getID() == 1) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{-1, 0}) {
 		// Left
-		if (tilePosition[1] - 1 < 0 || (*board)[tilePosition[0]][tilePosition[1] - 1].getID() == 1) {
+		if (tilePosition[1] - 1 < 0 || board->[tilePosition[0]][tilePosition[1] - 1].getID() == 1) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{0, 1}) {
 		// Down
-		if (size_t(tilePosition[0] + 1) >= (*board).size() || (*board)[tilePosition[0] + 1][tilePosition[1]].getID() == 1) {
+		if (size_t(tilePosition[0] + 1) >= board->.size() || board->[tilePosition[0] + 1][tilePosition[1]].getID() == 1) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{1, 0}) {
 		// Right
-		if (size_t(tilePosition[1] + 1) >= (*board)[0].size() || (*board)[tilePosition[0]][tilePosition[1] + 1].getID() == 1) {
+		if (size_t(tilePosition[1] + 1) >= board->[0].size() || board->[tilePosition[0]][tilePosition[1] + 1].getID() == 1) {
 			return true;
 		}
 	}
@@ -141,17 +141,17 @@ void Pacman::move() {
 void Pacman::adjustBounds() {
 	// Vertical OutOfBounds
 	if (tilePosition[0] < 0) {
-		tilePosition[0] = (*board).size() - 1;
+		tilePosition[0] = board->.size() - 1;
 	}
-	else if (size_t(tilePosition[0]) >= (*board).size()) {
+	else if (size_t(tilePosition[0]) >= board->.size()) {
 		tilePosition[0] = 0;
 	}
 
 	// Horizontal OutOfBounds
 	if (tilePosition[1] < 0) {
-		tilePosition[1] = (*board)[0].size() - 1;
+		tilePosition[1] = board->[0].size() - 1;
 	}
-	else if (size_t(tilePosition[1]) >= (*board)[0].size()) {
+	else if (size_t(tilePosition[1]) >= board->[0].size()) {
 		tilePosition[1] = 0;
 	}
 }

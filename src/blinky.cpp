@@ -13,7 +13,7 @@ Blinky::~Blinky() {}
 
 void Blinky::calculateTargetTile() {
 	if (mode == CHASE) {
-		targetTile = (*pacman).getTilePosition();
+		targetTile = pacman->getTilePosition();
 	}
 	else if (mode == SCATTER) {
 		targetTile = homeTilePosition;

@@ -89,8 +89,8 @@ void ofApp::update() {
 			pacman.setMode(modeMarkers[modeIndex]);
 
 			for (Ghost *g : ghostsVector) {
-				(*g).setMode(modeMarkers[modeIndex]);
-				(*g).setEdible(false);
+				g->setMode(modeMarkers[modeIndex]);
+				g->setEdible(false);
 			}
 
 			// Continue modeTimer
@@ -109,9 +109,9 @@ void ofApp::update() {
 				// Set SpriteModes And reverseDirection
 				pacman.setMode(modeMarkers[modeIndex]);
 				for (Ghost *g : ghostsVector) {
-					(*g).setMode(modeMarkers[modeIndex]);
-					if ((*g).isAlive()) {
-						(*g).reverseDirection();
+					g->setMode(modeMarkers[modeIndex]);
+					if (g->isAlive()) {
+						g->reverseDirection();
 					}
 				}
 
@@ -121,7 +121,7 @@ void ofApp::update() {
 		// Update Sprites
 		pacman.update();
 		for (Ghost *g : ghostsVector) {
-			(*g).update();
+			g->update();
 		}
 
 		// Check For PowerPellet Consumption
@@ -129,14 +129,14 @@ void ofApp::update() {
 			// Set SpriteModes And Edible
 			pacman.setMode(FRIGHTENED);
 			for (Ghost *g : ghostsVector) {
-				(*g).setMode(FRIGHTENED);
-				(*g).setEdible(true);
+				g->setMode(FRIGHTENED);
+				g->setEdible(true);
 			}
 
 			// Change From: ___ To FRIGHTENED vs FRIGHTENED To FRIGHTENED
 			if (!frightenedTimer.isStarted()) {
 				for (Ghost *g : ghostsVector) {
-					(*g).reverseDirection();
+					g->reverseDirection();
 				}
 
 				frightenedTimer.start();
@@ -152,13 +152,13 @@ void ofApp::update() {
 
 		// Check For Pacman - Ghost Collision
 		for (Ghost *g : ghostsVector) {
-			if ((pacman.getTilePosition() == (*g).getTilePosition() && (*g).isAlive())) {
-				if ((*g).isEdible()) {
-					if ((*g).getMode() != FRIGHTENED) {
+			if ((pacman.getTilePosition() == g->getTilePosition() && g->isAlive())) {
+				if (g->isEdible()) {
+					if (g->getMode() != FRIGHTENED) {
 						std::cerr << "Error. Ghost Is Edible But Not In FRIGHTENED Mode." << std::endl;
 						std::exit(1);
 					}
-					(*g).setAlive(false);
+					g->setAlive(false);
 				}
 				else {
 					// Decrement Lives
@@ -309,41 +309,45 @@ void ofApp::windowResized(int w, int h) {
 	startButton.setSize(crackman.stringWidth("PAC-MAN") / 3, crackman.stringHeight("PAC-MAN") / 1.5);
 
 	startButton.setFontSize(startButton.getSize()[1] / 4);
-	startButton.setRadius(startButton.getSize()[1] / 2, startButton.getSize()[1] / 2, startButton.getSize()[1] / 2, 0);
+	startButton.setRadius(startButton.getSize()[1] / 2, startButton.getSize()[1] / 2, startButton.getSize()[1] / 2, startButton.getSize()[1] / 2);
 
 	// Sprite Resize
 	pacman.resize(screenWidth, screenHeight, tileSize);
 	for (Ghost *g : ghostsVector) {
-		(*g).resize(screenWidth, screenHeight, tileSize);
+		g->resize(screenWidth, screenHeight, tileSize);
 	}
 }
 
 void ofApp::startButtonListener(ofVec2f &e) {
+	// Board
+	board = Board().getBoard();
+	ofSystemTextBoxDialog("Enter A Board String: ", "Invalid Block (0), Wall(1), No Dot(2), Regular Dot(3), Powerup Dot(4)");
+
 	// Set Sprites' homeTilePosition && initialTilePosition
 	pacman.setInitialPosition(vector<int>{ 26, 14 });
 	for (Ghost *g : ghostsVector) {
-		if ((*g).getGhostType() == BLINKY) {
-			(*g).setHomeTilePosition(vector<int>{ 0, (int)board[0].size() - 1 - 2 });
-			(*g).setInitialTilePosition(vector<int>{ 4, 1 });
+		if (g->getGhostType() == BLINKY) {
+			g->setHomeTilePosition(vector<int>{ 0, (int)board[0].size() - 1 - 2 });
+			g->setInitialTilePosition(vector<int>{ 4, 1 });
 		}
-		else if ((*g).getGhostType() == PINKY) {
-			(*g).setHomeTilePosition(vector<int>{ 0, 2 });
-			(*g).setInitialTilePosition(vector<int>{ 32, 26});
+		else if (g->getGhostType() == PINKY) {
+			g->setHomeTilePosition(vector<int>{ 0, 2 });
+			g->setInitialTilePosition(vector<int>{ 32, 26});
 		}
-		else if ((*g).getGhostType() == INKY) {
-			(*g).setHomeTilePosition(vector<int>{ (int)board.size() - 1, (int)board[0].size() - 1 });
-			(*g).setInitialTilePosition(vector<int>{ 4, 26 });
+		else if (g->getGhostType() == INKY) {
+			g->setHomeTilePosition(vector<int>{ (int)board.size() - 1, (int)board[0].size() - 1 });
+			g->setInitialTilePosition(vector<int>{ 4, 26 });
 		}
-		else if ((*g).getGhostType() == CLYDE) {
-			(*g).setHomeTilePosition(vector<int>{ (int)board.size() - 1, 0 });
-			(*g).setInitialTilePosition(vector<int>{ 32, 1 });
+		else if (g->getGhostType() == CLYDE) {
+			g->setHomeTilePosition(vector<int>{ (int)board.size() - 1, 0 });
+			g->setInitialTilePosition(vector<int>{ 32, 1 });
 		}
 	}
 
 	// Set Sprites' initialTilePosition
 	vector<vector<int>> ghostInitialTilePositions = vector<vector<int>>{ {4, 1}, {32, 26}, {4, 26}, {32, 1} };
 	for (size_t i = 0; i < ghostsVector.size(); i++) {
-		(*(ghostsVector[i])).setInitialTilePosition(ghostInitialTilePositions[i]);
+		ghostsVector[i]->setInitialTilePosition(ghostInitialTilePositions[i]);
 	}
 
 	// Reset Game
@@ -357,7 +361,7 @@ void ofApp::drawLandingPage() {
 	ofDrawRectangle(0, 0, screenWidth, screenHeight);
 
 	// "PACMAN" Horizontally And Vertically Centered With Respect To The Screen
-	int verticalButtonBuffer = 25;
+	int verticalButtonBuffer = screenHeight / 50;
 	int sumOfElementHeights = crackman.stringHeight("PAC-MAN") + startButton.getSize()[1] + verticalButtonBuffer;
 
 	ofSetColor(255, 255, 0);
@@ -528,9 +532,9 @@ void ofApp::drawPacMan() {
 
 void ofApp::drawGhosts() {
 	for (Ghost *g : ghostsVector) {
-		if ((*g).isAlive()) {
-			ofSetColor((*g).getDefaultColor());
-			if ((*g).isEdible()) {
+		if (g->isAlive()) {
+			ofSetColor(g->getDefaultColor());
+			if (g->isEdible()) {
 				if (frightenedTimer.count<std::chrono::milliseconds>() / 250 % 2) {
 					ofSetColor(25, 25, 255);
 				}
@@ -541,11 +545,11 @@ void ofApp::drawGhosts() {
 		}
 		else {
 			ofSetColor(255, 255, 255);
-			//ofSetColor((*g).getColor()[0] * 0.75, (*g).getColor()[1] * 0.75, (*g).getColor()[2] * 0.75);
+			//ofSetColor(g->getColor()[0] * 0.75, g->getColor()[1] * 0.75, g->getColor()[2] * 0.75);
 		}
-		ofDrawCircle((*g).getPixelPosition()[0] + centerOffset[0], (*g).getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-		//ofDrawRectangle((*g).getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-		//	(*g).getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+		ofDrawCircle(g->getPixelPosition()[0] + centerOffset[0], g->getPixelPosition()[1] + centerOffset[1], tileSize / 2);
+		//ofDrawRectangle(g->getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+		//	g->getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
 		//	tileSize / 2, tileSize / 2);
 	}
 }
@@ -583,7 +587,7 @@ void ofApp::resetSprites() {
 	// Reset Sprites
 	pacman.resetLevel(level);
 	for (Ghost *g : ghostsVector) {
-		(*g).resetLevel(level);
+		g->resetLevel(level);
 	}
 
 	// Reset SpriteMode Variables
@@ -634,7 +638,7 @@ void ofApp::resetGame() {
 	// Reset Game
 	pacman.resetGame();
 	for (Ghost *g : ghostsVector) {
-		(*g).resetGame();
+		g->resetGame();
 	}
 
 	// Reset SpriteMode Variables
