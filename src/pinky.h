@@ -3,8 +3,6 @@
 #include "ghost.h"
 
 class Pinky : public Ghost {
-
-	private:
 		
 	public:
 		// Default Constructor
@@ -36,5 +34,7 @@ class Pinky : public Ghost {
 				Pacman Moving Right: Four Tiles Right Of Pacman's Current Position
 		*/
 		void calculateTargetTile() override;
+
+	private:
 
 };

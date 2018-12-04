@@ -190,6 +190,7 @@
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\pacman.cpp" />
     <ClCompile Include="src\pinky.cpp" />
+    <ClCompile Include="src\RoundedButton.cpp" />
     <ClCompile Include="src\tile.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +205,7 @@
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\pacman.h" />
     <ClInclude Include="src\pinky.h" />
+    <ClInclude Include="src\RoundedButton.h" />
     <ClInclude Include="src\tile.h" />
   </ItemGroup>
   <ItemGroup>

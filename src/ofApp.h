@@ -8,6 +8,7 @@
 #include "ofMain.h"
 #include "ofEvents.h"
 #include "button.h"
+#include "RoundedButton.h"
 
 #include "enums.h"
 #include "cxxTimer.h"
@@ -75,7 +76,7 @@ class ofApp : public ofBaseApp {
 		bool incomingMessage = false;
 		
 		// Buttons
-		Button startButton;
+		RoundedButton startButton;
 
 		// Timers
 		const vector<SpriteMode> modeMarkers{ SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE };

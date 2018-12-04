@@ -5,9 +5,6 @@
 #include "blinky.h"
 
 class Inky : public Ghost {
-
-	private:
-		Ghost *blinky;
 		
 	public:
 		// Default Constructor
@@ -41,4 +38,8 @@ class Inky : public Ghost {
 				Double the Corresponding Vector From Blinky To ^^^
 		*/
 		void calculateTargetTile() override;
+
+	private:
+		Ghost *blinky;
+
 };

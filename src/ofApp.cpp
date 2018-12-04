@@ -297,7 +297,7 @@ void ofApp::windowResized(int w, int h) {
 	tileSize = min(screenHeight / board.size(), screenWidth / board[0].size());
 
 	// Fonts
-	crackman.load("crackman.ttf", screenHeight / 10, true, true);
+	crackman.load("crackman.ttf", screenWidth / 7.5, true, true);
 	emulogic.load("emulogic.ttf", tileSize, true, true);
 
 	// Offsets
@@ -306,8 +306,10 @@ void ofApp::windowResized(int w, int h) {
 
 	// Button Resize
 	startButton.setPosition(0, 0);
-	startButton.setSize(200, 75);
-	startButton.setFontSize(75 / 4);
+	startButton.setSize(crackman.stringWidth("PAC-MAN") / 3, crackman.stringHeight("PAC-MAN") / 1.5);
+
+	startButton.setFontSize(startButton.getSize()[1] / 4);
+	startButton.setRadius(startButton.getSize()[1] / 2, startButton.getSize()[1] / 2, startButton.getSize()[1] / 2, 0);
 
 	// Sprite Resize
 	pacman.resize(screenWidth, screenHeight, tileSize);

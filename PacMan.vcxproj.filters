@@ -34,6 +34,9 @@
     <ClCompile Include="src\button.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
+    <ClCompile Include="src\RoundedButton.cpp">
+      <Filter>src\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -84,6 +87,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\button.h">
+      <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RoundedButton.h">
       <Filter>src\gui</Filter>
     </ClInclude>
   </ItemGroup>

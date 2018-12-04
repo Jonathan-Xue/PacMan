@@ -13,7 +13,7 @@ class Button {
 	public:
 		ofEvent<ofVec2f> clicked;
 		
-		// Default constructor
+		// Default Constructor
 		Button();
 
 		// Transfer Constructor
@@ -40,7 +40,7 @@ class Button {
 		// Getters
 		string getName();
 		vector<int> getPosition();
-		vector<int> getSize();\
+		vector<int> getSize();
 
 		// Setters
 		void setBackgroundColor(const ofColor &bColor);
@@ -65,7 +65,7 @@ class Button {
 		void mouseEntered(ofMouseEventArgs & args);
 		void mouseExited(ofMouseEventArgs & args);
 
-	private:
+	protected:
 		ofColor backgroundColor = ofColor(255, 255, 255);
 
 		ofTrueTypeFont fontType;

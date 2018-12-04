@@ -3,8 +3,6 @@
 #include "ghost.h"
 
 class Clyde : public Ghost {
-
-	private:
 		
 	public:
 		// Default Constructor
@@ -34,5 +32,7 @@ class Clyde : public Ghost {
 				Otherwise: Pacman's tilePosition
 		*/
 		void calculateTargetTile() override;
+
+	private:
 
 };

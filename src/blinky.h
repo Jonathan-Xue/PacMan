@@ -3,8 +3,6 @@
 #include "ghost.h"
 
 class Blinky : public Ghost {
-
-	private:
 		
 	public:
 		// Default Constructor
@@ -33,5 +31,7 @@ class Blinky : public Ghost {
 				Pacman's Current tilePosition
 		*/
 		void calculateTargetTile() override;
+
+	private:
 
 };
