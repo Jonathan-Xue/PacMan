@@ -214,6 +214,13 @@ void ofApp::update() {
 }
 
 void ofApp::draw() {
+	// Redraw Background
+	if (redrawBackgroundFlag) {
+		ofSetColor(ofColor(0, 0, 0));
+		ofDrawRectangle(0, 0, screenWidth, screenHeight);
+		redrawBackgroundFlag = false;
+	}
+
 	// Set All Button's Visibility To False
 	startButton.setVisible(false);
 
@@ -319,9 +326,12 @@ void ofApp::windowResized(int w, int h) {
 }
 
 void ofApp::startButtonListener(ofVec2f &e) {
+	// Flags
+	redrawBackgroundFlag = true;
+
 	// Board
 	board = Board().getBoard();
-	ofSystemTextBoxDialog("Enter A Board String: ", "Invalid Block (0), Wall(1), No Dot(2), Regular Dot(3), Powerup Dot(4)");
+	//ofSystemTextBoxDialog("Enter A Board String: ", "Invalid Block (0), Wall(1), No Dot(2), Regular Dot(3), Powerup Dot(4)");
 
 	// Set Sprites' homeTilePosition && initialTilePosition
 	pacman.setInitialPosition(vector<int>{ 26, 14 });

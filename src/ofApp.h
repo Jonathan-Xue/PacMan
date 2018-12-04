@@ -6,6 +6,8 @@
 #include <vector>
 
 #include "ofMain.h"
+#include "ofxGui.h"
+
 #include "ofEvents.h"
 #include "button.h"
 #include "RoundedButton.h"
@@ -89,6 +91,7 @@ class ofApp : public ofBaseApp {
 		Timer frightenedTimer;
 
 		// Flags
+		bool redrawBackgroundFlag = false;
 		bool highScoreFlag = true;
 
 		// Game Variables

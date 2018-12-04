@@ -20,7 +20,7 @@ RoundedButton::~RoundedButton(){}
 
 void RoundedButton::draw() {
 	ofSetColor(backgroundColor);
-	ofRectRounded(ofRectangle(xPos, yPos, width, height), topLeftRadius, topRightRadius, bottomRightRadius, bottomLeftRadius);
+	ofDrawRectRounded(ofRectangle(xPos, yPos, width, height), topLeftRadius, topRightRadius, bottomRightRadius, bottomLeftRadius);
 
 	ofSetColor(fontColor);
 	fontType.drawString(name,
