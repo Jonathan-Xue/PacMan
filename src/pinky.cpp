@@ -4,7 +4,20 @@ Pinky::Pinky() {}
 
 Pinky::Pinky(vector<vector<Tile>> *b, Pacman *p) {
 	ghostType = PINKY;
+	upAliveImage.load("images/sprites/pinky/up.png");
+	leftAliveImage.load("images/sprites/pinky/left.png");
+	downAliveImage.load("images/sprites/pinky/down.png");
+	rightAliveImage.load("images/sprites/pinky/right.png");
+
+	upDeadImage.load("images/sprites/dead/up.png");
+	leftDeadImage.load("images/sprites/dead/left.png");
+	downDeadImage.load("images/sprites/dead/down.png");
+	rightDeadImage.load("images/sprites/dead/right.png");
+
+	edibleImageOne.load("images/sprites/edible/blue.png");
+	edibleImageTwo.load("images/sprites/edible/white.png");
 	defaultColor = ofColor(255, 185, 255);
+
 	board = b;
 	pacman = p;
 }

@@ -4,7 +4,20 @@ Clyde::Clyde() {}
 
 Clyde::Clyde(vector<vector<Tile>> *b, Pacman *p) {
 	ghostType = CLYDE;
+	upAliveImage.load("images/sprites/clyde/up.png");
+	leftAliveImage.load("images/sprites/clyde/left.png");
+	downAliveImage.load("images/sprites/clyde/down.png");
+	rightAliveImage.load("images/sprites/clyde/right.png");
+
+	upDeadImage.load("images/sprites/dead/up.png");
+	leftDeadImage.load("images/sprites/dead/left.png");
+	downDeadImage.load("images/sprites/dead/down.png");
+	rightDeadImage.load("images/sprites/dead/right.png");
+
+	edibleImageOne.load("images/sprites/edible/blue.png");
+	edibleImageTwo.load("images/sprites/edible/white.png");
 	defaultColor = ofColor(255, 185, 80);
+
 	board = b;
 	pacman = p;
 }

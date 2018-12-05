@@ -253,6 +253,65 @@ GhostType Ghost::getGhostType() {
 	return ghostType;
 }
 
+ofImage Ghost::getImage() {
+	if (alive) {
+		if (edible) {
+			if (whichEdibleImage) {
+				return edibleImageOne;
+			}
+			else {
+				return edibleImageTwo;
+			}
+		}
+		else {
+			if (currentVelocity == vector<int>{0, 0}) {
+				// Up
+				return downAliveImage;
+			}
+			else if (currentVelocity == vector<int>{0, -1}) {
+				// Up
+				return upAliveImage;
+			}
+			else if (currentVelocity == vector<int>{-1, 0}) {
+				// Left
+				return leftAliveImage;
+			}
+			else if (currentVelocity == vector<int>{0, 1}) {
+				// Down
+				return downAliveImage;
+			}
+			else if (currentVelocity == vector<int>{1, 0}) {
+				// Right
+				return rightAliveImage;
+			}
+		}
+	}
+	else {
+		if (currentVelocity == vector<int>{0, 0}) {
+			// Up
+			return downDeadImage;
+		}
+		else if (currentVelocity == vector<int>{0, -1}) {
+			// Up
+			return upDeadImage;
+		}
+		else if (currentVelocity == vector<int>{-1, 0}) {
+			// Left
+			return leftDeadImage;
+		}
+		else if (currentVelocity == vector<int>{0, 1}) {
+			// Down
+			return downDeadImage;
+		}
+		else if (currentVelocity == vector<int>{1, 0}) {
+			// Right
+			return rightDeadImage;
+		}
+	}
+	
+	return ofImage();
+}
+
 ofColor Ghost::getDefaultColor() {
 	return defaultColor;
 }
@@ -284,6 +343,10 @@ vector<double> Ghost::getTargetTilePixelPosition() {
 
 vector<int> Ghost::getTargetTile() {
 	return targetTile;
+}
+
+void Ghost::flipWhichEdibleImage(bool b) {
+	whichEdibleImage = b;
 }
 
 void Ghost::reverseDirection() {

@@ -156,12 +156,11 @@ void ofApp::update() {
 		// Check For Pacman - Ghost Collision
 		for (Ghost *g : ghostsVector) {
 			if ((pacman.getTilePosition() == g->getTilePosition() && g->isAlive())) {
-				if (g->isEdible()) {
-					if (g->getMode() != FRIGHTENED) {
-						std::cerr << "Error. Ghost Is Edible But Not In FRIGHTENED Mode." << std::endl;
-						std::exit(1);
+				if (g->getMode() == FRIGHTENED) {
+					if (g->isEdible()) {
+						g->setEdible(false);
+						g->setAlive(false);
 					}
-					g->setAlive(false);
 				}
 				else {
 					// Decrement Lives
@@ -607,26 +606,29 @@ void ofApp::drawPacMan() {
 }
 
 void ofApp::drawGhosts() {
+	/*
+	// Draw targetTile
 	for (Ghost *g : ghostsVector) {
-		if (g->isAlive()) {
-			ofSetColor(g->getDefaultColor());
-			if (g->isEdible()) {
-				if (frightenedTimer.count<std::chrono::milliseconds>() / 250 % 2) {
-					ofSetColor(25, 25, 255);
-				}
-				else {
-					ofSetColor(255, 255, 255);
-				}
+		ofSetColor(g->getDefaultColor());
+		ofDrawRectangle(g->getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
+			g->getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+			tileSize / 2, tileSize / 2);
+	}
+	*/
+
+	for (Ghost *g : ghostsVector) {
+		if (g->isEdible()) {
+			if (frightenedTimer.count<std::chrono::milliseconds>() / 250 % 2) {
+				g->flipWhichEdibleImage(true);
+			}
+			else {
+				g->flipWhichEdibleImage(false);
 			}
 		}
-		else {
-			ofSetColor(255, 255, 255);
-			//ofSetColor(g->getColor()[0] * 0.75, g->getColor()[1] * 0.75, g->getColor()[2] * 0.75);
-		}
-		ofDrawCircle(g->getPixelPosition()[0] + centerOffset[0], g->getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-		//ofDrawRectangle(g->getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-		//	g->getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
-		//	tileSize / 2, tileSize / 2);
+		ofSetColor(255, 255, 255);
+		g->getImage().draw(g->getPixelPosition()[0] - tileSize / 2 + centerOffset[0],
+			g->getPixelPosition()[1] + centerOffset[1] - tileSize / 2,
+			tileSize, tileSize);
 	}
 }
 

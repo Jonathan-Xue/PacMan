@@ -4,7 +4,20 @@ Inky::Inky() {}
 
 Inky::Inky(vector<vector<Tile>> *bo, Pacman *p, Ghost *bl) {
 	ghostType = INKY;
+	upAliveImage.load("images/sprites/inky/up.png");
+	leftAliveImage.load("images/sprites/inky/left.png");
+	downAliveImage.load("images/sprites/inky/down.png");
+	rightAliveImage.load("images/sprites/inky/right.png");
+
+	upDeadImage.load("images/sprites/dead/up.png");
+	leftDeadImage.load("images/sprites/dead/left.png");
+	downDeadImage.load("images/sprites/dead/down.png");
+	rightDeadImage.load("images/sprites/dead/right.png");
+
+	edibleImageOne.load("images/sprites/edible/blue.png");
+	edibleImageTwo.load("images/sprites/edible/white.png");
 	defaultColor = ofColor(0, 255, 255);
+
 	board = bo;
 	pacman = p;
 	blinky = bl;

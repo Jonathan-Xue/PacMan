@@ -96,6 +96,7 @@ class Ghost {
 
 		// Getters
 		GhostType getGhostType();
+		ofImage getImage();
 		ofColor getDefaultColor();
 
 		bool isAlive();
@@ -109,6 +110,7 @@ class Ghost {
 		vector<int> getTargetTile();
 
 		// Setters
+		void flipWhichEdibleImage(bool b);
 		void reverseDirection();
 		void setAlive(bool a);
 		void setEdible(bool e);
@@ -124,6 +126,21 @@ class Ghost {
 		int screenWidth;
 		int screenHeight;
 		int tileSize;
+
+		// Image Variables
+		ofImage upAliveImage;
+		ofImage leftAliveImage;
+		ofImage downAliveImage;
+		ofImage rightAliveImage;
+
+		ofImage upDeadImage;
+		ofImage leftDeadImage;
+		ofImage downDeadImage;
+		ofImage rightDeadImage;
+
+		bool whichEdibleImage = true;
+		ofImage edibleImageOne;
+		ofImage edibleImageTwo;
 
 		// Enums
 		GhostType ghostType = UNDEFINED;
