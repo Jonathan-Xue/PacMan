@@ -1,26 +1,30 @@
 #include "board.h"
 
+// Public Methods
 Board::Board() {
+	boardString = defaultBoardString;
 	numRows = 31;
 	numCols = 28;
-	boardString = defaultBoardString;
-	parseBoard();
 }
 
-Board::Board(int r, int c, string input) {
+Board::Board(string input, int r, int c) {
+	boardString = input;
 	numRows = r;
 	numCols = c;
-	boardString = input;
 
 	if (numRows * numCols != boardString.length()) {
 		boardString = defaultBoardString;
 	}
-
-	parseBoard();
 }
 
 Board::~Board() {}
 
+vector<vector<Tile>> Board::resetBoard() {
+	parseBoard();
+	return board;
+}
+
+// Private Methods
 void Board::parseBoard() {
 	// Resize Board Vector
 	board.resize(numRows);
@@ -64,8 +68,4 @@ void Board::parseBoard() {
 	for (int i = 0; i < after; i++) {
 		board.push_back(vector<Tile>(numCols, Tile(-1, false, false)));
 	}
-}
-
-vector<vector<Tile>> Board::getBoard() {
-	return board;
 }

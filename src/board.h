@@ -16,6 +16,25 @@ using std::vector;
 */
 class Board {
 
+	public:
+		// Default Constructor
+		Board();
+
+		// Parameterized Constructor
+		Board(string input, int r, int c);
+
+		// Copy Constructor
+		Board(const Board& other) = default;
+
+		// Transfer Constructor
+		Board(Board&& other) = default;
+
+		// Destructor
+		~Board();
+
+		// Reset Function
+		vector<vector<Tile>> resetBoard();
+
 	private:
 		// Before & After Blank Tiles For Miscellaneous Display
 		const int before = 3;
@@ -61,21 +80,6 @@ class Board {
 		string boardString;
 		vector<vector<Tile>> board;
 
-	public:
-		// Default Constructor
-		Board();
-
-		// Parameterized Constructor
-		Board(int r, int c, string input);
-
-		// Copy Constructor
-		Board(const Board& other) = default;
-
-		// Transfer Constructor
-		Board(Board&& other) = default;
-
-		// Destructor
-		~Board();
 
 		/*
 			Fill Board Vector From Default String
@@ -86,8 +90,4 @@ class Board {
 				4: Powerup Dot
 		*/
 		void parseBoard();
-
-		// Getter
-		vector<vector<Tile>> getBoard();
-
 };

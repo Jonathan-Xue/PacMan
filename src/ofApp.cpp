@@ -171,9 +171,9 @@ void ofApp::update() {
 		}
 
 		// Check For Next Level
-		for (size_t i = 0; i < board.size(); i++) {
-			for (size_t j = 0; j < board[0].size(); j++) {
-				if (board[i][j].isStandardPellet() || board[i][j].isPowerPellet()) {
+		for (size_t i = 0; i < currentBoard.size(); i++) {
+			for (size_t j = 0; j < currentBoard[0].size(); j++) {
+				if (currentBoard[i][j].isStandardPellet() || currentBoard[i][j].isPowerPellet()) {
 					goto stop;
 				}
 			}
@@ -301,15 +301,15 @@ void ofApp::windowResized(int w, int h) {
 	screenHeight = h;
 
 	// Tile Size
-	tileSize = min(screenHeight / board.size(), screenWidth / board[0].size());
+	tileSize = min(screenHeight / currentBoard.size(), screenWidth / currentBoard[0].size());
 
 	// Fonts
 	crackman.load("crackman.ttf", screenWidth / 7.5, true, true);
 	emulogic.load("emulogic.ttf", tileSize, true, true);
 
 	// Offsets
-	centerOffset[0] = (screenWidth - (board[0].size() * tileSize)) / 2;
-	centerOffset[1] = (screenHeight - (board.size() * tileSize)) / 2;
+	centerOffset[0] = (screenWidth - (currentBoard[0].size() * tileSize)) / 2;
+	centerOffset[1] = (screenHeight - (currentBoard.size() * tileSize)) / 2;
 
 	// Button Resize
 	startButton.setPosition(0, 0);
@@ -326,18 +326,18 @@ void ofApp::windowResized(int w, int h) {
 }
 
 void ofApp::startButtonListener(ofVec2f &e) {
+	// Board
+	// TODO: Insert Code To Take User Input Here
+	board = new Board();
+
 	// Flags
 	redrawBackgroundFlag = true;
-
-	// Board
-	board = Board().getBoard();
-	//ofSystemTextBoxDialog("Enter A Board String: ", "Invalid Block (0), Wall(1), No Dot(2), Regular Dot(3), Powerup Dot(4)");
 
 	// Set Sprites' homeTilePosition && initialTilePosition
 	pacman.setInitialPosition(vector<int>{ 26, 14 });
 	for (Ghost *g : ghostsVector) {
 		if (g->getGhostType() == BLINKY) {
-			g->setHomeTilePosition(vector<int>{ 0, (int)board[0].size() - 1 - 2 });
+			g->setHomeTilePosition(vector<int>{ 0, (int)currentBoard[0].size() - 1 - 2 });
 			g->setInitialTilePosition(vector<int>{ 4, 1 });
 		}
 		else if (g->getGhostType() == PINKY) {
@@ -345,11 +345,11 @@ void ofApp::startButtonListener(ofVec2f &e) {
 			g->setInitialTilePosition(vector<int>{ 32, 26});
 		}
 		else if (g->getGhostType() == INKY) {
-			g->setHomeTilePosition(vector<int>{ (int)board.size() - 1, (int)board[0].size() - 1 });
+			g->setHomeTilePosition(vector<int>{ (int)currentBoard.size() - 1, (int)currentBoard[0].size() - 1 });
 			g->setInitialTilePosition(vector<int>{ 4, 26 });
 		}
 		else if (g->getGhostType() == CLYDE) {
-			g->setHomeTilePosition(vector<int>{ (int)board.size() - 1, 0 });
+			g->setHomeTilePosition(vector<int>{ (int)currentBoard.size() - 1, 0 });
 			g->setInitialTilePosition(vector<int>{ 32, 1 });
 		}
 	}
@@ -388,20 +388,20 @@ void ofApp::drawLandingPage() {
 }
 
 void ofApp::drawGameBoard() {
-	for (size_t i = 0; i < board.size(); i++) {
-		for (size_t j = 0; j < board[0].size(); j++) {
-			if (board[i][j].getID() == -1) {
+	for (size_t i = 0; i < currentBoard.size(); i++) {
+		for (size_t j = 0; j < currentBoard[0].size(); j++) {
+			if (currentBoard[i][j].getID() == -1) {
 				// Invalid Block
 				ofSetColor(0, 0, 0);
 				ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
 			}
-			else if (board[i][j].getID() == 0) {
+			else if (currentBoard[i][j].getID() == 0) {
 				// Wall
 				ofSetColor(50, 50, 255);
 				ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
 			}
-			else if (board[i][j].getID() == 1) {
-				if (board[i][j].isStandardPellet()) {
+			else if (currentBoard[i][j].getID() == 1) {
+				if (currentBoard[i][j].isStandardPellet()) {
 					// Tile
 					ofSetColor(0, 0, 0);
 					ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
@@ -410,7 +410,7 @@ void ofApp::drawGameBoard() {
 					ofSetColor(255, 255, 0);
 					ofDrawCircle((j + 0.5) * tileSize + centerOffset[0], (i + 0.5) * tileSize + centerOffset[1], tileSize / 8);
 				}
-				else if (board[i][j].isPowerPellet()) {
+				else if (currentBoard[i][j].isPowerPellet()) {
 					// Tile
 					ofSetColor(0, 0, 0);
 					ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
@@ -440,7 +440,7 @@ void ofApp::drawMisc() {
 	ofSetColor(255, 255, 255);
 
 	// "HIGH SCORE" Horizontally Centered With Respect To The Screen
-	vector<int> highScoreLabelTilePosition = { 1, (int)((board[0].size() - string("HIGH SCORE").length()) / 2) };
+	vector<int> highScoreLabelTilePosition = { 1, (int)((currentBoard[0].size() - string("HIGH SCORE").length()) / 2) };
 
 	// High Score Horizontally Centered With Respect To The Screen
 	string highScore;
@@ -450,7 +450,7 @@ void ofApp::drawMisc() {
 	else {
 		highScore = std::to_string(highScores[0]);
 	}
-	vector<int> highScoreTilePosition = { 2,  (int)((board[0].size() - highScore.length()) / 2) };
+	vector<int> highScoreTilePosition = { 2,  (int)((currentBoard[0].size() - highScore.length()) / 2) };
 
 	// "1UP" Horizontally Centered With Respect To "HIGH SCORE"
 	vector<int> playerLabelTilePosition = { 1, (int)((highScoreLabelTilePosition[1] - string("1UP").length()) / 2) };
@@ -475,7 +475,7 @@ void ofApp::drawMisc() {
 		currentScoreTilePosition[0] * tileSize + centerOffset[1]);
 
 	// Lives
-	vector<int> tilePosition{ (int)board.size() - 1, 3 };
+	vector<int> tilePosition{ (int)currentBoard.size() - 1, 3 };
 	for (int i = 0; i < pacman.getLives() - 1; i++) {
 		ofSetColor(255, 255, 0);
 		ofDrawCircle((tilePosition[1] + i * 2) * tileSize + centerOffset[0],
@@ -576,8 +576,8 @@ void ofApp::drawHighScores() {
 
 	// Draw "HIGH SCORES"
 	string str = "HIGH SCORES";
-	vector<int> initialTilePosition = { (int)(board.size() - (highScores.size() + 1)) / 2 + 1,
-										(int)((board[0].size() - str.length()) / 2) };
+	vector<int> initialTilePosition = { (int)(currentBoard.size() - (highScores.size() + 1)) / 2 + 1,
+										(int)((currentBoard[0].size() - str.length()) / 2) };
 	emulogic.drawString(str,
 		initialTilePosition[1] * tileSize + centerOffset[0],
 		initialTilePosition[0] * tileSize + centerOffset[1]);
@@ -586,7 +586,7 @@ void ofApp::drawHighScores() {
 	for (int score : highScores) {
 		str = std::to_string(score);
 		initialTilePosition = vector<int>{ initialTilePosition[0] + 1,
-										   (int)((board[0].size() - str.length()) / 2) };
+										   (int)((currentBoard[0].size() - str.length()) / 2) };
 		emulogic.drawString(str,
 			initialTilePosition[1] * tileSize + centerOffset[0],
 			initialTilePosition[0] * tileSize + centerOffset[1]);
@@ -612,7 +612,7 @@ void ofApp::resetSprites() {
 
 void ofApp::resetLevel() {
 	// New Board
-	board = Board().getBoard();
+	currentBoard = board->resetBoard();
 
 	// Reset Sprites
 	resetSprites();
@@ -637,7 +637,7 @@ void ofApp::resetGame() {
 	}
 
 	// Create A New Board
-	board = Board().getBoard();
+	currentBoard = board->resetBoard();
 
 	// Set Level To 0
 	level = 0;
