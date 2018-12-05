@@ -197,7 +197,7 @@ void ofApp::update() {
 			highScores.pop_back();
 
 			// Write highscores To File
-			ofstream outputFile("highscores.txt", std::ios::trunc);
+			ofstream outputFile("data/highscores.txt", std::ios::trunc);
 			if (outputFile.is_open()) {
 				for (int i = 0; i < 10; i++) {
 					outputFile << highScores[i] << "\n";
@@ -687,7 +687,7 @@ void ofApp::resetLevel() {
 
 void ofApp::resetGame() {
 	// Read highscores From File
-	ifstream inputFile("highscores.txt");
+	ifstream inputFile("data/highscores.txt");
 	if (inputFile.is_open()) {
 		int lineCount = 0;
 		string line;
