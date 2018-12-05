@@ -550,46 +550,45 @@ void ofApp::drawMisc() {
 }
 
 void ofApp::drawPacMan() {
-	//ofSetColor(pacman.getDefaultColor());
-	//ofDrawCircle(pacman.getPixelPosition()[0] + centerOffset[0], pacman.getPixelPosition()[1] + centerOffset[1], tileSize / 2);
-
-	if (pacman.getCurrentVelocity() == vector<int>{0, 0}) {
-		angleDisplacement = 0;
-		pacmanDegree = 0;
-	}
-	else {
-		// pacmanDegree
-		if (degreeFlag) {
-			pacmanDegree+=degreeIncrement;
-
-			if (pacmanDegree >= maxDegree) {
-				degreeFlag = false;
-			}
+	if (currentState == IN_PROGRESS) {
+		if (pacman.getCurrentVelocity() == vector<int>{0, 0}) {
+			angleDisplacement = 0;
+			pacmanDegree = 0;
 		}
 		else {
-			pacmanDegree-=degreeIncrement;
+			// pacmanDegree
+			if (degreeFlag) {
+				pacmanDegree += degreeIncrement;
 
-			if (pacmanDegree <= 0) {
-				degreeFlag = true;
+				if (pacmanDegree >= maxDegree) {
+					degreeFlag = false;
+				}
 			}
-		}
+			else {
+				pacmanDegree -= degreeIncrement;
 
-		// angleDisplacement
-		if (pacman.getCurrentVelocity() == vector<int>{0, -1}) {
-			// Up
-			angleDisplacement = 270;
-		}
-		else if (pacman.getCurrentVelocity() == vector<int>{-1, 0}) {
-			// Left
-			angleDisplacement = 180;
-		}
-		else if (pacman.getCurrentVelocity() == vector<int>{0, 1}) {
-			// Down
-			angleDisplacement = 90;
-		}
-		else if (pacman.getCurrentVelocity() == vector<int>{1, 0}) {
-			// Right
-			angleDisplacement = 0;
+				if (pacmanDegree <= 0) {
+					degreeFlag = true;
+				}
+			}
+
+			// angleDisplacement
+			if (pacman.getCurrentVelocity() == vector<int>{0, -1}) {
+				// Up
+				angleDisplacement = 270;
+			}
+			else if (pacman.getCurrentVelocity() == vector<int>{-1, 0}) {
+				// Left
+				angleDisplacement = 180;
+			}
+			else if (pacman.getCurrentVelocity() == vector<int>{0, 1}) {
+				// Down
+				angleDisplacement = 90;
+			}
+			else if (pacman.getCurrentVelocity() == vector<int>{1, 0}) {
+				// Right
+				angleDisplacement = 0;
+			}
 		}
 	}
 	
