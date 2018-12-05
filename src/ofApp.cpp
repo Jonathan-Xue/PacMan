@@ -29,8 +29,11 @@ void ofApp::setup() {
 	setupSerial();
 
 	// Setup Buttons
-	startButton.setup("Start", ofColor(255, 255, 255), "emulogic.ttf", ofColor(0, 0, 0), 12);
-	ofAddListener(startButton.clicked, this, &ofApp::startButtonListener);
+	singlePlayerButton.setup("Solo", ofColor(255, 255, 255), "emulogic.ttf", ofColor(0, 0, 0), 12);
+	ofAddListener(singlePlayerButton.clicked, this, &ofApp::singlePlayerButtonListener);
+
+	multiPlayerButton.setup("Versus", ofColor(255, 255, 255), "emulogic.ttf", ofColor(0, 0, 0), 12);
+	ofAddListener(multiPlayerButton.clicked, this, &ofApp::singlePlayerButtonListener);
 
 	// Resize
 	windowResized(screenWidth, screenHeight);
@@ -222,7 +225,8 @@ void ofApp::draw() {
 	}
 
 	// Set All Button's Visibility To False
-	startButton.setVisible(false);
+	singlePlayerButton.setVisible(false);
+	multiPlayerButton.setVisible(false);
 
 	// State-Based Drawing Calls
 	switch (currentState) {
@@ -312,11 +316,25 @@ void ofApp::windowResized(int w, int h) {
 	centerOffset[1] = (screenHeight - (currentBoard.size() * tileSize)) / 2;
 
 	// Button Resize
-	startButton.setPosition(0, 0);
-	startButton.setSize(crackman.stringWidth("PAC-MAN") / 3, crackman.stringHeight("PAC-MAN") / 1.5);
+	singlePlayerButton.setPosition(0, 0);
+	singlePlayerButton.setSize(crackman.stringWidth("PAC-MAN") / 3, crackman.stringHeight("PAC-MAN") / 1.5);
+	singlePlayerButton.setFontSize(singlePlayerButton.getSize()[1] / 4);
+	singlePlayerButton.setRadius(
+		multiPlayerButton.getSize()[1] / 2, // Top Left
+		0, // Top Right
+		0, // Bottom Right
+		multiPlayerButton.getSize()[1] / 2 // Bottom Left
+	);
 
-	startButton.setFontSize(startButton.getSize()[1] / 4);
-	startButton.setRadius(startButton.getSize()[1] / 2, startButton.getSize()[1] / 2, startButton.getSize()[1] / 2, startButton.getSize()[1] / 2);
+	multiPlayerButton.setPosition(0, 0);
+	multiPlayerButton.setSize(crackman.stringWidth("PAC-MAN") / 3, crackman.stringHeight("PAC-MAN") / 1.5);
+	multiPlayerButton.setFontSize(multiPlayerButton.getSize()[1] / 4);
+	multiPlayerButton.setRadius(
+		0, // Top Left
+		multiPlayerButton.getSize()[1] / 2, // Top Right
+		multiPlayerButton.getSize()[1] / 2, // Bottom Right
+		0 // Bottom Left
+	);
 
 	// Sprite Resize
 	pacman.resize(screenWidth, screenHeight, tileSize);
@@ -325,7 +343,46 @@ void ofApp::windowResized(int w, int h) {
 	}
 }
 
-void ofApp::startButtonListener(ofVec2f &e) {
+void ofApp::singlePlayerButtonListener(ofVec2f &e) {
+	// Board
+	// TODO: Insert Code To Take User Input Here
+	board = new Board();
+
+	// Flags
+	redrawBackgroundFlag = true;
+
+	// Set Sprites' homeTilePosition && initialTilePosition
+	pacman.setInitialPosition(vector<int>{ 26, 14 });
+	for (Ghost *g : ghostsVector) {
+		if (g->getGhostType() == BLINKY) {
+			g->setHomeTilePosition(vector<int>{ 0, (int)currentBoard[0].size() - 1 - 2 });
+			g->setInitialTilePosition(vector<int>{ 4, 1 });
+		}
+		else if (g->getGhostType() == PINKY) {
+			g->setHomeTilePosition(vector<int>{ 0, 2 });
+			g->setInitialTilePosition(vector<int>{ 32, 26});
+		}
+		else if (g->getGhostType() == INKY) {
+			g->setHomeTilePosition(vector<int>{ (int)currentBoard.size() - 1, (int)currentBoard[0].size() - 1 });
+			g->setInitialTilePosition(vector<int>{ 4, 26 });
+		}
+		else if (g->getGhostType() == CLYDE) {
+			g->setHomeTilePosition(vector<int>{ (int)currentBoard.size() - 1, 0 });
+			g->setInitialTilePosition(vector<int>{ 32, 1 });
+		}
+	}
+
+	// Set Sprites' initialTilePosition
+	vector<vector<int>> ghostInitialTilePositions = vector<vector<int>>{ {4, 1}, {32, 26}, {4, 26}, {32, 1} };
+	for (size_t i = 0; i < ghostsVector.size(); i++) {
+		ghostsVector[i]->setInitialTilePosition(ghostInitialTilePositions[i]);
+	}
+
+	// Reset Game
+	resetGame();
+}
+
+void ofApp::multiPlayerButtonListener(ofVec2f &e) {
 	// Board
 	// TODO: Insert Code To Take User Input Here
 	board = new Board();
@@ -370,21 +427,30 @@ void ofApp::drawLandingPage() {
 	ofSetColor(0, 0, 0);
 	ofDrawRectangle(0, 0, screenWidth, screenHeight);
 
-	// "PACMAN" Horizontally And Vertically Centered With Respect To The Screen
-	int verticalButtonBuffer = screenHeight / 50;
-	int sumOfElementHeights = crackman.stringHeight("PAC-MAN") + startButton.getSize()[1] + verticalButtonBuffer;
-
+	// Centering Variables
+	vector<int> elementBuffer = { screenWidth / 125, (int)crackman.stringHeight("PAC-MAN") / 5 };
+	int sumOfElementHeights = crackman.stringHeight("PAC-MAN") + elementBuffer[1] + max(singlePlayerButton.getSize()[1], multiPlayerButton.getSize()[1]);
+	
+	// "PACMAN" Horizontally And Vertically Centered With Respect To The Buttons And The Screen
 	ofSetColor(255, 255, 0);
 	crackman.drawString("PAC-MAN",
 		(screenWidth - crackman.stringWidth("PAC-MAN")) / 2,
 		(screenHeight - sumOfElementHeights) / 2 + crackman.stringHeight("PAC-MAN"));
 
-	// Buttons
-	startButton.setVisible(true);
-	startButton.setPosition(
-		(screenWidth - startButton.getSize()[0]) / 2,
-		(screenHeight - sumOfElementHeights) / 2 + crackman.stringHeight("PAC-MAN") + verticalButtonBuffer);
-	startButton.draw();
+	// Buttons Horitontally And Vertically Centered With Respect To "PACMAN", Each Other, And The Screen
+	int sumOfButtonWidths = singlePlayerButton.getSize()[0] + elementBuffer[0] + multiPlayerButton.getSize()[0];
+
+	singlePlayerButton.setVisible(true);
+	singlePlayerButton.setPosition(
+		(screenWidth - sumOfButtonWidths) / 2,
+		(screenHeight - sumOfElementHeights) / 2 + crackman.stringHeight("PAC-MAN") + elementBuffer[1]);
+	singlePlayerButton.draw();
+
+	multiPlayerButton.setVisible(true);
+	multiPlayerButton.setPosition(
+		(screenWidth - sumOfButtonWidths) / 2 + singlePlayerButton.getSize()[0] + elementBuffer[0],
+		(screenHeight - sumOfElementHeights) / 2 + crackman.stringHeight("PAC-MAN") + elementBuffer[1]);
+	multiPlayerButton.draw();
 }
 
 void ofApp::drawGameBoard() {

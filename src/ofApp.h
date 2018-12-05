@@ -52,7 +52,8 @@ class ofApp : public ofBaseApp {
 		void windowResized(int w, int h);
 
 		// Event Listeners
-		void startButtonListener(ofVec2f &e);
+		void singlePlayerButtonListener(ofVec2f &e);
+		void multiPlayerButtonListener(ofVec2f &e);
 
 	private:
 		// OpenFramework Variables
@@ -78,7 +79,8 @@ class ofApp : public ofBaseApp {
 		bool incomingMessage = false;
 		
 		// Buttons
-		RoundedButton startButton;
+		RoundedButton singlePlayerButton;
+		RoundedButton multiPlayerButton;
 
 		// Timers
 		const vector<SpriteMode> modeMarkers{ SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE };
