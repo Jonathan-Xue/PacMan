@@ -350,30 +350,18 @@ void ofApp::singlePlayerButtonListener(ofVec2f &e) {
 	// Flags
 	redrawBackgroundFlag = true;
 
-	// Set Sprites' homeTilePosition && initialTilePosition
-	pacman.setInitialPosition(vector<int>{ 26, 14 });
-	for (Ghost *g : ghostsVector) {
-		if (g->getGhostType() == BLINKY) {
-			g->setHomeTilePosition(vector<int>{ 0, (int)currentBoard[0].size() - 1 - 2 });
-			g->setInitialTilePosition(vector<int>{ 4, 1 });
-		}
-		else if (g->getGhostType() == PINKY) {
-			g->setHomeTilePosition(vector<int>{ 0, 2 });
-			g->setInitialTilePosition(vector<int>{ 32, 26});
-		}
-		else if (g->getGhostType() == INKY) {
-			g->setHomeTilePosition(vector<int>{ (int)currentBoard.size() - 1, (int)currentBoard[0].size() - 1 });
-			g->setInitialTilePosition(vector<int>{ 4, 26 });
-		}
-		else if (g->getGhostType() == CLYDE) {
-			g->setHomeTilePosition(vector<int>{ (int)currentBoard.size() - 1, 0 });
-			g->setInitialTilePosition(vector<int>{ 32, 1 });
-		}
-	}
-
 	// Set Sprites' initialTilePosition
 	vector<vector<int>> ghostInitialTilePositions = vector<vector<int>>{ {4, 1}, {32, 26}, {4, 26}, {32, 1} };
+	vector<vector<int>> ghostHomeTilePositions = vector<vector<int>>{
+		{ 0, (int)currentBoard[0].size() - 1 - 2 },
+		{ 0, 2 },
+		{ (int)currentBoard.size() - 1, (int)currentBoard[0].size() - 1 },
+		{ (int)currentBoard.size() - 1, 0 }
+	};
+
+	pacman.setInitialPosition(vector<int>{ 26, 14 });
 	for (size_t i = 0; i < ghostsVector.size(); i++) {
+		ghostsVector[i]->setHomeTilePosition(ghostHomeTilePositions[i]);
 		ghostsVector[i]->setInitialTilePosition(ghostInitialTilePositions[i]);
 	}
 
@@ -382,42 +370,7 @@ void ofApp::singlePlayerButtonListener(ofVec2f &e) {
 }
 
 void ofApp::multiPlayerButtonListener(ofVec2f &e) {
-	// Board
-	// TODO: Insert Code To Take User Input Here
-	board = new Board();
-
-	// Flags
-	redrawBackgroundFlag = true;
-
-	// Set Sprites' homeTilePosition && initialTilePosition
-	pacman.setInitialPosition(vector<int>{ 26, 14 });
-	for (Ghost *g : ghostsVector) {
-		if (g->getGhostType() == BLINKY) {
-			g->setHomeTilePosition(vector<int>{ 0, (int)currentBoard[0].size() - 1 - 2 });
-			g->setInitialTilePosition(vector<int>{ 4, 1 });
-		}
-		else if (g->getGhostType() == PINKY) {
-			g->setHomeTilePosition(vector<int>{ 0, 2 });
-			g->setInitialTilePosition(vector<int>{ 32, 26});
-		}
-		else if (g->getGhostType() == INKY) {
-			g->setHomeTilePosition(vector<int>{ (int)currentBoard.size() - 1, (int)currentBoard[0].size() - 1 });
-			g->setInitialTilePosition(vector<int>{ 4, 26 });
-		}
-		else if (g->getGhostType() == CLYDE) {
-			g->setHomeTilePosition(vector<int>{ (int)currentBoard.size() - 1, 0 });
-			g->setInitialTilePosition(vector<int>{ 32, 1 });
-		}
-	}
-
-	// Set Sprites' initialTilePosition
-	vector<vector<int>> ghostInitialTilePositions = vector<vector<int>>{ {4, 1}, {32, 26}, {4, 26}, {32, 1} };
-	for (size_t i = 0; i < ghostsVector.size(); i++) {
-		ghostsVector[i]->setInitialTilePosition(ghostInitialTilePositions[i]);
-	}
-
-	// Reset Game
-	resetGame();
+	singlePlayerButtonListener(e);
 }
 
 // Private Methods
@@ -429,7 +382,7 @@ void ofApp::drawLandingPage() {
 	// Centering Variables
 	vector<int> elementBuffer = { screenWidth / 125, (int)crackman.stringHeight("PAC-MAN") / 5 };
 	int sumOfElementHeights = crackman.stringHeight("PAC-MAN") + elementBuffer[1] + max(singlePlayerButton.getSize()[1], multiPlayerButton.getSize()[1]);
-	
+
 	// "PACMAN" Horizontally And Vertically Centered With Respect To The Buttons And The Screen
 	ofSetColor(255, 255, 0);
 	crackman.drawString("PAC-MAN",
@@ -591,15 +544,15 @@ void ofApp::drawPacMan() {
 			}
 		}
 	}
-	
+
 
 	// Draw Pacman
 	ofPath pacmanPath;
 	pacmanPath.setColor(pacman.getDefaultColor());
 	pacmanPath.setCircleResolution(360);
 	pacmanPath.setFilled(true);
-	pacmanPath.arc(pacman.getPixelPosition()[0] + centerOffset[0], pacman.getPixelPosition()[1] + centerOffset[1], 
-		tileSize / 2, tileSize / 2, 
+	pacmanPath.arc(pacman.getPixelPosition()[0] + centerOffset[0], pacman.getPixelPosition()[1] + centerOffset[1],
+		tileSize / 2, tileSize / 2,
 		angleDisplacement + pacmanDegree, angleDisplacement - pacmanDegree);
 	pacmanPath.draw();
 }
@@ -626,7 +579,7 @@ void ofApp::drawGhosts() {
 		}
 		ofSetColor(255, 255, 255);
 		g->getImage().draw(g->getPixelPosition()[0] - tileSize / 2 + centerOffset[0],
-			g->getPixelPosition()[1] + centerOffset[1] - tileSize / 2,
+			g->getPixelPosition()[1] - tileSize / 2 + centerOffset[1],
 			tileSize, tileSize);
 	}
 }
