@@ -35,10 +35,12 @@ class Board {
 		// Reset Function
 		vector<vector<Tile>> resetBoard();
 
+		// Getters
+		vector<int> getBufferBounds();
+
 	private:
 		// Before & After Blank Tiles For Miscellaneous Display
-		const int before = 3;
-		const int after = 2;
+		const vector<int> buffer = vector<int>{ 3, 0, 2, 0 };
 
 		// Board Width, Height
 		int numRows;
@@ -46,7 +48,7 @@ class Board {
 
 		// Board Variables
 		const string defaultBoardString =
-			"1111111111111111111111111111"
+			"1111111111111111311111111111"
 			"1333333333333113333333333331"
 			"1311113111113113111113111131"
 			"1411113111113113111113111141"
@@ -58,7 +60,7 @@ class Board {
 			"1111113111112112111113111111"
 			"0000013111112112111113100000"
 			"0000013112222222222113100000"
-			"0000013112111001112113100000"
+			"0000013112111111112113100000"
 			"1111113112100000012113111111"
 			"2222223222100000012223222222"
 			"1111113112100000012113111111"
@@ -76,14 +78,14 @@ class Board {
 			"1311111111113113111111111131"
 			"1311111111113113111111111131"
 			"1333333333333333333333333331"
-			"1111111111111111111111111111";
+			"1111111111111111311111111111";
 		string boardString;
 		vector<vector<Tile>> board;
 
 
 		/*
 			Fill Board Vector From Default String
-				0: Invalid Block
+				0: Display/Invalid Block
 				1: Wall
 				2: No Dot
 				3: Regular Dot

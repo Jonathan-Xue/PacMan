@@ -614,6 +614,10 @@ void ofApp::drawHighScores() {
 }
 
 void ofApp::resetSprites() {
+	// Reset drawPacman Variables
+	angleDisplacement = 0;
+	pacmanDegree = 0;
+
 	// Reset Sprites
 	pacman.resetLevel(level);
 	for (Ghost *g : ghostsVector) {

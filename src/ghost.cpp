@@ -107,28 +107,28 @@ bool Ghost::checkValidVelocity(vector<int> velocity) {
 	else if (velocity == vector<int>{0, -1}) {
 		// Up
 		if (currentVelocity != vector<int>{0, 1} &&
-			(tilePosition[0] - 1 < 0 || (*board)[tilePosition[0] - 1][tilePosition[1]].getID() == 1)) {
+			(tilePosition[0] - 1 < 0 || (*board)[tilePosition[0] - 1][tilePosition[1]].getID() != 0)) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{-1, 0}) {
 		// Left
 		if (currentVelocity != vector<int>{1, 0} &&
-			(tilePosition[1] - 1 < 0 || (*board)[tilePosition[0]][tilePosition[1] - 1].getID() == 1)) {
+			(tilePosition[1] - 1 < 0 || (*board)[tilePosition[0]][tilePosition[1] - 1].getID() != 0)) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{0, 1}) {
 		// Down
 		if (currentVelocity != vector<int>{0, -1} &&
-			(size_t(tilePosition[0] + 1) >= board->size() || (*board)[tilePosition[0] + 1][tilePosition[1]].getID() == 1)) {
+			(size_t(tilePosition[0] + 1) >= board->size() || (*board)[tilePosition[0] + 1][tilePosition[1]].getID() != 0)) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{1, 0}) {
 		// Right
 		if (currentVelocity != vector<int>{-1, 0} &&
-			(size_t(tilePosition[1] + 1) >= (*board)[0].size() || (*board)[tilePosition[0]][tilePosition[1] + 1].getID() == 1)) {
+			(size_t(tilePosition[1] + 1) >= (*board)[0].size() || (*board)[tilePosition[0]][tilePosition[1] + 1].getID() != 0)) {
 			return true;
 		}
 	}
@@ -199,19 +199,19 @@ void Ghost::move() {
 
 void Ghost::adjustBounds() {
 	// Vertical OutOfBounds
-	if (tilePosition[0] < 0) {
-		tilePosition[0] = board->size() - 1;
+	if (tilePosition[0] < Board().getBufferBounds()[0]) {
+		tilePosition[0] = Board().getBufferBounds()[2];
 	}
-	else if (size_t(tilePosition[0]) >= board->size()) {
-		tilePosition[0] = 0;
+	else if (tilePosition[0] > Board().getBufferBounds()[2]) {
+		tilePosition[0] = Board().getBufferBounds()[0];
 	}
 
 	// Horizontal OutOfBounds
-	if (tilePosition[1] < 0) {
-		tilePosition[1] = (*board)[0].size() - 1;
+	if (tilePosition[1] < Board().getBufferBounds()[1]) {
+		tilePosition[1] = Board().getBufferBounds()[3];
 	}
-	else if (size_t(tilePosition[1]) >= (*board)[0].size()) {
-		tilePosition[1] = 0;
+	else if (tilePosition[1] > Board().getBufferBounds()[3]) {
+		tilePosition[1] = Board().getBufferBounds()[1];
 	}
 }
 

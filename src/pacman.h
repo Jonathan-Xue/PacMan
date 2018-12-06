@@ -4,6 +4,7 @@
 
 #include "enums.h"
 
+#include "board.h"
 #include "tile.h"
 
 #include <iostream>

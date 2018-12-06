@@ -15,6 +15,8 @@ Board::Board(string input, int r, int c) {
 	if (numRows * numCols != boardString.length()) {
 		boardString = defaultBoardString;
 	}
+
+	parseBoard();
 }
 
 Board::~Board() {}
@@ -22,6 +24,10 @@ Board::~Board() {}
 vector<vector<Tile>> Board::resetBoard() {
 	parseBoard();
 	return board;
+}
+
+vector<int> Board::getBufferBounds() {
+	return vector<int>{ buffer[0], 0, numRows + buffer[0] - 1, numCols - 1};
 }
 
 // Private Methods
@@ -53,7 +59,7 @@ void Board::parseBoard() {
 				board[i][j] = Tile(1, false, true);
 			}
 			else {
-				std::cerr << "Error. GameState Is Invalid" << std::endl;
+				std::cerr << "Error. Board String Is Invalid" << std::endl;
 				std::exit(1);
 			}
 
@@ -61,11 +67,11 @@ void Board::parseBoard() {
 		}
 	}
 
-	// Before & After Blank Tiles For Miscellaneous Display
-	for (int i = 0; i < before; i++) {
+	// Buffer Display Tiles For Miscellaneous Display
+	for (int i = 0; i < buffer[0]; i++) {
 		board.insert(board.begin(), vector<Tile>(numCols, Tile(-1, false, false)));
 	}
-	for (int i = 0; i < after; i++) {
+	for (int i = 0; i < buffer[2]; i++) {
 		board.push_back(vector<Tile>(numCols, Tile(-1, false, false)));
 	}
 }
