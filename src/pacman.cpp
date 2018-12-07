@@ -198,9 +198,14 @@ int Pacman::getScore() {
 	return score;
 }
 
-vector<double> Pacman::getPixelPosition() {
+vector<double> Pacman::getCenterPixelPosition() {
 	return vector<double>{ (tilePosition[1] + (currentTick[1] / maxTick)) * tileSize,
 		(tilePosition[0] + (currentTick[0] / maxTick)) * tileSize };
+}
+
+vector<double> Pacman::getTopLeftPixelPosition() {
+	return vector<double>{ (tilePosition[1] + (currentTick[1] / maxTick) - 0.5) * tileSize,
+		(tilePosition[0] + (currentTick[0] / maxTick) - 0.5) * tileSize };
 }
 
 vector<int> Pacman::getTilePosition() {

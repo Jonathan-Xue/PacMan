@@ -551,7 +551,7 @@ void ofApp::drawPacMan() {
 	pacmanPath.setColor(pacman.getDefaultColor());
 	pacmanPath.setCircleResolution(360);
 	pacmanPath.setFilled(true);
-	pacmanPath.arc(pacman.getPixelPosition()[0] + centerOffset[0], pacman.getPixelPosition()[1] + centerOffset[1],
+	pacmanPath.arc(pacman.getCenterPixelPosition()[0] + centerOffset[0], pacman.getCenterPixelPosition()[1] + centerOffset[1],
 		tileSize / 2, tileSize / 2,
 		angleDisplacement + pacmanDegree, angleDisplacement - pacmanDegree);
 	pacmanPath.draw();
@@ -562,8 +562,8 @@ void ofApp::drawGhosts() {
 	// Draw targetTile
 	for (Ghost *g : ghostsVector) {
 		ofSetColor(g->getDefaultColor());
-		ofDrawRectangle(g->getTargetTilePixelPosition()[0] + centerOffset[0] - tileSize / 4,
-			g->getTargetTilePixelPosition()[1] + centerOffset[1] - tileSize / 4,
+		ofDrawRectangle(g->getTargetTilePixelPosition()[0] - tileSize / 4 + centerOffset[0] ,
+			g->getTargetTilePixelPosition()[1] - tileSize / 4 + centerOffset[1],
 			tileSize / 2, tileSize / 2);
 	}
 	*/
@@ -578,8 +578,8 @@ void ofApp::drawGhosts() {
 			}
 		}
 		ofSetColor(255, 255, 255);
-		g->getImage().draw(g->getPixelPosition()[0] - tileSize / 2 + centerOffset[0],
-			g->getPixelPosition()[1] - tileSize / 2 + centerOffset[1],
+		g->getImage().draw(g->getTopLeftPixelPosition()[0] + centerOffset[0],
+			g->getTopLeftPixelPosition()[1] + centerOffset[1],
 			tileSize, tileSize);
 	}
 }

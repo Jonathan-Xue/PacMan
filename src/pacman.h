@@ -92,9 +92,12 @@ class Pacman {
 		int getLives();
 		int getScore();
 
-		vector<double> getPixelPosition();
+		vector<double> getCenterPixelPosition();
+		vector<double> getTopLeftPixelPosition();
 		vector<int> getTilePosition();
+
 		vector<int> getCurrentVelocity();
+
 		bool hasEatenPowerPellet();
 
 		// Setters

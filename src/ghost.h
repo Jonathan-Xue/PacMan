@@ -104,7 +104,8 @@ class Ghost {
 		bool isEdible();
 		SpriteMode getMode();
 
-		vector<double> getPixelPosition();
+		vector<double> getCenterPixelPosition();
+		vector<double> getTopLeftPixelPosition();
 		vector<int> getTilePosition();
 
 		vector<double> getTargetTilePixelPosition();
