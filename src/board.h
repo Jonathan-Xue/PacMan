@@ -32,6 +32,13 @@ class Board {
 		// Destructor
 		~Board();
 
+		/*
+			Generates A Board String
+				@param: vector<vector<int>> board
+				@return: string
+		*/
+		string generateBoardString(vector<vector<Tile>> b);
+
 		// Reset Function
 		vector<vector<Tile>> resetBoard();
 

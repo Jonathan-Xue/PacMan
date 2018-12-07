@@ -21,6 +21,33 @@ Board::Board(string input, int r, int c) {
 
 Board::~Board() {}
 
+string Board::generateBoardString(vector<vector<Tile>> b) {
+	string output = "";
+	for (int i = 0; i < b.size(); i++) {
+		for (int j = 0; j < b[0].size(); j++) {
+			if (b[i][j].getID() == -1) {
+				output.append("0");
+			}
+			else if (b[i][j].getID() == 0) {
+				output.append("1");
+			}
+			else if (b[i][j].getID() ==  1) {
+				if (b[i][j].isStandardPellet()) {
+					output.append("3");
+				}
+				else if (b[i][j].isPowerPellet()) {
+					output.append("4");
+				}
+				else {
+					output.append("2");
+				}
+			}
+		}
+	}
+
+	return output;
+}
+
 vector<vector<Tile>> Board::resetBoard() {
 	parseBoard();
 	return board;
