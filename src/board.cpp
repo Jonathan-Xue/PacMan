@@ -17,6 +17,7 @@ void BoardGenerator::parseBoardFromString(string bo, int r, int c) {
 		boardString = defaultBoardString;
 		numRows = defaultNumRows;
 		numCols = defaultNumCols;
+		std::cout << r << "\t" << c << "\t" << bo.length() << std::endl;
 	}
 	else {
 		boardString = bo;
@@ -68,10 +69,11 @@ void BoardGenerator::parseBoardFromString(string bo, int r, int c) {
 	}
 }
 
-void BoardGenerator::generateStringFromBoard(vector<vector<Tile>> b) {
+void BoardGenerator::generateStringFromBoard(vector<vector<Tile>> b) {	
 	// Parse Ignoring Buffers
-	for (int i = buffer[0]; i < buffer[2]; i++) {
-		for (size_t j = buffer[1]; j < b[0].size() - buffer[3]; j++) {
+	boardString = "";
+	for (int i = buffer[0]; i < numRows + buffer[0]; i++) {
+		for (int j = buffer[1]; j < numCols + buffer[1]; j++) {
 			if (b[i][j].getID() == -1) {
 				boardString.append("0");
 			}
@@ -95,8 +97,8 @@ void BoardGenerator::generateStringFromBoard(vector<vector<Tile>> b) {
 	// Set Variables
 	board = b;
 	boardString = boardString;
-	numRows = b.size();
-	numCols = b[0].size();
+	numRows = b.size() - buffer[0] - buffer[2];
+	numCols = b[0].size() - buffer[1] - buffer[3];
 }
 
 vector<vector<Tile>> BoardGenerator::resetBoard() {

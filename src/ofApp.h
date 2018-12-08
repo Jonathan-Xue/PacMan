@@ -58,6 +58,28 @@ class ofApp : public ofBaseApp {
 		void multiPlayerButtonListener(ofVec2f &e);
 		void continueButtonListener(ofVec2f &e);
 
+		// BoardEditor Listeners
+		void editorDisplayBlockButtonListener();
+		void editorWallBlockButtonListener();
+		void editorStandardPelletBlockButtonListener();
+		void editorPowerPelletBlockButtonListener();
+
+		void editorPacmanSpriteButtonListener();
+
+		void editorBlinkySpriteButtonListener();
+		void editorBlinkyHomeTileButtonListener();
+
+		void editorPinkySpriteButtonListener();
+		void editorPinkyHomeTileButtonListener();
+
+		void editorInkySpriteButtonListener();
+		void editorInkyHomeTileButtonListener();
+
+		void editorClydeSpriteButtonListener();
+		void editorClydeHomeTileButtonListener();
+
+		void editorContinueLabelListener() { std::cout << "Continue Pressed" << std::endl;  };
+
 	private:
 		// OpenFramework Variables
 		const int frameRate = 60;
@@ -80,6 +102,29 @@ class ofApp : public ofBaseApp {
 		ofSerial serial;
 		string serialMessage = "";
 		bool incomingMessage = false;
+
+		// OfxGui
+		EditorOptions currentEditorOption = DISPLAY_BLOCK;
+		ofxPanel levelEditorPanel;
+
+		ofxButton editorDisplayBlockButton;
+		ofxButton editorWallBlockButton;
+		ofxButton editorStandardPelletBlockButton;
+		ofxButton editorPowerPelletBlockButton;
+
+		ofxButton editorPacmanSpriteButton;
+
+		ofxButton editorBlinkySpriteButton;
+		ofxButton editorBlinkyHomeTileButton;
+
+		ofxButton editorPinkySpriteButton;
+		ofxButton editorPinkyHomeTileButton;
+
+		ofxButton editorInkySpriteButton;
+		ofxButton editorInkyHomeTileButton;
+
+		ofxButton editorClydeSpriteButton;
+		ofxButton editorClydeHomeTileButton;
 		
 		// Buttons
 		RoundedButton singlePlayerButton;

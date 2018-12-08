@@ -104,7 +104,7 @@ class Pacman {
 		// Setters
 		void setMode(SpriteMode m);
 		void decrementLives();
-		void setInitialPosition(vector<int> itp);
+		void setInitialTilePosition(vector<int> itp);
 		void setQueuedVelocity(vector<int> v);
 
 	private:

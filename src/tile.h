@@ -44,6 +44,8 @@ class Tile {
 		bool isPowerPellet();
 
 		// Setters
+		void setParams(int i, bool sp, bool pp);
+		void setID(int i);
 		void setStandardPellet(bool sp);
 		void setPowerPellet(bool pp);
 

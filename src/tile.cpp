@@ -22,6 +22,16 @@ bool Tile::isPowerPellet() {
 	return powerPellet;
 }
 
+void Tile::setParams(int i, bool sp, bool pp) {
+	id = i;
+	standardPellet = sp;
+	powerPellet = pp;
+}
+
+void Tile::setID(int i) {
+	id = i;
+}
+
 void Tile::setStandardPellet(bool sp) {
 	standardPellet = sp;
 }

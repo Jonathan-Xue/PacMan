@@ -28,6 +28,48 @@ void ofApp::setup() {
 	// Setup Arduino
 	setupSerial();
 
+	// Setup LevelEditor
+	levelEditorPanel.setup("Variables");
+
+	levelEditorPanel.add(editorDisplayBlockButton.setup("Display Block"));
+	levelEditorPanel.add(editorWallBlockButton.setup("Wall Block"));
+	levelEditorPanel.add(editorStandardPelletBlockButton.setup("Standard Pellet Block"));
+	levelEditorPanel.add(editorPowerPelletBlockButton.setup("Power Pellet Block"));
+
+	levelEditorPanel.add(editorPacmanSpriteButton.setup("Pacman Sprite"));
+
+	levelEditorPanel.add(editorBlinkySpriteButton.setup("Blinky Sprite"));
+	levelEditorPanel.add(editorBlinkyHomeTileButton.setup("Blinky Home Position"));
+
+	levelEditorPanel.add(editorPinkySpriteButton.setup("Pinky Sprite"));
+	levelEditorPanel.add(editorPinkyHomeTileButton.setup("Pinky Home Position"));
+
+	levelEditorPanel.add(editorInkySpriteButton.setup("Inky Sprite"));
+	levelEditorPanel.add(editorInkyHomeTileButton.setup("Inky Home Position"));
+
+	levelEditorPanel.add(editorClydeSpriteButton.setup("Clyde Sprite"));
+	levelEditorPanel.add(editorClydeHomeTileButton.setup("Clyde Home Position"));
+
+	// Listeners
+	editorDisplayBlockButton.addListener(this, &ofApp::editorDisplayBlockButtonListener);
+	editorWallBlockButton.addListener(this, &ofApp::editorWallBlockButtonListener);
+	editorStandardPelletBlockButton.addListener(this, &ofApp::editorStandardPelletBlockButtonListener);
+	editorPowerPelletBlockButton.addListener(this, &ofApp::editorPowerPelletBlockButtonListener);
+
+	editorPacmanSpriteButton.addListener(this, &ofApp::editorPacmanSpriteButtonListener);
+
+	editorBlinkySpriteButton.addListener(this, &ofApp::editorBlinkySpriteButtonListener);
+	editorBlinkyHomeTileButton.addListener(this, &ofApp::editorBlinkyHomeTileButtonListener);
+
+	editorPinkySpriteButton.addListener(this, &ofApp::editorPinkySpriteButtonListener);
+	editorPinkyHomeTileButton.addListener(this, &ofApp::editorPinkyHomeTileButtonListener);
+
+	editorInkySpriteButton.addListener(this, &ofApp::editorInkySpriteButtonListener);
+	editorInkyHomeTileButton.addListener(this, &ofApp::editorInkyHomeTileButtonListener);
+
+	editorClydeSpriteButton.addListener(this, &ofApp::editorClydeSpriteButtonListener);
+	editorClydeHomeTileButton.addListener(this, &ofApp::editorClydeHomeTileButtonListener);
+	
 	// Setup Buttons
 	singlePlayerButton.setup("Solo", ofColor(255, 255, 255), "emulogic.ttf", ofColor(0, 0, 0), 12);
 	ofAddListener(singlePlayerButton.clicked, this, &ofApp::singlePlayerButtonListener);
@@ -238,6 +280,7 @@ void ofApp::draw() {
 		break;
 	case LEVEL_EDITOR:
 		drawLevelEditor();
+		redrawBackgroundFlag = true;
 		break;
 	case IN_PROGRESS:
 		// Fallthrough Intended
@@ -262,8 +305,75 @@ void ofApp::draw() {
 
 void ofApp::mousePressed(int x, int y, int button) {
 	if (currentState == LEVEL_EDITOR) {
-		vector<int> tilePosition = vector<int>{ (y - centerOffset[1]) / tileSize, (x - centerOffset[0]) / tileSize };
-		std::cout << "TilePosition: " << tilePosition[0] << "\t" << tilePosition[1] << std::endl;
+		// Ignore Panel
+		if (!(x > levelEditorPanel.getPosition().x && x < levelEditorPanel.getPosition().x + levelEditorPanel.getWidth() &&
+			y > levelEditorPanel.getPosition().y && y < levelEditorPanel.getPosition().y + levelEditorPanel.getHeight())) {
+			vector<int> tilePosition = vector<int>{ (y - centerOffset[1]) / tileSize, (x - centerOffset[0]) / tileSize };
+			
+			bool withinBoardBounds = (tilePosition[0] >= board->getBufferBounds()[0] && tilePosition[0] < board->getBufferBounds()[2] &&
+				tilePosition[1] >= board->getBufferBounds()[1] && tilePosition[1] < board->getBufferBounds()[3]);
+			
+			// Only Allow For Certain Elements To Be Placed Outside Board Bounds
+			switch (currentEditorOption) {
+			case DISPLAY_BLOCK:
+				if (withinBoardBounds) {
+					currentBoard[tilePosition[0]][tilePosition[1]].setParams(-1, false, false);
+				}
+				break;
+			case WALL_BLOCK:
+				if (withinBoardBounds) {
+					currentBoard[tilePosition[0]][tilePosition[1]].setParams(0, false, false);
+				}
+				break;
+			case STANDARD_PELLET_BLOCK:
+				if (withinBoardBounds) {
+					currentBoard[tilePosition[0]][tilePosition[1]].setParams(1, true, false);
+				}
+				break;
+			case POWER_PELLET_BLOCK:
+				if (withinBoardBounds) {
+					currentBoard[tilePosition[0]][tilePosition[1]].setParams(1, false, true);
+				}
+				break;
+			case PACMAN_SPRITE:
+				if (withinBoardBounds) {
+					pacman.setInitialTilePosition(tilePosition);
+				}
+				break;
+			case BLINKY_SPRITE:
+				if (withinBoardBounds) {
+					blinky.setInitialTilePosition(tilePosition);
+				}
+				break;
+			case BLINKY_HOME_TILE:
+				blinky.setHomeTilePosition(tilePosition);
+				break;
+			case PINKY_SPRITE:
+				if (withinBoardBounds) {
+					pinky.setInitialTilePosition(tilePosition);
+				}
+				break;
+			case PINKY_HOME_TILE:
+				pinky.setHomeTilePosition(tilePosition);
+				break;
+			case INKY_SPRITE:
+				if (withinBoardBounds) {
+					inky.setInitialTilePosition(tilePosition);
+				}
+				break;
+			case INKY_HOME_TILE:
+				inky.setHomeTilePosition(tilePosition);
+				break;
+			case CLYDE_SPRITE:
+				if (withinBoardBounds) {
+					clyde.setInitialTilePosition(tilePosition);
+				}
+				break;
+			case CLYDE_HOME_TILE:
+				clyde.setHomeTilePosition(tilePosition);
+				break;
+			}
+		}
 	}
 }
 
@@ -375,7 +485,7 @@ void ofApp::singlePlayerButtonListener(ofVec2f &e) {
 	vector<vector<int>> ghostInitialTilePositions = vector<vector<int>>{ {4, 1}, {32, 26}, {4, 26}, {32, 1} };
 	vector<vector<int>> ghostHomeTilePositions = vector<vector<int>>{ { 0, 25 }, { 0, 2 }, { 35, 27 }, { 35, 0 } };
 
-	pacman.setInitialPosition(vector<int>{ 26, 14 });
+	pacman.setInitialTilePosition(vector<int>{ 26, 14 });
 	for (size_t i = 0; i < ghostsVector.size(); i++) {
 		ghostsVector[i]->setHomeTilePosition(ghostHomeTilePositions[i]);
 		ghostsVector[i]->setInitialTilePosition(ghostInitialTilePositions[i]);
@@ -391,10 +501,63 @@ void ofApp::multiPlayerButtonListener(ofVec2f &e) {
 
 void ofApp::continueButtonListener(ofVec2f &e) {
 	// Set Board
+	std::cout << "Current Board Index [3, 0]: " << currentBoard[3][0].isPowerPellet() << std::endl;
 	board->generateStringFromBoard(currentBoard);
 
 	// Reset Game
 	resetGame();
+}
+
+void ofApp::editorDisplayBlockButtonListener() {
+	currentEditorOption = DISPLAY_BLOCK;
+}
+
+void ofApp::editorWallBlockButtonListener() { 
+	currentEditorOption = WALL_BLOCK;
+}
+
+void ofApp::editorStandardPelletBlockButtonListener() { 
+	currentEditorOption = STANDARD_PELLET_BLOCK;
+}
+
+void ofApp::editorPowerPelletBlockButtonListener() { 
+	currentEditorOption = POWER_PELLET_BLOCK;
+}
+
+void ofApp::editorPacmanSpriteButtonListener() { 
+	currentEditorOption = PACMAN_SPRITE;
+}
+
+void ofApp::editorBlinkySpriteButtonListener() { 
+	currentEditorOption = BLINKY_SPRITE;
+}
+
+void ofApp::editorBlinkyHomeTileButtonListener() { 
+	currentEditorOption = BLINKY_HOME_TILE;
+}
+
+void ofApp::editorPinkySpriteButtonListener() { 
+	currentEditorOption = PINKY_SPRITE;
+}
+
+void ofApp::editorPinkyHomeTileButtonListener() { 
+	currentEditorOption = PINKY_HOME_TILE;
+}
+
+void ofApp::editorInkySpriteButtonListener() { 
+	currentEditorOption = INKY_SPRITE;
+}
+
+void ofApp::editorInkyHomeTileButtonListener() { 
+	currentEditorOption = INKY_HOME_TILE;
+}
+
+void ofApp::editorClydeSpriteButtonListener() { 
+	currentEditorOption = CLYDE_SPRITE;
+}
+
+void ofApp::editorClydeHomeTileButtonListener() { 
+	currentEditorOption = CLYDE_HOME_TILE;
 }
 
 // Private Methods
@@ -435,21 +598,21 @@ void ofApp::drawLevelEditor() {
 
 	// Sprites
 	ofSetColor(pacman.getDefaultColor());
-	ofDrawRectangle(pacman.getInitialTilePosition()[1] * tileSize + centerOffset[0], 
-		pacman.getInitialTilePosition()[0] * tileSize + centerOffset[1], 
+	ofDrawRectangle(pacman.getInitialTilePosition()[1] * tileSize + centerOffset[0],
+		pacman.getInitialTilePosition()[0] * tileSize + centerOffset[1],
 		tileSize, tileSize);
 
 	for (Ghost *g : ghostsVector) {
 		ofSetColor(g->getDefaultColor());
-		ofDrawRectangle(g->getInitialTilePosition()[1] * tileSize + centerOffset[0], 
-			g->getInitialTilePosition()[0] * tileSize + centerOffset[1], 
+		ofDrawRectangle(g->getInitialTilePosition()[1] * tileSize + centerOffset[0],
+			g->getInitialTilePosition()[0] * tileSize + centerOffset[1],
 			tileSize, tileSize);
 
 		ofColor darkenedColor = g->getDefaultColor();
 		darkenedColor.setBrightness(128);
 		ofSetColor(darkenedColor);
-		ofDrawRectangle(g->getHomeTilePosition()[1] * tileSize + centerOffset[0], 
-			g->getHomeTilePosition()[0] * tileSize + centerOffset[1], 
+		ofDrawRectangle(g->getHomeTilePosition()[1] * tileSize + centerOffset[0],
+			g->getHomeTilePosition()[0] * tileSize + centerOffset[1],
 			tileSize, tileSize);
 	}
 
@@ -460,7 +623,7 @@ void ofApp::drawLevelEditor() {
 		for (size_t j = 0; j < currentBoard[0].size(); j++) {
 			if (i >= (size_t)board->getBufferBounds()[0] && i < (size_t)board->getBufferBounds()[2] &&
 				j >= (size_t)board->getBufferBounds()[1] && j < (size_t)board->getBufferBounds()[3]) {
-				ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);		
+				ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
 			}
 		}
 	}
@@ -469,6 +632,9 @@ void ofApp::drawLevelEditor() {
 	// Buttons
 	continueButton.setVisible(true);
 	continueButton.draw();
+
+	// Level Editor Panel
+	levelEditorPanel.draw();
 }
 
 void ofApp::drawGameBoard() {

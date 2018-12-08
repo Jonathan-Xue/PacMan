@@ -232,7 +232,7 @@ void Pacman::decrementLives() {
 	lives--;
 }
 
-void Pacman::setInitialPosition(vector<int> itp) {
+void Pacman::setInitialTilePosition(vector<int> itp) {
 	initialTilePosition = itp;
 	tilePosition = itp;
 }
