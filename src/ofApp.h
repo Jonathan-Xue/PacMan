@@ -99,7 +99,7 @@ class ofApp : public ofBaseApp {
 		// Game Variables
 		vector<int> highScores{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-		Board *board = new Board();
+		BoardGenerator *board = new BoardGenerator();
 		vector<vector<Tile>> currentBoard = board->resetBoard();
 		Pacman &pacman = Pacman(&currentBoard);
 		Ghost &blinky = Blinky(&currentBoard, &pacman);

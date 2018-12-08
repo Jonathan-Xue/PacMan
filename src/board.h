@@ -14,30 +14,41 @@ using std::vector;
 		Purpose:
 			Generates A New Board & Returns It As A 2D Vector Of Tiles
 */
-class Board {
+class BoardGenerator {
 
 	public:
 		// Default Constructor
-		Board();
+		BoardGenerator();
 
 		// Parameterized Constructor
-		Board(string input, int r, int c);
+		BoardGenerator(string input, int r, int c);
 
 		// Copy Constructor
-		Board(const Board& other) = default;
+		BoardGenerator(const BoardGenerator& other) = default;
 
 		// Transfer Constructor
-		Board(Board&& other) = default;
+		BoardGenerator(BoardGenerator&& other) = default;
 
 		// Destructor
-		~Board();
+		~BoardGenerator();
+
+		/*
+			Fill Board Vector From Default String
+				0: Display/Invalid Block
+				1: Wall
+				2: No Dot
+				3: Regular Dot
+				4: Powerup Dot
+		*/
+		void parseBoardFromString(string bo, int r, int c);
 
 		/*
 			Generates A Board String
 				@param: vector<vector<int>> board
 				@return: string
 		*/
-		string generateBoardString(vector<vector<Tile>> b);
+		void generateStringFromBoard(vector<vector<Tile>> b);
+
 
 		// Reset Function
 		vector<vector<Tile>> resetBoard();
@@ -49,11 +60,8 @@ class Board {
 		// Before & After Blank Tiles For Miscellaneous Display
 		const vector<int> buffer = vector<int>{ 3, 0, 2, 0 };
 
-		// Board Width, Height
-		int numRows;
-		int numCols;
-
 		// Board Variables
+		vector<vector<Tile>> board;
 		const string defaultBoardString =
 			"1111111111111111311111111111"
 			"1333333333333113333333333331"
@@ -87,16 +95,9 @@ class Board {
 			"1333333333333333333333333331"
 			"1111111111111111311111111111";
 		string boardString;
-		vector<vector<Tile>> board;
 
-
-		/*
-			Fill Board Vector From Default String
-				0: Display/Invalid Block
-				1: Wall
-				2: No Dot
-				3: Regular Dot
-				4: Powerup Dot
-		*/
-		void parseBoard();
+		const int defaultNumRows = 31;
+		const int defaultNumCols = 28;
+		int numRows;
+		int numCols;
 };

@@ -1,64 +1,29 @@
 #include "board.h"
 
 // Public Methods
-Board::Board() {
-	boardString = defaultBoardString;
-	numRows = 31;
-	numCols = 28;
+BoardGenerator::BoardGenerator() {
+	parseBoardFromString(defaultBoardString, defaultNumRows, defaultNumCols);
 }
 
-Board::Board(string input, int r, int c) {
-	boardString = input;
-	numRows = r;
-	numCols = c;
+BoardGenerator::BoardGenerator(string input, int r, int c) {
+	parseBoardFromString(defaultBoardString, defaultNumRows, defaultNumCols);
+}
 
-	if (numRows * numCols != boardString.length()) {
+BoardGenerator::~BoardGenerator() {}
+
+void BoardGenerator::parseBoardFromString(string bo, int r, int c) {
+	// Check Parameter Validity
+	if (bo == "" || r * c != bo.length()) {
 		boardString = defaultBoardString;
+		numRows = defaultNumRows;
+		numCols = defaultNumCols;
+	}
+	else {
+		boardString = bo;
+		numRows = r;
+		numCols = c;
 	}
 
-	parseBoard();
-}
-
-Board::~Board() {}
-
-string Board::generateBoardString(vector<vector<Tile>> b) {
-	string output = "";
-	for (int i = 0; i < b.size(); i++) {
-		for (int j = 0; j < b[0].size(); j++) {
-			if (b[i][j].getID() == -1) {
-				output.append("0");
-			}
-			else if (b[i][j].getID() == 0) {
-				output.append("1");
-			}
-			else if (b[i][j].getID() ==  1) {
-				if (b[i][j].isStandardPellet()) {
-					output.append("3");
-				}
-				else if (b[i][j].isPowerPellet()) {
-					output.append("4");
-				}
-				else {
-					output.append("2");
-				}
-			}
-		}
-	}
-
-	return output;
-}
-
-vector<vector<Tile>> Board::resetBoard() {
-	parseBoard();
-	return board;
-}
-
-vector<int> Board::getBufferBounds() {
-	return vector<int>{ buffer[0], 0, numRows + buffer[0] - 1, numCols - 1};
-}
-
-// Private Methods
-void Board::parseBoard() {
 	// Resize Board Vector
 	board.resize(numRows);
 	for (auto &it : board) {
@@ -101,4 +66,44 @@ void Board::parseBoard() {
 	for (int i = 0; i < buffer[2]; i++) {
 		board.push_back(vector<Tile>(numCols, Tile(-1, false, false)));
 	}
+}
+
+void BoardGenerator::generateStringFromBoard(vector<vector<Tile>> b) {
+	// Parse Ignoring Buffers
+	for (size_t i = buffer[0]; i < b.size() - buffer[2]; i++) {
+		for (size_t j = buffer[1]; j < b[0].size() - buffer[3]; j++) {
+			if (b[i][j].getID() == -1) {
+				boardString.append("0");
+			}
+			else if (b[i][j].getID() == 0) {
+				boardString.append("1");
+			}
+			else if (b[i][j].getID() == 1) {
+				if (b[i][j].isStandardPellet()) {
+					boardString.append("3");
+				}
+				else if (b[i][j].isPowerPellet()) {
+					boardString.append("4");
+				}
+				else {
+					boardString.append("2");
+				}
+			}
+		}
+	}
+
+	// Set Variables
+	board = b;
+	boardString = boardString;
+	numRows = b.size();
+	numCols = b[0].size();
+}
+
+vector<vector<Tile>> BoardGenerator::resetBoard() {
+	parseBoardFromString(boardString, numRows, numCols);
+	return board;
+}
+
+vector<int> BoardGenerator::getBufferBounds() {
+	return vector<int>{ buffer[0], 0, numRows + buffer[0] - 1, numCols - 1};
 }

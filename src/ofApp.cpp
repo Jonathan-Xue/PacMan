@@ -345,7 +345,7 @@ void ofApp::windowResized(int w, int h) {
 void ofApp::singlePlayerButtonListener(ofVec2f &e) {
 	// Board
 	// TODO: Insert Code To Take User Input Here
-	board = new Board();
+	board = new BoardGenerator();
 
 	// Flags
 	redrawBackgroundFlag = true;
@@ -635,7 +635,7 @@ void ofApp::resetSprites() {
 }
 
 void ofApp::resetLevel() {
-	// New Board
+	// Reset Board
 	currentBoard = board->resetBoard();
 
 	// Reset Sprites
@@ -660,16 +660,16 @@ void ofApp::resetGame() {
 		std::exit(1);
 	}
 
-	// Create A New Board
-	currentBoard = board->resetBoard();
-
 	// Set Level To 0
 	level = 0;
 
 	// Set Flags
 	highScoreFlag = true;
 
-	// Reset Game
+	// Reset Board
+	currentBoard = board->resetBoard();
+
+	// Reset Sprites
 	pacman.resetGame();
 	for (Ghost *g : ghostsVector) {
 		g->resetGame();
