@@ -199,19 +199,19 @@ void Ghost::move() {
 
 void Ghost::adjustBounds() {
 	// Vertical OutOfBounds
-	if (tilePosition[0] < BoardGenerator().getBufferBounds()[0]) {
-		tilePosition[0] = BoardGenerator().getBufferBounds()[2];
+	if (tilePosition[0] < boardBufferBounds[0]) {
+		tilePosition[0] = boardBufferBounds[2] - 1;
 	}
-	else if (tilePosition[0] > BoardGenerator().getBufferBounds()[2]) {
-		tilePosition[0] = BoardGenerator().getBufferBounds()[0];
+	else if (tilePosition[0] >= boardBufferBounds[2]) {
+		tilePosition[0] = boardBufferBounds[0];
 	}
 
 	// Horizontal OutOfBounds
-	if (tilePosition[1] < BoardGenerator().getBufferBounds()[1]) {
-		tilePosition[1] = BoardGenerator().getBufferBounds()[3];
+	if (tilePosition[1] < boardBufferBounds[1]) {
+		tilePosition[1] = boardBufferBounds[3] - 1;
 	}
-	else if (tilePosition[1] > BoardGenerator().getBufferBounds()[3]) {
-		tilePosition[1] = BoardGenerator().getBufferBounds()[1];
+	else if (tilePosition[1] >= boardBufferBounds[3]) {
+		tilePosition[1] = boardBufferBounds[1];
 	}
 }
 

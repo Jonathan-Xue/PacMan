@@ -262,7 +262,7 @@ void ofApp::draw() {
 
 void ofApp::mousePressed(int x, int y, int button) {
 	if (currentState == LEVEL_EDITOR) {
-		vector<int> tilePosition = vector<int>{(y - centerOffset[1]) / tileSize, (x - centerOffset[0]) / tileSize};
+		vector<int> tilePosition = vector<int>{ (y - centerOffset[1]) / tileSize, (x - centerOffset[0]) / tileSize };
 		std::cout << "TilePosition: " << tilePosition[0] << "\t" << tilePosition[1] << std::endl;
 	}
 }
@@ -353,8 +353,8 @@ void ofApp::windowResized(int w, int h) {
 		0 // Bottom Left
 	);
 
-	continueButton.setPosition(centerOffset[0], (board->getBufferBounds()[2] + 1) * tileSize + centerOffset[1]);
-	continueButton.setSize(currentBoard[0].size() * tileSize, (currentBoard.size() - (board->getBufferBounds()[2] + 1)) * tileSize);
+	continueButton.setPosition(centerOffset[0], board->getBufferBounds()[2] * tileSize + centerOffset[1]);
+	continueButton.setSize(currentBoard[0].size() * tileSize, (currentBoard.size() - board->getBufferBounds()[2]) * tileSize);
 	continueButton.setFontSize(tileSize);
 
 	// Sprite Resize
@@ -365,7 +365,23 @@ void ofApp::windowResized(int w, int h) {
 }
 
 void ofApp::singlePlayerButtonListener(ofVec2f &e) {
+	// Flags
 	redrawBackgroundFlag = true;
+
+	// Board
+	board = new BoardGenerator();
+
+	// Set Sprites' initialTilePosition
+	vector<vector<int>> ghostInitialTilePositions = vector<vector<int>>{ {4, 1}, {32, 26}, {4, 26}, {32, 1} };
+	vector<vector<int>> ghostHomeTilePositions = vector<vector<int>>{ { 0, 25 }, { 0, 2 }, { 35, 27 }, { 35, 0 } };
+
+	pacman.setInitialPosition(vector<int>{ 26, 14 });
+	for (size_t i = 0; i < ghostsVector.size(); i++) {
+		ghostsVector[i]->setHomeTilePosition(ghostHomeTilePositions[i]);
+		ghostsVector[i]->setInitialTilePosition(ghostInitialTilePositions[i]);
+	}
+
+	// State
 	currentState = LEVEL_EDITOR;
 }
 
@@ -374,23 +390,8 @@ void ofApp::multiPlayerButtonListener(ofVec2f &e) {
 }
 
 void ofApp::continueButtonListener(ofVec2f &e) {
-	// Board
-	board = new BoardGenerator();
-
-	// Set Sprites' initialTilePosition
-	vector<vector<int>> ghostInitialTilePositions = vector<vector<int>>{ {4, 1}, {32, 26}, {4, 26}, {32, 1} };
-	vector<vector<int>> ghostHomeTilePositions = vector<vector<int>>{
-		{ 0, (int)currentBoard[0].size() - 1 - 2 },
-		{ 0, 2 },
-		{ (int)currentBoard.size() - 1, (int)currentBoard[0].size() - 1 },
-		{ (int)currentBoard.size() - 1, 0 }
-	};
-
-	pacman.setInitialPosition(vector<int>{ 26, 14 });
-	for (size_t i = 0; i < ghostsVector.size(); i++) {
-		ghostsVector[i]->setHomeTilePosition(ghostHomeTilePositions[i]);
-		ghostsVector[i]->setInitialTilePosition(ghostInitialTilePositions[i]);
-	}
+	// Set Board
+	board->generateStringFromBoard(currentBoard);
 
 	// Reset Game
 	resetGame();
@@ -429,7 +430,41 @@ void ofApp::drawLandingPage() {
 }
 
 void ofApp::drawLevelEditor() {
+	// GameBoard
 	drawGameBoard();
+
+	// Sprites
+	ofSetColor(pacman.getDefaultColor());
+	ofDrawRectangle(pacman.getInitialTilePosition()[1] * tileSize + centerOffset[0], 
+		pacman.getInitialTilePosition()[0] * tileSize + centerOffset[1], 
+		tileSize, tileSize);
+
+	for (Ghost *g : ghostsVector) {
+		ofSetColor(g->getDefaultColor());
+		ofDrawRectangle(g->getInitialTilePosition()[1] * tileSize + centerOffset[0], 
+			g->getInitialTilePosition()[0] * tileSize + centerOffset[1], 
+			tileSize, tileSize);
+
+		ofColor darkenedColor = g->getDefaultColor();
+		darkenedColor.setBrightness(128);
+		ofSetColor(darkenedColor);
+		ofDrawRectangle(g->getHomeTilePosition()[1] * tileSize + centerOffset[0], 
+			g->getHomeTilePosition()[0] * tileSize + centerOffset[1], 
+			tileSize, tileSize);
+	}
+
+	// Grey Border
+	ofNoFill();
+	ofSetColor(175, 175, 175);
+	for (size_t i = 0; i < currentBoard.size(); i++) {
+		for (size_t j = 0; j < currentBoard[0].size(); j++) {
+			if (i >= (size_t)board->getBufferBounds()[0] && i < (size_t)board->getBufferBounds()[2] &&
+				j >= (size_t)board->getBufferBounds()[1] && j < (size_t)board->getBufferBounds()[3]) {
+				ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);		
+			}
+		}
+	}
+	ofFill();
 
 	// Buttons
 	continueButton.setVisible(true);
@@ -592,7 +627,9 @@ void ofApp::drawGhosts() {
 	/*
 	// Draw targetTile
 	for (Ghost *g : ghostsVector) {
-		ofSetColor(g->getDefaultColor());
+		ofColor darkenedColor = g->getDefaultColor();
+		darkenedColor.setBrightness(128);
+		ofSetColor(darkenedColor);
 		ofDrawRectangle(g->getTargetTilePixelPosition()[0] - tileSize / 4 + centerOffset[0] ,
 			g->getTargetTilePixelPosition()[1] - tileSize / 4 + centerOffset[1],
 			tileSize / 2, tileSize / 2);

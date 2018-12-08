@@ -70,7 +70,7 @@ void BoardGenerator::parseBoardFromString(string bo, int r, int c) {
 
 void BoardGenerator::generateStringFromBoard(vector<vector<Tile>> b) {
 	// Parse Ignoring Buffers
-	for (size_t i = buffer[0]; i < b.size() - buffer[2]; i++) {
+	for (int i = buffer[0]; i < buffer[2]; i++) {
 		for (size_t j = buffer[1]; j < b[0].size() - buffer[3]; j++) {
 			if (b[i][j].getID() == -1) {
 				boardString.append("0");
@@ -105,5 +105,5 @@ vector<vector<Tile>> BoardGenerator::resetBoard() {
 }
 
 vector<int> BoardGenerator::getBufferBounds() {
-	return vector<int>{ buffer[0], 0, numRows + buffer[0] - 1, numCols - 1};
+	return vector<int>{ buffer[0], buffer[1], numRows + buffer[0], numCols + buffer[1]};
 }

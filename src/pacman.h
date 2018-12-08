@@ -125,6 +125,7 @@ class Pacman {
 
 		// Game Variables
 		vector<vector<Tile>> *board;
+		vector<int> boardBufferBounds = BoardGenerator().getBufferBounds();
 
 		// Class Variables
 		ofColor defaultColor = ofColor(255, 255, 0);
