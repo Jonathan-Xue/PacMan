@@ -354,6 +354,7 @@ void ofApp::windowResized(int w, int h) {
 }
 
 void ofApp::singlePlayerButtonListener(ofVec2f &e) {
+	redrawBackgroundFlag = true;
 	currentState = LEVEL_EDITOR;
 }
 
@@ -363,11 +364,7 @@ void ofApp::multiPlayerButtonListener(ofVec2f &e) {
 
 void ofApp::continueButtonListener(ofVec2f &e) {
 	// Board
-	// TODO: Insert Code To Take User Input Here
 	board = new BoardGenerator();
-
-	// Flags
-	redrawBackgroundFlag = true;
 
 	// Set Sprites' initialTilePosition
 	vector<vector<int>> ghostInitialTilePositions = vector<vector<int>>{ {4, 1}, {32, 26}, {4, 26}, {32, 1} };
