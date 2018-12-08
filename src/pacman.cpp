@@ -212,6 +212,10 @@ vector<int> Pacman::getTilePosition() {
 	return tilePosition;
 }
 
+vector<int> Pacman::getInitialTilePosition() {
+	return initialTilePosition;
+}
+
 vector<int> Pacman::getCurrentVelocity() {
 	return currentVelocity;
 }

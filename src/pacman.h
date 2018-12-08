@@ -94,6 +94,7 @@ class Pacman {
 
 		vector<double> getCenterPixelPosition();
 		vector<double> getTopLeftPixelPosition();
+		vector<int> getInitialTilePosition();
 		vector<int> getTilePosition();
 
 		vector<int> getCurrentVelocity();

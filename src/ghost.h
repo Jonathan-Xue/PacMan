@@ -106,19 +106,23 @@ class Ghost {
 
 		vector<double> getCenterPixelPosition();
 		vector<double> getTopLeftPixelPosition();
+		vector<int> getInitialTilePosition();
+		vector<int> getHomeTilePosition();
 		vector<int> getTilePosition();
 
 		vector<double> getTargetTilePixelPosition();
-		vector<int> getTargetTile();
+		vector<int> getTargetTilePosition();
 
 		// Setters
 		void flipWhichEdibleImage(bool b);
 		void reverseDirection();
+
 		void setAlive(bool a);
 		void setEdible(bool e);
 		void setMode(SpriteMode m);
-		void setHomeTilePosition(vector<int> htp);
+
 		void setInitialTilePosition(vector<int> itp);
+		void setHomeTilePosition(vector<int> htp);
 
 	protected:
 		// OpenFramework Variables
@@ -168,7 +172,7 @@ class Ghost {
 		vector<int> tilePosition = { 0, 0 };
 		vector<double> pixelPosition = { 0, 0 };
 
-		vector<int> targetTile = { 0, 0 };
+		vector<int> targetTilePosition = { 0, 0 };
 
 		vector<int> currentVelocity = { 0, 0 };
 		vector<vector<int>> queuedVelocity{ {0, -1}, {-1, 0}, {0, 1}, {1, 0} };

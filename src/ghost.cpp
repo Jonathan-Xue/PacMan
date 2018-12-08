@@ -10,7 +10,7 @@ void Ghost::update() {
 		calculateTargetTile();
 	}
 	else {
-		targetTile = initialTilePosition;
+		targetTilePosition = initialTilePosition;
 	}
 
 	// Update currentVelocity
@@ -23,7 +23,7 @@ void Ghost::update() {
 	adjustBounds();
 
 	// Check To See If Ghost Should Be Alive
-	if (!alive && tilePosition == targetTile) {
+	if (!alive && tilePosition == targetTilePosition) {
 		alive = true;
 		edible = false;
 	}
@@ -83,8 +83,8 @@ void Ghost::updateVelocity() {
 			double minVal = 1000000000.0;
 
 			for (size_t i = 0; i < possibleVelocity.size(); i++) {
-				double distance = calculateDistance(tileSize * (targetTile[0] + 0.5),
-					tileSize * (targetTile[1] + 0.5),
+				double distance = calculateDistance(tileSize * (targetTilePosition[0] + 0.5),
+					tileSize * (targetTilePosition[1] + 0.5),
 					tileSize * (tilePosition[0] + (currentTick[0] / maxTick) + possibleVelocity[i][1]),
 					tileSize * (tilePosition[1] + (currentTick[1] / maxTick) + possibleVelocity[i][0]));
 
@@ -342,12 +342,20 @@ vector<int> Ghost::getTilePosition() {
 	return tilePosition;
 }
 
-vector<double> Ghost::getTargetTilePixelPosition() {
-	return vector<double>{ (targetTile[1] + 0.5) * tileSize, (targetTile[0] + 0.5) * tileSize };
+vector<int> Ghost::getInitialTilePosition() {
+	return initialTilePosition;
 }
 
-vector<int> Ghost::getTargetTile() {
-	return targetTile;
+vector<int> Ghost::getHomeTilePosition() {
+	return homeTilePosition;
+}
+
+vector<double> Ghost::getTargetTilePixelPosition() {
+	return vector<double>{ (targetTilePosition[1] + 0.5) * tileSize, (targetTilePosition[0] + 0.5) * tileSize };
+}
+
+vector<int> Ghost::getTargetTilePosition() {
+	return targetTilePosition;
 }
 
 void Ghost::flipWhichEdibleImage(bool b) {
@@ -370,11 +378,11 @@ void Ghost::setMode(SpriteMode m) {
 	mode = m;
 }
 
-void Ghost::setHomeTilePosition(vector<int> htp) {
-	homeTilePosition = htp;
-}
-
 void Ghost::setInitialTilePosition(vector<int> itp) {
 	initialTilePosition = itp;
 	tilePosition = initialTilePosition;
+}
+
+void Ghost::setHomeTilePosition(vector<int> htp) {
+	homeTilePosition = htp;
 }
