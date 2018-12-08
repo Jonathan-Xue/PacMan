@@ -54,6 +54,7 @@ class ofApp : public ofBaseApp {
 		// Event Listeners
 		void singlePlayerButtonListener(ofVec2f &e);
 		void multiPlayerButtonListener(ofVec2f &e);
+		void continueButtonListener(ofVec2f &e);
 
 	private:
 		// OpenFramework Variables
@@ -81,6 +82,8 @@ class ofApp : public ofBaseApp {
 		// Buttons
 		RoundedButton singlePlayerButton;
 		RoundedButton multiPlayerButton;
+
+		Button continueButton;
 
 		// Timers
 		const vector<SpriteMode> modeMarkers{ SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE, SCATTER, CHASE };
@@ -122,6 +125,7 @@ class ofApp : public ofBaseApp {
 
 		// Helper Methods For Display Render
 		void drawLandingPage();
+		void drawLevelEditor();
 		void drawGameBoard();
 		void drawMisc();
 		void drawPacMan();

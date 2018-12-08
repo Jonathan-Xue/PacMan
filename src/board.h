@@ -49,7 +49,6 @@ class BoardGenerator {
 		*/
 		void generateStringFromBoard(vector<vector<Tile>> b);
 
-
 		// Reset Function
 		vector<vector<Tile>> resetBoard();
 

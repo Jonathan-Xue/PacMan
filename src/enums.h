@@ -2,6 +2,7 @@
 
 enum GameState {
 	START,
+	LEVEL_EDITOR,
 	IN_PROGRESS,
 	PAUSED,
 	GAME_OVER,

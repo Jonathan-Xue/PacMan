@@ -35,6 +35,9 @@ void ofApp::setup() {
 	multiPlayerButton.setup("Versus", ofColor(255, 255, 255), "emulogic.ttf", ofColor(0, 0, 0), 12);
 	ofAddListener(multiPlayerButton.clicked, this, &ofApp::singlePlayerButtonListener);
 
+	continueButton.setup("Continue", ofColor(255, 0, 0), "emulogic.ttf", ofColor(255, 255, 255), 12);
+	ofAddListener(continueButton.clicked, this, &ofApp::continueButtonListener);
+
 	// Resize
 	windowResized(screenWidth, screenHeight);
 }
@@ -226,11 +229,15 @@ void ofApp::draw() {
 	// Set All Button's Visibility To False
 	singlePlayerButton.setVisible(false);
 	multiPlayerButton.setVisible(false);
+	continueButton.setVisible(false);
 
 	// State-Based Drawing Calls
 	switch (currentState) {
 	case START:
 		drawLandingPage();
+		break;
+	case LEVEL_EDITOR:
+		drawLevelEditor();
 		break;
 	case IN_PROGRESS:
 		// Fallthrough Intended
@@ -335,6 +342,10 @@ void ofApp::windowResized(int w, int h) {
 		0 // Bottom Left
 	);
 
+	continueButton.setPosition(centerOffset[0], (board->getBufferBounds()[2] + 1) * tileSize + centerOffset[1]);
+	continueButton.setSize(currentBoard[0].size() * tileSize, (currentBoard.size() - (board->getBufferBounds()[2] + 1)) * tileSize);
+	continueButton.setFontSize(tileSize);
+
 	// Sprite Resize
 	pacman.resize(screenWidth, screenHeight, tileSize);
 	for (Ghost *g : ghostsVector) {
@@ -343,6 +354,14 @@ void ofApp::windowResized(int w, int h) {
 }
 
 void ofApp::singlePlayerButtonListener(ofVec2f &e) {
+	currentState = LEVEL_EDITOR;
+}
+
+void ofApp::multiPlayerButtonListener(ofVec2f &e) {
+	singlePlayerButtonListener(e);
+}
+
+void ofApp::continueButtonListener(ofVec2f &e) {
 	// Board
 	// TODO: Insert Code To Take User Input Here
 	board = new BoardGenerator();
@@ -367,10 +386,6 @@ void ofApp::singlePlayerButtonListener(ofVec2f &e) {
 
 	// Reset Game
 	resetGame();
-}
-
-void ofApp::multiPlayerButtonListener(ofVec2f &e) {
-	singlePlayerButtonListener(e);
 }
 
 // Private Methods
@@ -403,6 +418,14 @@ void ofApp::drawLandingPage() {
 		(screenWidth - sumOfButtonWidths) / 2 + singlePlayerButton.getSize()[0] + elementBuffer[0],
 		(screenHeight - sumOfElementHeights) / 2 + crackman.stringHeight("PAC-MAN") + elementBuffer[1]);
 	multiPlayerButton.draw();
+}
+
+void ofApp::drawLevelEditor() {
+	drawGameBoard();
+
+	// Buttons
+	continueButton.setVisible(true);
+	continueButton.draw();
 }
 
 void ofApp::drawGameBoard() {
