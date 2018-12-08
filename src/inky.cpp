@@ -63,15 +63,15 @@ void Inky::calculateTargetTile() {
 		}
 
 		// Double The Vector From Blinky To The targetTile
-		targetTile[0] = tempTile[0] + (tempTile[0] - blinky->getTilePosition()[0]);
-		targetTile[1] = tempTile[1] + (tempTile[1] - blinky->getTilePosition()[1]);
+		targetTilePosition[0] = tempTile[0] + (tempTile[0] - blinky->getTilePosition()[0]);
+		targetTilePosition[1] = tempTile[1] + (tempTile[1] - blinky->getTilePosition()[1]);
 	}
 	else if (mode == SCATTER) {
-		targetTile = homeTilePosition;
+		targetTilePosition = homeTilePosition;
 	}
 	else if (mode == FRIGHTENED) {
 		// Do Nothing (targetTile Adjustment Is For Display Debugging Purposes)
-		targetTile = vector<int>{ 0, 0 };
+		targetTilePosition = vector<int>{ 0, 0 };
 	}
 	else {
 		std::cerr << "Error. State Is Invalid" << std::endl;

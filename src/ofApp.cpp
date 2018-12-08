@@ -260,6 +260,17 @@ void ofApp::draw() {
 	}
 }
 
+void ofApp::mousePressed(int x, int y, int button) {
+	if (currentState == LEVEL_EDITOR) {
+		vector<int> tilePosition = vector<int>{(y - centerOffset[1]) / tileSize, (x - centerOffset[0]) / tileSize};
+		std::cout << "TilePosition: " << tilePosition[0] << "\t" << tilePosition[1] << std::endl;
+	}
+}
+
+void ofApp::mouseDragged(int x, int y, int button) {
+	mousePressed(x, y, button);
+}
+
 void ofApp::keyPressed(int key) {
 	// TODO: Remove
 	if (key == OF_KEY_CONTROL) {

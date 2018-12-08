@@ -31,27 +31,27 @@ void Pinky::calculateTargetTile() {
 
 		if (pacmanVelocity == vector<int>{0, 0}) {
 			// Nothing
-			targetTile = targetTile;
+			targetTilePosition = targetTilePosition;
 		}
 		else if (pacmanVelocity == vector<int>{0, -1}) {
 			// Up
-			targetTile[0] = pacman->getTilePosition()[0] - 4;
-			targetTile[1] = pacman->getTilePosition()[1] - 4;
+			targetTilePosition[0] = pacman->getTilePosition()[0] - 4;
+			targetTilePosition[1] = pacman->getTilePosition()[1] - 4;
 		}
 		else if (pacmanVelocity == vector<int>{-1, 0}) {
 			// Left
-			targetTile[0] = pacman->getTilePosition()[0];
-			targetTile[1] = pacman->getTilePosition()[1] - 4;
+			targetTilePosition[0] = pacman->getTilePosition()[0];
+			targetTilePosition[1] = pacman->getTilePosition()[1] - 4;
 		}
 		else if (pacmanVelocity == vector<int>{0, 1}) {
 			// Down
-			targetTile[0] = pacman->getTilePosition()[0] + 4;
-			targetTile[1] = pacman->getTilePosition()[1];
+			targetTilePosition[0] = pacman->getTilePosition()[0] + 4;
+			targetTilePosition[1] = pacman->getTilePosition()[1];
 		}
 		else if (pacmanVelocity == vector<int>{1, 0}) {
 			// Right
-			targetTile[0] = pacman->getTilePosition()[0];
-			targetTile[1] = pacman->getTilePosition()[1] + 4;
+			targetTilePosition[0] = pacman->getTilePosition()[0];
+			targetTilePosition[1] = pacman->getTilePosition()[1] + 4;
 		}
 		else {
 			std::cerr << "Error. Pacman's Velocity Vector Is Invalid" << std::endl;
@@ -59,11 +59,11 @@ void Pinky::calculateTargetTile() {
 		}
 	}
 	else if (mode == SCATTER) {
-		targetTile = homeTilePosition;
+		targetTilePosition = homeTilePosition;
 	}
 	else if (mode == FRIGHTENED) {
 		// Do Nothing (targetTile Adjustment Is For Display Debugging Purposes)
-		targetTile = vector<int>{ 0, 0 };
+		targetTilePosition = vector<int>{ 0, 0 };
 	}
 	else {
 		std::cerr << "Error. State Is Invalid" << std::endl;

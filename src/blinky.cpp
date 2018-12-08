@@ -26,14 +26,14 @@ Blinky::~Blinky() {}
 
 void Blinky::calculateTargetTile() {
 	if (mode == CHASE) {
-		targetTile = pacman->getTilePosition();
+		targetTilePosition = pacman->getTilePosition();
 	}
 	else if (mode == SCATTER) {
-		targetTile = homeTilePosition;
+		targetTilePosition = homeTilePosition;
 	}
 	else if (mode == FRIGHTENED) {
 		// Do Nothing (targetTile Adjustment Is For Display Debugging Purposes)
-		targetTile = vector<int>{ 0, 0 };
+		targetTilePosition = vector<int>{ 0, 0 };
 	}
 	else {
 		std::cerr << "Error. State Is Invalid" << std::endl;
