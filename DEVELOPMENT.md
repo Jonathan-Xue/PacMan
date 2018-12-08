@@ -1,5 +1,16 @@
 # Development
 
+## Week Of 12/1/2018
+### Default Pacman Game
+* Increased Overall Aesthetics
+	* Buttons
+	* Pacman & Ghosts
+* Board Level Editor
+
+### Arduino
+* Button Functionality
+* LED For BT Connectivity
+
 ## Accomplished
 ### Default Pacman Game
 * Multiwindow Screens (Start, Instructions, In Progress/Paused, Game Over, High Scores)
