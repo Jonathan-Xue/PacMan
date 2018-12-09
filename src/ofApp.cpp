@@ -274,11 +274,11 @@ void ofApp::mousePressed(int x, int y, int button) {
 				case ROW_ADJUSTMENT:
 				case COL_ADJUSTMENT:
 					break;
-				case DISPLAY_BLOCK:
-					currentBoard[tilePosition[0]][tilePosition[1]].setParams(-1, false, false);
-					break;
 				case WALL_BLOCK:
 					currentBoard[tilePosition[0]][tilePosition[1]].setParams(0, false, false);
+					break;
+				case REGULAR_BLOCK:
+					currentBoard[tilePosition[0]][tilePosition[1]].setParams(1, false, false);
 					break;
 				case STANDARD_PELLET_BLOCK:
 					currentBoard[tilePosition[0]][tilePosition[1]].setParams(1, true, false);

@@ -3,7 +3,6 @@
 /*
 	Tile Class
 		ID:
-			-1	-> Display/Invalid Block
 			0	-> Wall
 			1	-> Valid Block
 		Pellet:

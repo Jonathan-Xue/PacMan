@@ -107,28 +107,28 @@ bool Ghost::checkValidVelocity(vector<int> velocity) {
 	else if (velocity == vector<int>{0, -1}) {
 		// Up
 		if (currentVelocity != vector<int>{0, 1} &&
-			(tilePosition[0] - 1 < 0 || (*board)[tilePosition[0] - 1][tilePosition[1]].getID() != 0)) {
+			(tilePosition[0] - 1 < 0 || (*board)[tilePosition[0] - 1][tilePosition[1]].getID() == 1)) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{-1, 0}) {
 		// Left
 		if (currentVelocity != vector<int>{1, 0} &&
-			(tilePosition[1] - 1 < 0 || (*board)[tilePosition[0]][tilePosition[1] - 1].getID() != 0)) {
+			(tilePosition[1] - 1 < 0 || (*board)[tilePosition[0]][tilePosition[1] - 1].getID() == 1)) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{0, 1}) {
 		// Down
 		if (currentVelocity != vector<int>{0, -1} &&
-			(unsigned(tilePosition[0] + 1) >= board->size() || (*board)[tilePosition[0] + 1][tilePosition[1]].getID() != 0)) {
+			(unsigned(tilePosition[0] + 1) >= board->size() || (*board)[tilePosition[0] + 1][tilePosition[1]].getID() == 1)) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{1, 0}) {
 		// Right
 		if (currentVelocity != vector<int>{-1, 0} &&
-			(unsigned(tilePosition[1] + 1) >= (*board)[0].size() || (*board)[tilePosition[0]][tilePosition[1] + 1].getID() != 0)) {
+			(unsigned(tilePosition[1] + 1) >= (*board)[0].size() || (*board)[tilePosition[0]][tilePosition[1] + 1].getID() == 1)) {
 			return true;
 		}
 	}

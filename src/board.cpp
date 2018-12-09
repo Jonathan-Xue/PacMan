@@ -36,10 +36,7 @@ void BoardGenerator::parseBoardFromString(string bo, int r, int c) {
 	for (int i = 0; i < numRows; i++) {
 		for (int j = 0; j < numCols; j++) {
 			int val = boardString[count] - '0';
-			if (val == 0) {
-				board[i][j] = Tile(-1, false, false);
-			}
-			else if (val == 1) {
+			if (val == 1) {
 				board[i][j] = Tile(0, false, false);
 			}
 			else if (val == 2) {
@@ -66,10 +63,7 @@ void BoardGenerator::generateStringFromBoard(vector<vector<Tile>> b) {
 	boardString = "";
 	for (unsigned i = 0; i < b.size(); i++) {
 		for (unsigned j = 0; j < b[0].size(); j++) {
-			if (b[i][j].getID() == -1) {
-				boardString.append("0");
-			}
-			else if (b[i][j].getID() == 0) {
+			if (b[i][j].getID() == 0) {
 				boardString.append("1");
 			}
 			else if (b[i][j].getID() == 1) {
@@ -82,6 +76,9 @@ void BoardGenerator::generateStringFromBoard(vector<vector<Tile>> b) {
 				else {
 					boardString.append("2");
 				}
+			}
+			else {
+				std::cout << "Error. Vector Is Invalid" << "\t" << i << "\t" << j << std::endl;
 			}
 		}
 	}

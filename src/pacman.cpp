@@ -81,25 +81,25 @@ bool Pacman::checkValidVelocity(vector<int> velocity) {
 	}
 	else if (velocity == vector<int>{0, -1}) {
 		// Up
-		if (tilePosition[0] - 1 < 0 || (*board)[tilePosition[0] - 1][tilePosition[1]].getID() != 0) {
+		if (tilePosition[0] - 1 < 0 || (*board)[tilePosition[0] - 1][tilePosition[1]].getID() == 1) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{-1, 0}) {
 		// Left
-		if (tilePosition[1] - 1 < 0 || (*board)[tilePosition[0]][tilePosition[1] - 1].getID() != 0) {
+		if (tilePosition[1] - 1 < 0 || (*board)[tilePosition[0]][tilePosition[1] - 1].getID() == 1) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{0, 1}) {
 		// Down
-		if (unsigned(tilePosition[0] + 1) >= board->size() || (*board)[tilePosition[0] + 1][tilePosition[1]].getID() != 0) {
+		if (unsigned(tilePosition[0] + 1) >= board->size() || (*board)[tilePosition[0] + 1][tilePosition[1]].getID() == 1) {
 			return true;
 		}
 	}
 	else if (velocity == vector<int>{1, 0}) {
 		// Right
-		if (unsigned(tilePosition[1] + 1) >= (*board)[0].size() || (*board)[tilePosition[0]][tilePosition[1] + 1].getID() != 0) {
+		if (unsigned(tilePosition[1] + 1) >= (*board)[0].size() || (*board)[tilePosition[0]][tilePosition[1] + 1].getID() == 1) {
 			return true;
 		}
 	}

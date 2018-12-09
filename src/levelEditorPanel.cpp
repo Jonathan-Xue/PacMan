@@ -11,8 +11,8 @@ LevelEditorPanel::LevelEditorPanel(EditorOptions *ceo) {
 	levelEditorPanel.add(editorNumRowsSlider.set("Rows", 31, 25, 50));
 	levelEditorPanel.add(editorNumColsSlider.set("Columns", 28, 25, 50));
 
-	levelEditorPanel.add(editorDisplayBlockButton.setup("Display Block"));
 	levelEditorPanel.add(editorWallBlockButton.setup("Wall Block"));
+	levelEditorPanel.add(editorRegularBlockButton.setup("Regular Block"));
 	levelEditorPanel.add(editorStandardPelletBlockButton.setup("Standard Pellet Block"));
 	levelEditorPanel.add(editorPowerPelletBlockButton.setup("Power Pellet Block"));
 
@@ -34,8 +34,8 @@ LevelEditorPanel::LevelEditorPanel(EditorOptions *ceo) {
 	editorNumRowsSlider.addListener(this, &LevelEditorPanel::editorNumRowsSliderListener);
 	editorNumColsSlider.addListener(this, &LevelEditorPanel::editorNumColsSliderListener);
 
-	editorDisplayBlockButton.addListener(this, &LevelEditorPanel::editorDisplayBlockButtonListener);
 	editorWallBlockButton.addListener(this, &LevelEditorPanel::editorWallBlockButtonListener);
+	editorRegularBlockButton.addListener(this, &LevelEditorPanel::editorRegularBlockButtonListener);
 	editorStandardPelletBlockButton.addListener(this, &LevelEditorPanel::editorStandardPelletBlockButtonListener);
 	editorPowerPelletBlockButton.addListener(this, &LevelEditorPanel::editorPowerPelletBlockButtonListener);
 
@@ -75,12 +75,12 @@ void LevelEditorPanel::editorNumColsSliderListener(int &value) {
 	(*currentEditorOption) = COL_ADJUSTMENT;
 }
 
-void LevelEditorPanel::editorDisplayBlockButtonListener() {
-	(*currentEditorOption) = DISPLAY_BLOCK;
-}
-
 void LevelEditorPanel::editorWallBlockButtonListener() {
 	(*currentEditorOption) = WALL_BLOCK;
+}
+
+void LevelEditorPanel::editorRegularBlockButtonListener() {
+	(*currentEditorOption) = REGULAR_BLOCK;
 }
 
 void LevelEditorPanel::editorStandardPelletBlockButtonListener() {

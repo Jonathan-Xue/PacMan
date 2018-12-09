@@ -82,7 +82,7 @@ class ofApp : public ofBaseApp {
 		bool incomingMessage = false;
 
 		// OfxGui
-		EditorOptions currentEditorOption = DISPLAY_BLOCK;
+		EditorOptions currentEditorOption = REGULAR_BLOCK;
 		LevelEditorPanel levelEditorPanel = LevelEditorPanel(&currentEditorOption);
 		
 		// Buttons

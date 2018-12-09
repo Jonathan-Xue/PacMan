@@ -47,8 +47,8 @@ class LevelEditorPanel {
 		void editorNumRowsSliderListener(int &value);
 		void editorNumColsSliderListener(int &value);
 
-		void editorDisplayBlockButtonListener();
 		void editorWallBlockButtonListener();
+		void editorRegularBlockButtonListener();
 		void editorStandardPelletBlockButtonListener();
 		void editorPowerPelletBlockButtonListener();
 
@@ -86,8 +86,8 @@ class LevelEditorPanel {
 		ofParameter<int> editorNumRowsSlider;
 		ofParameter<int> editorNumColsSlider;
 
-		ofxButton editorDisplayBlockButton;
 		ofxButton editorWallBlockButton;
+		ofxButton editorRegularBlockButton;
 		ofxButton editorStandardPelletBlockButton;
 		ofxButton editorPowerPelletBlockButton;
 
