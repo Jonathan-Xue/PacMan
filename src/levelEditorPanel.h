@@ -66,14 +66,6 @@ class LevelEditorPanel {
 		void editorClydeSpriteButtonListener();
 		void editorClydeHomeTileButtonListener();
 
-		void mouseMoved(ofMouseEventArgs & args) {}
-		void mouseDragged(ofMouseEventArgs & args) {}
-		void mousePressed(ofMouseEventArgs & args) {}
-		void mouseReleased(ofMouseEventArgs & args) {}
-		void mouseScrolled(ofMouseEventArgs & args) {}
-		void mouseEntered(ofMouseEventArgs & args) {}
-		void mouseExited(ofMouseEventArgs & args) {}
-
 		// Getters
 		int getRows();
 		int getCols();
