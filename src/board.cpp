@@ -59,14 +59,6 @@ void BoardGenerator::parseBoardFromString(string bo, int r, int c) {
 			count++;
 		}
 	}
-
-	// Buffer Display Tiles For Miscellaneous Display
-	for (int i = 0; i < buffer[0]; i++) {
-		board.insert(board.begin(), vector<Tile>(numCols, Tile(-1, false, false)));
-	}
-	for (int i = 0; i < buffer[2]; i++) {
-		board.push_back(vector<Tile>(numCols, Tile(-1, false, false)));
-	}
 }
 
 void BoardGenerator::generateStringFromBoard(vector<vector<Tile>> b) {	

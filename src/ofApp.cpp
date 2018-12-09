@@ -426,6 +426,14 @@ void ofApp::keyPressed(int key) {
 			resetGame();
 			currentState = START;
 		}
+
+		if (currentState == LEVEL_EDITOR) {
+			// Set Board
+			board->generateStringFromBoard(currentBoard);
+
+			// Reset Game
+			resetGame();
+		}
 	}
 
 	// Fullscreen
@@ -467,15 +475,15 @@ void ofApp::windowResized(int w, int h) {
 	screenHeight = h;
 
 	// Tile Size
-	tileSize = min(screenHeight / currentBoard.size(), screenWidth / currentBoard[0].size());
+	tileSize = min(screenHeight / (currentBoard.size() + buffer[0] + buffer[2]), screenWidth / (currentBoard[0].size() + buffer[1] + buffer[3]));
 
 	// Fonts
 	crackman.load("crackman.ttf", screenWidth / 7.5, true, true);
 	emulogic.load("emulogic.ttf", tileSize, true, true);
 
 	// Offsets
-	centerOffset[0] = (screenWidth - (currentBoard[0].size() * tileSize)) / 2;
-	centerOffset[1] = (screenHeight - (currentBoard.size() * tileSize)) / 2;
+	centerOffset[0] = (screenWidth - (currentBoard[0].size() * tileSize - (buffer[1] * tileSize) - (buffer[3]) * tileSize)) / 2;
+	centerOffset[1] = ((screenHeight - (currentBoard.size() * tileSize) - (buffer[0] * tileSize) - (buffer[2]) * tileSize)) / 2;
 
 	// Button Resize
 	singlePlayerButton.setPosition(0, 0);
@@ -517,10 +525,10 @@ void ofApp::singlePlayerButtonListener(ofVec2f &e) {
 	board = new BoardGenerator();
 
 	// Set Sprites' initialTilePosition
-	vector<vector<int>> ghostInitialTilePositions = vector<vector<int>>{ {4, 1}, {32, 26}, {4, 26}, {32, 1} };
-	vector<vector<int>> ghostHomeTilePositions = vector<vector<int>>{ { 0, 25 }, { 0, 2 }, { 35, 27 }, { 35, 0 } };
+	vector<vector<int>> ghostInitialTilePositions = vector<vector<int>>{ {1, 1}, {29, 26}, {1, 26}, {29, 1} };
+	vector<vector<int>> ghostHomeTilePositions = vector<vector<int>>{ { 0, 27 }, { 0, 0 }, { 30, 27 }, { 30, 0 } };
 
-	pacman.setInitialTilePosition(vector<int>{ 26, 14 });
+	pacman.setInitialTilePosition(vector<int>{ 23, 14 });
 	for (size_t i = 0; i < ghostsVector.size(); i++) {
 		ghostsVector[i]->setHomeTilePosition(ghostHomeTilePositions[i]);
 		ghostsVector[i]->setInitialTilePosition(ghostInitialTilePositions[i]);
@@ -580,21 +588,21 @@ void ofApp::drawLevelEditor() {
 
 	// Sprites
 	ofSetColor(pacman.getDefaultColor());
-	ofDrawRectangle(pacman.getInitialTilePosition()[1] * tileSize + centerOffset[0],
-		pacman.getInitialTilePosition()[0] * tileSize + centerOffset[1],
+	ofDrawRectangle((pacman.getInitialTilePosition()[1] * tileSize) + centerOffset[0],
+		(pacman.getInitialTilePosition()[0] * tileSize) + (buffer[0] * tileSize) + centerOffset[1],
 		tileSize, tileSize);
 
 	for (Ghost *g : ghostsVector) {
 		ofSetColor(g->getDefaultColor());
-		ofDrawRectangle(g->getInitialTilePosition()[1] * tileSize + centerOffset[0],
-			g->getInitialTilePosition()[0] * tileSize + centerOffset[1],
+		ofDrawRectangle((g->getInitialTilePosition()[1] * tileSize) + centerOffset[0],
+			(g->getInitialTilePosition()[0] * tileSize) + (buffer[0] * tileSize) + centerOffset[1],
 			tileSize, tileSize);
 
 		ofColor darkenedColor = g->getDefaultColor();
 		darkenedColor.setBrightness(128);
 		ofSetColor(darkenedColor);
-		ofDrawRectangle(g->getHomeTilePosition()[1] * tileSize + centerOffset[0],
-			g->getHomeTilePosition()[0] * tileSize + centerOffset[1],
+		ofDrawRectangle((g->getHomeTilePosition()[1] * tileSize) + centerOffset[0],
+			(g->getHomeTilePosition()[0] * tileSize) + (buffer[0] * tileSize) + centerOffset[1],
 			tileSize, tileSize);
 	}
 
@@ -605,7 +613,7 @@ void ofApp::drawLevelEditor() {
 		for (size_t j = 0; j < currentBoard[0].size(); j++) {
 			if (i >= (size_t)board->getBuffer()[0] && i < currentBoard.size() - board->getBuffer()[2] &&
 				j >= (size_t)board->getBuffer()[1] && j < currentBoard.size() - board->getBuffer()[3]) {
-				ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
+				ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
 			}
 		}
 	}
@@ -625,36 +633,36 @@ void ofApp::drawGameBoard() {
 			if (currentBoard[i][j].getID() == -1) {
 				// Invalid Block
 				ofSetColor(0, 0, 0);
-				ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
+				ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
 			}
 			else if (currentBoard[i][j].getID() == 0) {
 				// Wall
 				ofSetColor(50, 50, 255);
-				ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
+				ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
 			}
 			else if (currentBoard[i][j].getID() == 1) {
 				if (currentBoard[i][j].isStandardPellet()) {
 					// Tile
 					ofSetColor(0, 0, 0);
-					ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
+					ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
 
 					// Standard Pellet
 					ofSetColor(255, 255, 0);
-					ofDrawCircle((j + 0.5) * tileSize + centerOffset[0], (i + 0.5) * tileSize + centerOffset[1], tileSize / 8);
+					ofDrawCircle(((j + 0.5) * tileSize) + centerOffset[0], ((i + 0.5) * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize / 8);
 				}
 				else if (currentBoard[i][j].isPowerPellet()) {
 					// Tile
 					ofSetColor(0, 0, 0);
-					ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
+					ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
 
 					// Power Pellet
 					ofSetColor(255, 255, 0);
-					ofDrawCircle((j + 0.5) * tileSize + centerOffset[0], (i + 0.5) * tileSize + centerOffset[1], tileSize / 2.5);
+					ofDrawCircle(((j + 0.5) * tileSize) + centerOffset[0], ((i + 0.5) * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize / 2.5);
 				}
 				else {
 					// Tile
 					ofSetColor(0, 0, 0);
-					ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
+					ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
 
 					// No Pellet
 				}
@@ -669,8 +677,6 @@ void ofApp::drawGameBoard() {
 }
 
 void ofApp::drawMisc() {
-	ofSetColor(255, 255, 255);
-
 	// "HIGH SCORE" Horizontally Centered With Respect To The Screen
 	vector<int> highScoreLabelTilePosition = { 1, (int)((currentBoard[0].size() - string("HIGH SCORE").length()) / 2) };
 
@@ -691,27 +697,39 @@ void ofApp::drawMisc() {
 	string currentScore = std::to_string(pacman.getScore());
 	vector<int> currentScoreTilePosition = { 2, (int)(playerLabelTilePosition[1] + string("1UP").length() + 1 - currentScore.length()) };
 
-	// Draw
+	// Draw Upper Buffer
+	ofSetColor(0, 0, 0);
+	ofDrawRectangle(centerOffset[0], centerOffset[1], 
+		currentBoard[0].size() * tileSize, buffer[0] * tileSize);
+
+	// Draw Upper Info
+	ofSetColor(255, 255, 255);
 	emulogic.drawString("HIGH SCORE",
-		highScoreLabelTilePosition[1] * tileSize + centerOffset[0],
-		highScoreLabelTilePosition[0] * tileSize + centerOffset[1]);
+		(highScoreLabelTilePosition[1] * tileSize) + centerOffset[0],
+		(highScoreLabelTilePosition[0] * tileSize) + centerOffset[1]);
 	emulogic.drawString(highScore,
-		highScoreTilePosition[1] * tileSize + centerOffset[0],
-		highScoreTilePosition[0] * tileSize + centerOffset[1]);
+		(highScoreTilePosition[1] * tileSize) + centerOffset[0],
+		(highScoreTilePosition[0] * tileSize) + centerOffset[1]);
 
 	emulogic.drawString("1UP",
-		playerLabelTilePosition[1] * tileSize + centerOffset[0],
-		playerLabelTilePosition[0] * tileSize + centerOffset[1]);
+		(playerLabelTilePosition[1] * tileSize) + centerOffset[0],
+		(playerLabelTilePosition[0] * tileSize) + centerOffset[1]);
 	emulogic.drawString(currentScore,
-		currentScoreTilePosition[1] * tileSize + centerOffset[0],
-		currentScoreTilePosition[0] * tileSize + centerOffset[1]);
+		(currentScoreTilePosition[1] * tileSize) + centerOffset[0],
+		(currentScoreTilePosition[0] * tileSize) + centerOffset[1]);
 
-	// Lives
-	vector<int> tilePosition{ (int)currentBoard.size() - 1, 3 };
+	// Draw Lower Buffer
+	ofSetColor(0, 0, 0);
+	ofDrawRectangle(centerOffset[0], (currentBoard.size() * tileSize) + (buffer[0] * tileSize) + centerOffset[1],
+		currentBoard[0].size() * tileSize, buffer[2] * tileSize);
+
+	// Draw Lower Info (Lives)
+	ofSetColor(255, 255, 255);
+	vector<int> tilePosition{ (int)currentBoard.size() + 1, 3 };
 	for (int i = 0; i < pacman.getLives() - 1; i++) {
 		ofSetColor(255, 255, 0);
-		ofDrawCircle((tilePosition[1] + i * 2) * tileSize + centerOffset[0],
-			(tilePosition[0]) * tileSize + centerOffset[1],
+		ofDrawCircle(((tilePosition[1] + (i * 2)) * tileSize) + centerOffset[0],
+			(tilePosition[0] * tileSize) + (buffer[0] * tileSize) + centerOffset[1],
 			tileSize);
 	}
 }
@@ -765,7 +783,8 @@ void ofApp::drawPacMan() {
 	pacmanPath.setColor(pacman.getDefaultColor());
 	pacmanPath.setCircleResolution(360);
 	pacmanPath.setFilled(true);
-	pacmanPath.arc(pacman.getCenterPixelPosition()[0] + centerOffset[0], pacman.getCenterPixelPosition()[1] + centerOffset[1],
+	pacmanPath.arc(pacman.getCenterPixelPosition()[0] + centerOffset[0], 
+		pacman.getCenterPixelPosition()[1] + (buffer[0] * tileSize) + centerOffset[1],
 		tileSize / 2, tileSize / 2,
 		angleDisplacement + pacmanDegree, angleDisplacement - pacmanDegree);
 	pacmanPath.draw();
@@ -778,8 +797,8 @@ void ofApp::drawGhosts() {
 		ofColor darkenedColor = g->getDefaultColor();
 		darkenedColor.setBrightness(128);
 		ofSetColor(darkenedColor);
-		ofDrawRectangle(g->getTargetTilePixelPosition()[0] - tileSize / 4 + centerOffset[0] ,
-			g->getTargetTilePixelPosition()[1] - tileSize / 4 + centerOffset[1],
+		ofDrawRectangle(g->getTargetTilePixelPosition()[0] - (tileSize / 4) + centerOffset[0] ,
+			g->getTargetTilePixelPosition()[1] - (tileSize / 4) + (buffer[0] * tileSize) + centerOffset[1],
 			tileSize / 2, tileSize / 2);
 	}
 	*/
@@ -795,7 +814,7 @@ void ofApp::drawGhosts() {
 		}
 		ofSetColor(255, 255, 255);
 		g->getImage().draw(g->getTopLeftPixelPosition()[0] + centerOffset[0],
-			g->getTopLeftPixelPosition()[1] + centerOffset[1],
+			g->getTopLeftPixelPosition()[1] + (buffer[0] * tileSize) + centerOffset[1],
 			tileSize, tileSize);
 	}
 }
@@ -812,20 +831,20 @@ void ofApp::drawHighScores() {
 
 	// Draw "HIGH SCORES"
 	string str = "HIGH SCORES";
-	vector<int> initialTilePosition = { (int)(currentBoard.size() - (highScores.size() + 1)) / 2 + 1,
-										(int)((currentBoard[0].size() - str.length()) / 2) };
+
 	emulogic.drawString(str,
-		initialTilePosition[1] * tileSize + centerOffset[0],
-		initialTilePosition[0] * tileSize + centerOffset[1]);
+		(screenWidth - emulogic.stringWidth(str)) / 2,
+		((screenHeight - ((highScores.size() + 1) * emulogic.stringHeight(str))) / 2) + tileSize);
 
 	// Draw Scores
+	int count = 1;
 	for (int score : highScores) {
 		str = std::to_string(score);
-		initialTilePosition = vector<int>{ initialTilePosition[0] + 1,
-										   (int)((currentBoard[0].size() - str.length()) / 2) };
+		
 		emulogic.drawString(str,
-			initialTilePosition[1] * tileSize + centerOffset[0],
-			initialTilePosition[0] * tileSize + centerOffset[1]);
+			(screenWidth - emulogic.stringWidth(str)) / 2,
+			((screenHeight - ((highScores.size() + 1) * emulogic.stringHeight(str))) / 2) + tileSize + (count * tileSize));
+		count++;
 	}
 }
 

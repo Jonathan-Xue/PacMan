@@ -130,6 +130,9 @@ class ofApp : public ofBaseApp {
 		const int degreeIncrement = (2 * cyclesPerSecond) * (maxDegree / frameRate);
 		bool degreeFlag = true;
 
+		// drawMisc Variables
+		vector<int> buffer = vector<int>{ 3, 0, 2, 0 };
+
 		// Helper Methods For Display Render
 		void drawLandingPage();
 		void drawLevelEditor();

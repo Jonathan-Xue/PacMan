@@ -57,7 +57,7 @@ class BoardGenerator {
 
 	private:
 		// Before & After Blank Tiles For Miscellaneous Display
-		const vector<int> buffer = vector<int>{ 3, 0, 2, 0 };
+		const vector<int> buffer = vector<int>{ 0, 0, 0, 0};
 
 		// Board Variables
 		vector<vector<Tile>> board;
