@@ -352,15 +352,19 @@ void ofApp::mouseReleased(int x, int y, int button) {
 		int numCols = currentBoard[0].size();
 		while (levelEditorPanel.getCols() != numCols) {
 			if (levelEditorPanel.getCols() > numCols) {
+				for (unsigned i = 0; i < currentBoard.size(); i++) {
+					currentBoard[i].push_back(Tile(0, false, false));
+				}
 
 				numCols++;
 			}
-			else if (levelEditorPanel.getCols() > numCols) {
+			else if (levelEditorPanel.getCols() < numCols) {
+				for (unsigned i = 0; i < currentBoard.size(); i++) {
+					currentBoard[i].pop_back();
+				}
 
 				numCols--;
-			}
-
-			
+			}			
 		}
 
 		// Adjust Display Variables
@@ -560,7 +564,9 @@ void ofApp::drawLevelEditor() {
 	ofSetColor(175, 175, 175);
 	for (unsigned i = 0; i < currentBoard.size(); i++) {
 		for (unsigned j = 0; j < currentBoard[0].size(); j++) {
-			ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
+			ofDrawRectangle((j * tileSize) + centerOffset[0], 
+				(i * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1], 
+				tileSize, tileSize);
 		}
 	}
 	ofFill();
