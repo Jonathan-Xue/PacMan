@@ -29,47 +29,11 @@ void ofApp::setup() {
 	setupSerial();
 
 	// Setup LevelEditor
-	levelEditorPanel.setup("Variables");
 
-	levelEditorPanel.add(editorDisplayBlockButton.setup("Display Block"));
-	levelEditorPanel.add(editorWallBlockButton.setup("Wall Block"));
-	levelEditorPanel.add(editorStandardPelletBlockButton.setup("Standard Pellet Block"));
-	levelEditorPanel.add(editorPowerPelletBlockButton.setup("Power Pellet Block"));
-
-	levelEditorPanel.add(editorPacmanSpriteButton.setup("Pacman Sprite"));
-
-	levelEditorPanel.add(editorBlinkySpriteButton.setup("Blinky Sprite"));
-	levelEditorPanel.add(editorBlinkyHomeTileButton.setup("Blinky Home Position"));
-
-	levelEditorPanel.add(editorPinkySpriteButton.setup("Pinky Sprite"));
-	levelEditorPanel.add(editorPinkyHomeTileButton.setup("Pinky Home Position"));
-
-	levelEditorPanel.add(editorInkySpriteButton.setup("Inky Sprite"));
-	levelEditorPanel.add(editorInkyHomeTileButton.setup("Inky Home Position"));
-
-	levelEditorPanel.add(editorClydeSpriteButton.setup("Clyde Sprite"));
-	levelEditorPanel.add(editorClydeHomeTileButton.setup("Clyde Home Position"));
 
 	// Listeners
-	editorDisplayBlockButton.addListener(this, &ofApp::editorDisplayBlockButtonListener);
-	editorWallBlockButton.addListener(this, &ofApp::editorWallBlockButtonListener);
-	editorStandardPelletBlockButton.addListener(this, &ofApp::editorStandardPelletBlockButtonListener);
-	editorPowerPelletBlockButton.addListener(this, &ofApp::editorPowerPelletBlockButtonListener);
 
-	editorPacmanSpriteButton.addListener(this, &ofApp::editorPacmanSpriteButtonListener);
 
-	editorBlinkySpriteButton.addListener(this, &ofApp::editorBlinkySpriteButtonListener);
-	editorBlinkyHomeTileButton.addListener(this, &ofApp::editorBlinkyHomeTileButtonListener);
-
-	editorPinkySpriteButton.addListener(this, &ofApp::editorPinkySpriteButtonListener);
-	editorPinkyHomeTileButton.addListener(this, &ofApp::editorPinkyHomeTileButtonListener);
-
-	editorInkySpriteButton.addListener(this, &ofApp::editorInkySpriteButtonListener);
-	editorInkyHomeTileButton.addListener(this, &ofApp::editorInkyHomeTileButtonListener);
-
-	editorClydeSpriteButton.addListener(this, &ofApp::editorClydeSpriteButtonListener);
-	editorClydeHomeTileButton.addListener(this, &ofApp::editorClydeHomeTileButtonListener);
-	
 	// Setup Buttons
 	singlePlayerButton.setup("Solo", ofColor(255, 255, 255), "emulogic.ttf", ofColor(0, 0, 0), 12);
 	ofAddListener(singlePlayerButton.clicked, this, &ofApp::singlePlayerButtonListener);
@@ -304,74 +268,80 @@ void ofApp::draw() {
 }
 
 void ofApp::mousePressed(int x, int y, int button) {
+	// Level Editor
 	if (currentState == LEVEL_EDITOR) {
 		// Ignore Panel
-		if (!(x > levelEditorPanel.getPosition().x && x < levelEditorPanel.getPosition().x + levelEditorPanel.getWidth() &&
-			y > levelEditorPanel.getPosition().y && y < levelEditorPanel.getPosition().y + levelEditorPanel.getHeight())) {
+		if (!levelEditorPanel.withinBounds(x, y)) {
 			vector<int> tilePosition = vector<int>{ (y - centerOffset[1]) / tileSize, (x - centerOffset[0]) / tileSize };
-			
+
+			// Only Allow For Certain Elements To Be Placed Outside Of Immediate Board Bounds
 			bool withinBoardBounds = (tilePosition[0] >= board->getBufferBounds()[0] && tilePosition[0] < board->getBufferBounds()[2] &&
 				tilePosition[1] >= board->getBufferBounds()[1] && tilePosition[1] < board->getBufferBounds()[3]);
-			
-			// Only Allow For Certain Elements To Be Placed Outside Board Bounds
-			switch (currentEditorOption) {
-			case DISPLAY_BLOCK:
-				if (withinBoardBounds) {
+			if (withinBoardBounds) {
+				switch (currentEditorOption) {
+				case DISPLAY_BLOCK:
 					currentBoard[tilePosition[0]][tilePosition[1]].setParams(-1, false, false);
-				}
-				break;
-			case WALL_BLOCK:
-				if (withinBoardBounds) {
+					break;
+				case WALL_BLOCK:
 					currentBoard[tilePosition[0]][tilePosition[1]].setParams(0, false, false);
-				}
-				break;
-			case STANDARD_PELLET_BLOCK:
-				if (withinBoardBounds) {
+					break;
+				case STANDARD_PELLET_BLOCK:
 					currentBoard[tilePosition[0]][tilePosition[1]].setParams(1, true, false);
-				}
-				break;
-			case POWER_PELLET_BLOCK:
-				if (withinBoardBounds) {
+					break;
+				case POWER_PELLET_BLOCK:
 					currentBoard[tilePosition[0]][tilePosition[1]].setParams(1, false, true);
-				}
-				break;
-			case PACMAN_SPRITE:
-				if (withinBoardBounds) {
+					break;
+				case PACMAN_SPRITE:
 					pacman.setInitialTilePosition(tilePosition);
-				}
-				break;
-			case BLINKY_SPRITE:
-				if (withinBoardBounds) {
+					break;
+				case BLINKY_SPRITE:
 					blinky.setInitialTilePosition(tilePosition);
-				}
-				break;
-			case BLINKY_HOME_TILE:
-				blinky.setHomeTilePosition(tilePosition);
-				break;
-			case PINKY_SPRITE:
-				if (withinBoardBounds) {
+					break;
+				case BLINKY_HOME_TILE:
+					blinky.setHomeTilePosition(tilePosition);
+					break;
+				case PINKY_SPRITE:
 					pinky.setInitialTilePosition(tilePosition);
-				}
-				break;
-			case PINKY_HOME_TILE:
-				pinky.setHomeTilePosition(tilePosition);
-				break;
-			case INKY_SPRITE:
-				if (withinBoardBounds) {
+					break;
+				case PINKY_HOME_TILE:
+					pinky.setHomeTilePosition(tilePosition);
+					break;
+				case INKY_SPRITE:
 					inky.setInitialTilePosition(tilePosition);
-				}
-				break;
-			case INKY_HOME_TILE:
-				inky.setHomeTilePosition(tilePosition);
-				break;
-			case CLYDE_SPRITE:
-				if (withinBoardBounds) {
+					break;
+				case INKY_HOME_TILE:
+					inky.setHomeTilePosition(tilePosition);
+					break;
+				case CLYDE_SPRITE:
 					clyde.setInitialTilePosition(tilePosition);
+					break;
+				case CLYDE_HOME_TILE:
+					clyde.setHomeTilePosition(tilePosition);
+					break;
+				default:
+					std::cerr << "Error. Invalid editorOptions Enum. Verify That The Corresponding Enum Is Handled Within ofApp::mousePressed" << std::endl;
+					std::exit(1);
+					break;
 				}
-				break;
-			case CLYDE_HOME_TILE:
-				clyde.setHomeTilePosition(tilePosition);
-				break;
+			}
+			else {
+				switch (currentEditorOption) {
+				case BLINKY_HOME_TILE:
+					blinky.setHomeTilePosition(tilePosition);
+					break;
+				case PINKY_HOME_TILE:
+					pinky.setHomeTilePosition(tilePosition);
+					break;
+				case INKY_HOME_TILE:
+					inky.setHomeTilePosition(tilePosition);
+					break;
+				case CLYDE_HOME_TILE:
+					clyde.setHomeTilePosition(tilePosition);
+					break;
+				default:
+					std::cout << "Current Editor Option Doesn't Allow For Placement Outside The Immediate Board Bounds" << std::endl;
+					break;
+				}
 			}
 		}
 	}
@@ -506,58 +476,6 @@ void ofApp::continueButtonListener(ofVec2f &e) {
 
 	// Reset Game
 	resetGame();
-}
-
-void ofApp::editorDisplayBlockButtonListener() {
-	currentEditorOption = DISPLAY_BLOCK;
-}
-
-void ofApp::editorWallBlockButtonListener() { 
-	currentEditorOption = WALL_BLOCK;
-}
-
-void ofApp::editorStandardPelletBlockButtonListener() { 
-	currentEditorOption = STANDARD_PELLET_BLOCK;
-}
-
-void ofApp::editorPowerPelletBlockButtonListener() { 
-	currentEditorOption = POWER_PELLET_BLOCK;
-}
-
-void ofApp::editorPacmanSpriteButtonListener() { 
-	currentEditorOption = PACMAN_SPRITE;
-}
-
-void ofApp::editorBlinkySpriteButtonListener() { 
-	currentEditorOption = BLINKY_SPRITE;
-}
-
-void ofApp::editorBlinkyHomeTileButtonListener() { 
-	currentEditorOption = BLINKY_HOME_TILE;
-}
-
-void ofApp::editorPinkySpriteButtonListener() { 
-	currentEditorOption = PINKY_SPRITE;
-}
-
-void ofApp::editorPinkyHomeTileButtonListener() { 
-	currentEditorOption = PINKY_HOME_TILE;
-}
-
-void ofApp::editorInkySpriteButtonListener() { 
-	currentEditorOption = INKY_SPRITE;
-}
-
-void ofApp::editorInkyHomeTileButtonListener() { 
-	currentEditorOption = INKY_HOME_TILE;
-}
-
-void ofApp::editorClydeSpriteButtonListener() { 
-	currentEditorOption = CLYDE_SPRITE;
-}
-
-void ofApp::editorClydeHomeTileButtonListener() { 
-	currentEditorOption = CLYDE_HOME_TILE;
 }
 
 // Private Methods
