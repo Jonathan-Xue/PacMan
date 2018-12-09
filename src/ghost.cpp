@@ -26,6 +26,8 @@ void Ghost::update() {
 	if (!alive && tilePosition == targetTilePosition) {
 		alive = true;
 		edible = false;
+		currentTilesPerSecond = defaultTilesPerSecond;
+		speed = maxTick * currentTilesPerSecond / frameRate;
 	}
 }
 
@@ -222,6 +224,9 @@ void Ghost::resetLevel(int l) {
 
 	mode = SCATTER;
 
+	currentTilesPerSecond = defaultTilesPerSecond;
+	speed = maxTick * currentTilesPerSecond / frameRate;
+
 	tilePosition = initialTilePosition;
 	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
 
@@ -235,6 +240,9 @@ void Ghost::resetGame() {
 
 	mode = SCATTER;
 
+	currentTilesPerSecond = defaultTilesPerSecond;
+	speed = maxTick * currentTilesPerSecond / frameRate;
+
 	tilePosition = initialTilePosition;
 	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
 
@@ -246,7 +254,7 @@ void Ghost::resize(int w, int h, int ts) {
 	screenHeight = h;
 	tileSize = ts;
 
-	speed = maxTick * tilesPerSecond / frameRate;
+	speed = maxTick * currentTilesPerSecond / frameRate;
 }
 
 GhostType Ghost::getGhostType() {
@@ -368,10 +376,24 @@ void Ghost::reverseDirection() {
 
 void Ghost::setAlive(bool a) {
 	alive = a;
+	if (!a) {
+		currentTilesPerSecond = 2 * defaultTilesPerSecond;
+		speed = maxTick * currentTilesPerSecond / frameRate;
+	}
 }
 
 void Ghost::setEdible(bool e) {
 	edible = e;
+	if (e) {
+		currentTilesPerSecond = 0.875 * defaultTilesPerSecond;
+		speed = maxTick * currentTilesPerSecond / frameRate;
+	}
+	else {
+		if (alive) {
+			currentTilesPerSecond = defaultTilesPerSecond;
+			speed = maxTick * currentTilesPerSecond / frameRate;
+		}
+	}
 }
 
 void Ghost::setMode(SpriteMode m) {

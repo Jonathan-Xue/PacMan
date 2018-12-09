@@ -766,11 +766,16 @@ void ofApp::drawGhosts() {
 
 	for (Ghost *g : ghostsVector) {
 		if (g->isEdible()) {
-			if (frightenedTimer.count<std::chrono::milliseconds>() / 250 % 2) {
+			if (frightenedTimer.count<std::chrono::seconds>() < 0.75 * frightenedTimeMarker) {
 				g->flipWhichEdibleImage(true);
 			}
 			else {
-				g->flipWhichEdibleImage(false);
+				if (frightenedTimer.count<std::chrono::milliseconds>() / 250 % 2) {
+					g->flipWhichEdibleImage(false);
+				}
+				else {
+					g->flipWhichEdibleImage(true);
+				}
 			}
 		}
 		ofSetColor(255, 255, 255);

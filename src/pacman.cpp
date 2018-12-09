@@ -118,7 +118,7 @@ void Pacman::move() {
 		tilePosition[1]--;
 		currentTick[1] = maxTick;
 	}
-	else if (currentTick[1] > 100) {
+	else if (currentTick[1] > maxTick) {
 		tilePosition[1]++;
 		currentTick[1] = 0.0;
 	}
@@ -128,7 +128,7 @@ void Pacman::move() {
 		tilePosition[0]--;
 		currentTick[0] = maxTick;
 	}
-	else if (currentTick[0] > 100) {
+	else if (currentTick[0] > maxTick) {
 		tilePosition[0]++;
 		currentTick[0] = 0.0;
 	}
@@ -242,5 +242,5 @@ void Pacman::resize(int w, int h, int ts) {
 	screenHeight = h;
 	tileSize = ts;
 
-	speed = maxTick * tilesPerSecond / frameRate;
+	speed = maxTick * currentTilesPerSecond / frameRate;
 }

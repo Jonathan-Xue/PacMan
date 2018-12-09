@@ -178,12 +178,12 @@ class Ghost {
 		vector<vector<int>> queuedVelocity{ {0, -1}, {-1, 0}, {0, 1}, {1, 0} };
 
 		// Separate Each Tile Into X Ticks
-		double maxTick = 100.0;
+		double maxTick = 1000.0;
 		vector<double> currentTick = { maxTick / 2, maxTick / 2 };
 
 		// Tiles Per Second
-		double maxTilesPerSecond = 10;
-		double tilesPerSecond = 7.5;
+		const double defaultTilesPerSecond = 7.5;
+		double currentTilesPerSecond = 7.5;
 
 		// Ticks Per Frame
 		double speed = 0.0;

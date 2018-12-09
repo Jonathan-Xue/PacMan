@@ -98,7 +98,7 @@ class ofApp : public ofBaseApp {
 		Timer modeTimer;
 		int modeIndex = 0;
 
-		const int frightenedTimeMarker = 7;
+		const int frightenedTimeMarker = 8;
 		Timer frightenedTimer;
 
 		// Flags

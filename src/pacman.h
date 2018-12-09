@@ -142,12 +142,12 @@ class Pacman {
 		vector<int> queuedVelocity = { 0, 0 };
 
 		// Separate Each Tile Into X Ticks
-		double maxTick = 100.0;
+		double maxTick = 1000.0;
 		vector<double> currentTick = { maxTick / 2, maxTick / 2 };
 
 		// Tiles Per Second
-		double maxTilesPerSecond = 10;
-		double tilesPerSecond = 8;
+		const double defaultTilesPerSecond = 10;
+		double currentTilesPerSecond = 8;
 
 		// Ticks Per Frame
 		double speed = 0.0;
