@@ -61,14 +61,10 @@ void Ghost::updateVelocity() {
 				currentVelocity = possibleVelocity[0];
 			}
 		}
-
 	}
 	else {
 		// Update currentVelocity To queuedVelocity If Ghost Is Within (Speed / 2) Ticks Of The Center Of The Tile
 		if (abs(currentTick[0] - maxTick / 2) < (epsilon + speed / 2) && abs(currentTick[1] - maxTick / 2) < (epsilon + speed / 2)) {
-			// Center The Ghost In The Tile
-			// currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
-
 			// Retrieve Valid Velocities From queuedVelocity And Append It To possibleVelocity
 			vector<vector<int>> possibleVelocity{};
 
@@ -95,6 +91,10 @@ void Ghost::updateVelocity() {
 			}
 
 			// Update currentVelocity
+			if (possibleVelocity.size() == 0) {
+				minIndex = 0;
+				possibleVelocity.push_back(vector<int>{ currentVelocity[0] *= -1, currentVelocity[1] *= -1 });
+			}
 			currentVelocity = possibleVelocity[minIndex];
 		}
 	}

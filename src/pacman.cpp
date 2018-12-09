@@ -58,8 +58,6 @@ void Pacman::updateVelocity() {
 	if (!checkValidVelocity(currentVelocity)) {
 		// Set currentVelocity To { 0, 0 } If PacMan Is Within (Speed / 2) Ticks Of The Center Of The Tile
 		if (abs(currentTick[0] - maxTick / 2) < (epsilon + speed / 2) && abs(currentTick[1] - maxTick / 2) < (epsilon + speed / 2)) {
-			// Center Pacman In The Tile
-			// currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
 			currentVelocity = { 0, 0 };
 		}
 	}
@@ -68,8 +66,6 @@ void Pacman::updateVelocity() {
 	if (checkValidVelocity(queuedVelocity)) {
 		// Update currentVelocity To queuedVelocity If PacMan Is Within (Speed / 2) Ticks Of The Center Of The Tile
 		if (abs(currentTick[0] - maxTick / 2) < (epsilon + speed / 2) && abs(currentTick[1] - maxTick / 2) < (epsilon + speed / 2)) {
-			// Center Pacman In The tile
-			// currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
 			currentVelocity = queuedVelocity;
 		}
 	}
