@@ -266,7 +266,6 @@ void ofApp::mousePressed(int x, int y, int button) {
 		// Ignore Panel
 		if (!levelEditorPanel.withinBounds(x, y)) {
 			vector<int> tilePosition = vector<int>{ (y - centerOffset[1]) / tileSize - tileBuffer[0], (x - centerOffset[0]) / tileSize - tileBuffer[1] };
-			
 			// Prevent Elements From Being Placed Outside Of Board (Will Throw OutOfBounds Error)
 			if ((tilePosition[0] >= 0 && tilePosition[0] < (int)currentBoard.size() &&
 				tilePosition[1] >= 0 && tilePosition[1] < (int)currentBoard[0].size())) {
@@ -492,11 +491,29 @@ void ofApp::multiPlayerButtonListener(ofVec2f &e) {
 
 void ofApp::continueButtonListener(ofVec2f &e) {
 	if (currentState == LEVEL_EDITOR) {
-		// Set Board
-		board->generateStringFromBoard(currentBoard);
+		// OutOfBounds
+		bool pacmanOutOfBounds = pacman.getTilePosition()[0] < 0 || pacman.getTilePosition()[0] >= currentBoard.size() ||
+			pacman.getTilePosition()[1] < 0 || pacman.getTilePosition()[1] >= currentBoard[1].size();
+		bool ghostOutOfBounds = false;
+		for (Ghost *g : ghostsVector) {
+			if (g->getTilePosition()[0] < 0 || g->getTilePosition()[0] >= currentBoard.size() ||
+				g->getTilePosition()[1] < 0 || g->getTilePosition()[1] >= currentBoard[1].size()) {
+				ghostOutOfBounds = true;
+				break;
+			}
+		}
 
-		// Reset Game
-		resetGame();
+		// Verify Board Validity
+		if (pacmanOutOfBounds || ghostOutOfBounds) {
+			ofSystemAlertDialog("The current board is invalid. All sprites need to be inside board bounds.");
+		}
+		else {
+			// Set Board
+			board->generateStringFromBoard(currentBoard);
+
+			// Reset Game
+			resetGame();
+		}
 	}
 	else if (currentState == GAME_OVER) {
 		currentState = HIGH_SCORE;
