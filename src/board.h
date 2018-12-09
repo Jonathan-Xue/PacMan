@@ -52,13 +52,7 @@ class BoardGenerator {
 		// Reset Function
 		vector<vector<Tile>> resetBoard();
 
-		// Getters
-		vector<int> getBuffer();
-
 	private:
-		// Before & After Blank Tiles For Miscellaneous Display
-		const vector<int> buffer = vector<int>{ 0, 0, 0, 0};
-
 		// Board Variables
 		vector<vector<Tile>> board;
 		const string defaultBoardString =

@@ -51,6 +51,7 @@ class ofApp : public ofBaseApp {
 		*/
 		void mousePressed(int x, int y, int button);
 		void mouseDragged(int x, int y, int button);
+		void mouseReleased(int x, int y, int button);
 		void keyPressed(int key);
 		void windowResized(int w, int h);
 
@@ -72,8 +73,6 @@ class ofApp : public ofBaseApp {
 		int screenWidth = ofGetWindowWidth();
 		int screenHeight = ofGetWindowHeight();
 		int tileSize = 0;
-
-		vector<int> centerOffset{ 0, 0 };
 
 		// OfSerial
 		const string port = "COM5";
@@ -120,6 +119,10 @@ class ofApp : public ofBaseApp {
 
 		int level = 0;
 
+		// drawPacman, drawGhosts, drawBoard, drawMisc, drawLevelEditor Variables
+		vector<int> centerOffset{ 0, 0 };
+		vector<int> tileBuffer = vector<int>{ 3, 0, 2, 0 };
+
 		// drawPacMan Variables
 		int angleDisplacement = 0;
 		
@@ -129,9 +132,6 @@ class ofApp : public ofBaseApp {
 		const int cyclesPerSecond = 5;
 		const int degreeIncrement = (2 * cyclesPerSecond) * (maxDegree / frameRate);
 		bool degreeFlag = true;
-
-		// drawMisc Variables
-		vector<int> buffer = vector<int>{ 3, 0, 2, 0 };
 
 		// Helper Methods For Display Render
 		void drawLandingPage();

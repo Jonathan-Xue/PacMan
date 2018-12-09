@@ -28,12 +28,6 @@ void ofApp::setup() {
 	// Setup Arduino
 	setupSerial();
 
-	// Setup LevelEditor
-
-
-	// Listeners
-
-
 	// Setup Buttons
 	singlePlayerButton.setup("Solo", ofColor(255, 255, 255), "emulogic.ttf", ofColor(0, 0, 0), 12);
 	ofAddListener(singlePlayerButton.clicked, this, &ofApp::singlePlayerButtonListener);
@@ -182,8 +176,8 @@ void ofApp::update() {
 		}
 
 		// Check For Next Level
-		for (size_t i = 0; i < currentBoard.size(); i++) {
-			for (size_t j = 0; j < currentBoard[0].size(); j++) {
+		for (unsigned i = 0; i < currentBoard.size(); i++) {
+			for (unsigned j = 0; j < currentBoard[0].size(); j++) {
 				if (currentBoard[i][j].isStandardPellet() || currentBoard[i][j].isPowerPellet()) {
 					goto stop;
 				}
@@ -244,7 +238,6 @@ void ofApp::draw() {
 		break;
 	case LEVEL_EDITOR:
 		drawLevelEditor();
-		redrawBackgroundFlag = true;
 		break;
 	case IN_PROGRESS:
 		// Fallthrough Intended
@@ -272,45 +265,15 @@ void ofApp::mousePressed(int x, int y, int button) {
 	if (currentState == LEVEL_EDITOR) {
 		// Ignore Panel
 		if (!levelEditorPanel.withinBounds(x, y)) {
-			vector<int> tilePosition = vector<int>{ (y - centerOffset[1]) / tileSize, (x - centerOffset[0]) / tileSize };
+			vector<int> tilePosition = vector<int>{ (y - centerOffset[1]) / tileSize - tileBuffer[0], (x - centerOffset[0]) / tileSize - tileBuffer[1] };
 			
-			// Only Allow For Certain Elements To Be Placed Outside Of Immediate Board Bounds
-			if ((tilePosition[0] >= board->getBuffer()[0] && tilePosition[0] < (int)currentBoard.size() - board->getBuffer()[2] &&
-				tilePosition[1] >= board->getBuffer()[1] && tilePosition[1] < (int)currentBoard[0].size() - board->getBuffer()[3])) {
+			// Prevent Elements From Being Placed Outside Of Board (Will Throw OutOfBounds Error)
+			if ((tilePosition[0] >= 0 && tilePosition[0] < (int)currentBoard.size() &&
+				tilePosition[1] >= 0 && tilePosition[1] < (int)currentBoard[0].size())) {
 				switch (currentEditorOption) {
 				case ROW_ADJUSTMENT:
 				case COL_ADJUSTMENT:
-				{
-					// Row Adjustments
-					int adjustedBoardWidth = (int)currentBoard.size() - (board->getBuffer()[0] + board->getBuffer()[2]);
-					while (levelEditorPanel.getRows() != adjustedBoardWidth) {
-						if (levelEditorPanel.getRows() > adjustedBoardWidth) {
-							vector<Tile> temp;
-							for (size_t i = 0; i < currentBoard[0].size(); i++) {
-								if (i < (size_t)board->getBuffer()[1] || i > currentBoard[0].size() - 1 - board->getBuffer()[3]) {
-									temp.push_back(Tile(-1, false, false));
-								}
-								else {
-									temp.push_back(Tile(0, false, false));
-								}
-							}
-							currentBoard.insert(currentBoard.begin() + (currentBoard.size() - board->getBuffer()[2]), temp);
-
-							adjustedBoardWidth++;
-						}
-						else if (levelEditorPanel.getRows() < adjustedBoardWidth) {
-							currentBoard.erase(currentBoard.begin() + (currentBoard.size() - 1 - board->getBuffer()[2]));
-
-							adjustedBoardWidth--;
-						}
-					}
-
-					// Column Adjustments
-
-					// Adjust Display Variables
-					windowResized(screenWidth, screenHeight);
 					break;
-				}
 				case DISPLAY_BLOCK:
 					currentBoard[tilePosition[0]][tilePosition[1]].setParams(-1, false, false);
 					break;
@@ -356,58 +319,6 @@ void ofApp::mousePressed(int x, int y, int button) {
 					break;
 				}
 			}
-			else {
-				switch (currentEditorOption) {
-				case ROW_ADJUSTMENT:
-				case COL_ADJUSTMENT:
-				{
-					// Row Adjustments
-					int adjustedBoardWidth = (int)currentBoard.size() - (board->getBuffer()[0] + board->getBuffer()[2]);
-					while (levelEditorPanel.getRows() != adjustedBoardWidth) {
-						if (levelEditorPanel.getRows() > adjustedBoardWidth) {
-							vector<Tile> temp;
-							for (size_t i = 0; i < currentBoard[0].size(); i++) {
-								if (i < (size_t)board->getBuffer()[1] || i > currentBoard[0].size() - 1 - board->getBuffer()[3]) {
-									temp.push_back(Tile(-1, false, false));
-								}
-								else {
-									temp.push_back(Tile(0, false, false));
-								}
-							}
-							currentBoard.insert(currentBoard.begin() + (currentBoard.size() - board->getBuffer()[2]), temp);
-
-							adjustedBoardWidth++;
-						}
-						else if (levelEditorPanel.getRows() < adjustedBoardWidth) {
-							currentBoard.erase(currentBoard.begin() + (currentBoard.size() - 1 - board->getBuffer()[2]));
-
-							adjustedBoardWidth--;
-						}
-					}
-
-					// Column Adjustments
-
-					// Adjust Display Variables
-					windowResized(screenWidth, screenHeight);
-					break;
-				}
-				case BLINKY_HOME_TILE:
-					blinky.setHomeTilePosition(tilePosition);
-					break;
-				case PINKY_HOME_TILE:
-					pinky.setHomeTilePosition(tilePosition);
-					break;
-				case INKY_HOME_TILE:
-					inky.setHomeTilePosition(tilePosition);
-					break;
-				case CLYDE_HOME_TILE:
-					clyde.setHomeTilePosition(tilePosition);
-					break;
-				default:
-					std::cout << "Current Editor Option Doesn't Allow For Placement Outside The Immediate Board Bounds" << std::endl;
-					break;
-				}
-			}
 		}
 	}
 }
@@ -416,23 +327,53 @@ void ofApp::mouseDragged(int x, int y, int button) {
 	mousePressed(x, y, button);
 }
 
+void ofApp::mouseReleased(int x, int y, int button) {
+	if (currentEditorOption == ROW_ADJUSTMENT || currentEditorOption == COL_ADJUSTMENT) {
+		// Row Adjustments
+		int numRows = currentBoard.size();
+		while (levelEditorPanel.getRows() != numRows) {
+			if (levelEditorPanel.getRows() > numRows) {
+				vector<Tile> temp;
+				for (unsigned i = 0; i < currentBoard[0].size(); i++) {
+					temp.push_back(Tile(0, false, false));
+				}
+				currentBoard.insert(currentBoard.begin() + currentBoard.size(), temp);
+
+				numRows++;
+			}
+			else if (levelEditorPanel.getRows() < numRows) {
+				currentBoard.erase(currentBoard.begin() + (currentBoard.size() - 1));
+
+				numRows--;
+			}
+		}
+
+		// Column Adjustments
+		int numCols = currentBoard[0].size();
+		while (levelEditorPanel.getCols() != numCols) {
+			if (levelEditorPanel.getCols() > numCols) {
+
+				numCols++;
+			}
+			else if (levelEditorPanel.getCols() > numCols) {
+
+				numCols--;
+			}
+
+			
+		}
+
+		// Adjust Display Variables
+		windowResized(screenWidth, screenHeight);
+	}
+}
+
 void ofApp::keyPressed(int key) {
 	// TODO: Remove
 	if (key == OF_KEY_CONTROL) {
-		if (currentState == GAME_OVER) {
-			currentState = HIGH_SCORE;
-		}
-		else if (currentState == HIGH_SCORE) {
+		if (currentState == HIGH_SCORE) {
 			resetGame();
 			currentState = START;
-		}
-
-		if (currentState == LEVEL_EDITOR) {
-			// Set Board
-			board->generateStringFromBoard(currentBoard);
-
-			// Reset Game
-			resetGame();
 		}
 	}
 
@@ -470,20 +411,23 @@ void ofApp::keyPressed(int key) {
 }
 
 void ofApp::windowResized(int w, int h) {
+	// Flags
+	redrawBackgroundFlag = true;
+
 	// Update Width & Height
 	screenWidth = w;
 	screenHeight = h;
 
 	// Tile Size
-	tileSize = min(screenHeight / (currentBoard.size() + buffer[0] + buffer[2]), screenWidth / (currentBoard[0].size() + buffer[1] + buffer[3]));
+	tileSize = min(screenHeight / (currentBoard.size() + tileBuffer[0] + tileBuffer[2]), screenWidth / (currentBoard[0].size() + tileBuffer[1] + tileBuffer[3]));
 
 	// Fonts
 	crackman.load("crackman.ttf", screenWidth / 7.5, true, true);
 	emulogic.load("emulogic.ttf", tileSize, true, true);
 
 	// Offsets
-	centerOffset[0] = (screenWidth - (currentBoard[0].size() * tileSize - (buffer[1] * tileSize) - (buffer[3]) * tileSize)) / 2;
-	centerOffset[1] = ((screenHeight - (currentBoard.size() * tileSize) - (buffer[0] * tileSize) - (buffer[2]) * tileSize)) / 2;
+	centerOffset[0] = (screenWidth - (currentBoard[0].size() * tileSize - (tileBuffer[1] * tileSize) - (tileBuffer[3]) * tileSize)) / 2;
+	centerOffset[1] = ((screenHeight - (currentBoard.size() * tileSize) - (tileBuffer[0] * tileSize) - (tileBuffer[2]) * tileSize)) / 2;
 
 	// Button Resize
 	singlePlayerButton.setPosition(0, 0);
@@ -506,8 +450,8 @@ void ofApp::windowResized(int w, int h) {
 		0 // Bottom Left
 	);
 
-	continueButton.setPosition(centerOffset[0], (currentBoard.size() - board->getBuffer()[2]) * tileSize + centerOffset[1]);
-	continueButton.setSize(currentBoard[0].size() * tileSize, board->getBuffer()[2] * tileSize);
+	continueButton.setPosition(centerOffset[0], (currentBoard.size() * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1]);
+	continueButton.setSize(currentBoard[0].size() * tileSize, tileBuffer[2] * tileSize);
 	continueButton.setFontSize(tileSize);
 
 	// Sprite Resize
@@ -529,7 +473,7 @@ void ofApp::singlePlayerButtonListener(ofVec2f &e) {
 	vector<vector<int>> ghostHomeTilePositions = vector<vector<int>>{ { 0, 27 }, { 0, 0 }, { 30, 27 }, { 30, 0 } };
 
 	pacman.setInitialTilePosition(vector<int>{ 23, 14 });
-	for (size_t i = 0; i < ghostsVector.size(); i++) {
+	for (unsigned i = 0; i < ghostsVector.size(); i++) {
 		ghostsVector[i]->setHomeTilePosition(ghostHomeTilePositions[i]);
 		ghostsVector[i]->setInitialTilePosition(ghostInitialTilePositions[i]);
 	}
@@ -543,11 +487,16 @@ void ofApp::multiPlayerButtonListener(ofVec2f &e) {
 }
 
 void ofApp::continueButtonListener(ofVec2f &e) {
-	// Set Board
-	board->generateStringFromBoard(currentBoard);
+	if (currentState == LEVEL_EDITOR) {
+		// Set Board
+		board->generateStringFromBoard(currentBoard);
 
-	// Reset Game
-	resetGame();
+		// Reset Game
+		resetGame();
+	}
+	else if (currentState == GAME_OVER) {
+		currentState = HIGH_SCORE;
+	}
 }
 
 // Private Methods
@@ -589,80 +538,77 @@ void ofApp::drawLevelEditor() {
 	// Sprites
 	ofSetColor(pacman.getDefaultColor());
 	ofDrawRectangle((pacman.getInitialTilePosition()[1] * tileSize) + centerOffset[0],
-		(pacman.getInitialTilePosition()[0] * tileSize) + (buffer[0] * tileSize) + centerOffset[1],
+		(pacman.getInitialTilePosition()[0] * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1],
 		tileSize, tileSize);
 
 	for (Ghost *g : ghostsVector) {
 		ofSetColor(g->getDefaultColor());
 		ofDrawRectangle((g->getInitialTilePosition()[1] * tileSize) + centerOffset[0],
-			(g->getInitialTilePosition()[0] * tileSize) + (buffer[0] * tileSize) + centerOffset[1],
+			(g->getInitialTilePosition()[0] * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1],
 			tileSize, tileSize);
 
 		ofColor darkenedColor = g->getDefaultColor();
 		darkenedColor.setBrightness(128);
 		ofSetColor(darkenedColor);
 		ofDrawRectangle((g->getHomeTilePosition()[1] * tileSize) + centerOffset[0],
-			(g->getHomeTilePosition()[0] * tileSize) + (buffer[0] * tileSize) + centerOffset[1],
+			(g->getHomeTilePosition()[0] * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1],
 			tileSize, tileSize);
 	}
 
 	// Grey Border
 	ofNoFill();
 	ofSetColor(175, 175, 175);
-	for (size_t i = 0; i < currentBoard.size(); i++) {
-		for (size_t j = 0; j < currentBoard[0].size(); j++) {
-			if (i >= (size_t)board->getBuffer()[0] && i < currentBoard.size() - board->getBuffer()[2] &&
-				j >= (size_t)board->getBuffer()[1] && j < currentBoard.size() - board->getBuffer()[3]) {
-				ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
-			}
+	for (unsigned i = 0; i < currentBoard.size(); i++) {
+		for (unsigned j = 0; j < currentBoard[0].size(); j++) {
+			ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
 		}
 	}
 	ofFill();
 
 	// Buttons
 	continueButton.setVisible(true);
-	//continueButton.draw();
+	continueButton.draw();
 
 	// Level Editor Panel
 	levelEditorPanel.draw();
 }
 
 void ofApp::drawGameBoard() {
-	for (size_t i = 0; i < currentBoard.size(); i++) {
-		for (size_t j = 0; j < currentBoard[0].size(); j++) {
+	for (unsigned i = 0; i < currentBoard.size(); i++) {
+		for (unsigned j = 0; j < currentBoard[0].size(); j++) {
 			if (currentBoard[i][j].getID() == -1) {
 				// Invalid Block
 				ofSetColor(0, 0, 0);
-				ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
+				ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
 			}
 			else if (currentBoard[i][j].getID() == 0) {
 				// Wall
 				ofSetColor(50, 50, 255);
-				ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
+				ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
 			}
 			else if (currentBoard[i][j].getID() == 1) {
 				if (currentBoard[i][j].isStandardPellet()) {
 					// Tile
 					ofSetColor(0, 0, 0);
-					ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
+					ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
 
 					// Standard Pellet
 					ofSetColor(255, 255, 0);
-					ofDrawCircle(((j + 0.5) * tileSize) + centerOffset[0], ((i + 0.5) * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize / 8);
+					ofDrawCircle(((j + 0.5) * tileSize) + centerOffset[0], ((i + 0.5) * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1], tileSize / 8);
 				}
 				else if (currentBoard[i][j].isPowerPellet()) {
 					// Tile
 					ofSetColor(0, 0, 0);
-					ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
+					ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
 
 					// Power Pellet
 					ofSetColor(255, 255, 0);
-					ofDrawCircle(((j + 0.5) * tileSize) + centerOffset[0], ((i + 0.5) * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize / 2.5);
+					ofDrawCircle(((j + 0.5) * tileSize) + centerOffset[0], ((i + 0.5) * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1], tileSize / 2.5);
 				}
 				else {
 					// Tile
 					ofSetColor(0, 0, 0);
-					ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (buffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
+					ofDrawRectangle((j * tileSize) + centerOffset[0], (i * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
 
 					// No Pellet
 				}
@@ -700,7 +646,7 @@ void ofApp::drawMisc() {
 	// Draw Upper Buffer
 	ofSetColor(0, 0, 0);
 	ofDrawRectangle(centerOffset[0], centerOffset[1], 
-		currentBoard[0].size() * tileSize, buffer[0] * tileSize);
+		currentBoard[0].size() * tileSize, tileBuffer[0] * tileSize);
 
 	// Draw Upper Info
 	ofSetColor(255, 255, 255);
@@ -720,8 +666,8 @@ void ofApp::drawMisc() {
 
 	// Draw Lower Buffer
 	ofSetColor(0, 0, 0);
-	ofDrawRectangle(centerOffset[0], (currentBoard.size() * tileSize) + (buffer[0] * tileSize) + centerOffset[1],
-		currentBoard[0].size() * tileSize, buffer[2] * tileSize);
+	ofDrawRectangle(centerOffset[0], (currentBoard.size() * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1],
+		currentBoard[0].size() * tileSize, tileBuffer[2] * tileSize);
 
 	// Draw Lower Info (Lives)
 	ofSetColor(255, 255, 255);
@@ -729,7 +675,7 @@ void ofApp::drawMisc() {
 	for (int i = 0; i < pacman.getLives() - 1; i++) {
 		ofSetColor(255, 255, 0);
 		ofDrawCircle(((tilePosition[1] + (i * 2)) * tileSize) + centerOffset[0],
-			(tilePosition[0] * tileSize) + (buffer[0] * tileSize) + centerOffset[1],
+			(tilePosition[0] * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1],
 			tileSize);
 	}
 }
@@ -784,7 +730,7 @@ void ofApp::drawPacMan() {
 	pacmanPath.setCircleResolution(360);
 	pacmanPath.setFilled(true);
 	pacmanPath.arc(pacman.getCenterPixelPosition()[0] + centerOffset[0], 
-		pacman.getCenterPixelPosition()[1] + (buffer[0] * tileSize) + centerOffset[1],
+		pacman.getCenterPixelPosition()[1] + (tileBuffer[0] * tileSize) + centerOffset[1],
 		tileSize / 2, tileSize / 2,
 		angleDisplacement + pacmanDegree, angleDisplacement - pacmanDegree);
 	pacmanPath.draw();
@@ -814,13 +760,15 @@ void ofApp::drawGhosts() {
 		}
 		ofSetColor(255, 255, 255);
 		g->getImage().draw(g->getTopLeftPixelPosition()[0] + centerOffset[0],
-			g->getTopLeftPixelPosition()[1] + (buffer[0] * tileSize) + centerOffset[1],
+			g->getTopLeftPixelPosition()[1] + (tileBuffer[0] * tileSize) + centerOffset[1],
 			tileSize, tileSize);
 	}
 }
 
 void ofApp::drawGameOver() {
-
+	// Buttons
+	continueButton.setVisible(true);
+	continueButton.draw();
 }
 
 void ofApp::drawHighScores() {

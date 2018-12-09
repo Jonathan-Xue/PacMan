@@ -158,7 +158,6 @@ class Ghost {
 
 		// Game Variables
 		vector<vector<Tile>> *board;
-		vector<int> boardBuffer = BoardGenerator().getBuffer();
 		Pacman *pacman;
 
 		// Class Variables
