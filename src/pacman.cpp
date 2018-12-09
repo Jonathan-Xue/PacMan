@@ -143,7 +143,7 @@ void Pacman::adjustBounds() {
 	if (tilePosition[0] < boardBuffer[0]) {
 		tilePosition[0] = board->size() - boardBuffer[2] - 1;
 	}
-	else if (tilePosition[0] >= board->size() - boardBuffer[2]) {
+	else if (tilePosition[0] >= (int)board->size() - boardBuffer[2]) {
 		tilePosition[0] = boardBuffer[0];
 	}
 
@@ -151,7 +151,7 @@ void Pacman::adjustBounds() {
 	if (tilePosition[1] < boardBuffer[1]) {
 		tilePosition[1] = (*board)[0].size() - boardBuffer[3] - 1;
 	}
-	else if (tilePosition[1] >= (*board)[0].size() - boardBuffer[3]) {
+	else if (tilePosition[1] >= (int)(*board)[0].size() - boardBuffer[3]) {
 		tilePosition[1] = boardBuffer[0];
 	}
 }
