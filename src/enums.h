@@ -10,6 +10,9 @@ enum GameState {
 };
 
 enum EditorOptions {
+	ROW_ADJUSTMENT,
+	COL_ADJUSTMENT,
+
 	DISPLAY_BLOCK,
 	WALL_BLOCK,
 	STANDARD_PELLET_BLOCK,

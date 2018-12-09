@@ -273,12 +273,44 @@ void ofApp::mousePressed(int x, int y, int button) {
 		// Ignore Panel
 		if (!levelEditorPanel.withinBounds(x, y)) {
 			vector<int> tilePosition = vector<int>{ (y - centerOffset[1]) / tileSize, (x - centerOffset[0]) / tileSize };
-
+			
 			// Only Allow For Certain Elements To Be Placed Outside Of Immediate Board Bounds
-			bool withinBoardBounds = (tilePosition[0] >= board->getBufferBounds()[0] && tilePosition[0] < board->getBufferBounds()[2] &&
-				tilePosition[1] >= board->getBufferBounds()[1] && tilePosition[1] < board->getBufferBounds()[3]);
-			if (withinBoardBounds) {
+			if ((tilePosition[0] >= board->getBuffer()[0] && tilePosition[0] < currentBoard.size() - board->getBuffer()[2] &&
+				tilePosition[1] >= board->getBuffer()[1] && tilePosition[1] < currentBoard[0].size() - board->getBuffer()[3])) {
 				switch (currentEditorOption) {
+				case ROW_ADJUSTMENT:
+				case COL_ADJUSTMENT:
+				{
+					// Row Adjustments
+					int adjustedBoardWidth = (int)currentBoard.size() - (board->getBuffer()[0] + board->getBuffer()[2]);
+					while (levelEditorPanel.getRows() != adjustedBoardWidth) {
+						if (levelEditorPanel.getRows() > adjustedBoardWidth) {
+							vector<Tile> temp;
+							for (size_t i = 0; i < currentBoard[0].size(); i++) {
+								if (i < board->getBuffer()[1] || i > currentBoard[0].size() - 1 - board->getBuffer()[3]) {
+									temp.push_back(Tile(-1, false, false));
+								}
+								else {
+									temp.push_back(Tile(0, false, false));
+								}
+							}
+							currentBoard.insert(currentBoard.begin() + (currentBoard.size() - board->getBuffer()[2]), temp);
+
+							adjustedBoardWidth++;
+						}
+						else if (levelEditorPanel.getRows() < adjustedBoardWidth) {
+							currentBoard.erase(currentBoard.begin() + (currentBoard.size() - 1 - board->getBuffer()[2]));
+
+							adjustedBoardWidth--;
+						}
+					}
+
+					// Column Adjustments
+
+					// Adjust Display Variables
+					windowResized(screenWidth, screenHeight);
+					break;
+				}
 				case DISPLAY_BLOCK:
 					currentBoard[tilePosition[0]][tilePosition[1]].setParams(-1, false, false);
 					break;
@@ -397,6 +429,7 @@ void ofApp::keyPressed(int key) {
 }
 
 void ofApp::windowResized(int w, int h) {
+	std::cout << "Current Board Size" << currentBoard.size() << std::endl;
 	// Update Width & Height
 	screenWidth = w;
 	screenHeight = h;
@@ -433,8 +466,8 @@ void ofApp::windowResized(int w, int h) {
 		0 // Bottom Left
 	);
 
-	continueButton.setPosition(centerOffset[0], board->getBufferBounds()[2] * tileSize + centerOffset[1]);
-	continueButton.setSize(currentBoard[0].size() * tileSize, (currentBoard.size() - board->getBufferBounds()[2]) * tileSize);
+	continueButton.setPosition(centerOffset[0], (currentBoard.size() - board->getBuffer()[2]) * tileSize + centerOffset[1]);
+	continueButton.setSize(currentBoard[0].size() * tileSize, board->getBuffer()[2] * tileSize);
 	continueButton.setFontSize(tileSize);
 
 	// Sprite Resize
@@ -471,7 +504,6 @@ void ofApp::multiPlayerButtonListener(ofVec2f &e) {
 
 void ofApp::continueButtonListener(ofVec2f &e) {
 	// Set Board
-	std::cout << "Current Board Index [3, 0]: " << currentBoard[3][0].isPowerPellet() << std::endl;
 	board->generateStringFromBoard(currentBoard);
 
 	// Reset Game
@@ -539,8 +571,8 @@ void ofApp::drawLevelEditor() {
 	ofSetColor(175, 175, 175);
 	for (size_t i = 0; i < currentBoard.size(); i++) {
 		for (size_t j = 0; j < currentBoard[0].size(); j++) {
-			if (i >= (size_t)board->getBufferBounds()[0] && i < (size_t)board->getBufferBounds()[2] &&
-				j >= (size_t)board->getBufferBounds()[1] && j < (size_t)board->getBufferBounds()[3]) {
+			if (i >= (size_t)board->getBuffer()[0] && i < currentBoard.size() - board->getBuffer()[2] &&
+				j >= (size_t)board->getBuffer()[1] && j < currentBoard.size() - board->getBuffer()[3]) {
 				ofDrawRectangle(j * tileSize + centerOffset[0], i * tileSize + centerOffset[1], tileSize, tileSize);
 			}
 		}
@@ -549,7 +581,7 @@ void ofApp::drawLevelEditor() {
 
 	// Buttons
 	continueButton.setVisible(true);
-	continueButton.draw();
+	//continueButton.draw();
 
 	// Level Editor Panel
 	levelEditorPanel.draw();

@@ -44,6 +44,9 @@ class LevelEditorPanel {
 		void draw();
 
 		// Listeners
+		void editorNumRowsSliderListener(int &value);
+		void editorNumColsSliderListener(int &value);
+
 		void editorDisplayBlockButtonListener();
 		void editorWallBlockButtonListener();
 		void editorStandardPelletBlockButtonListener();
@@ -63,10 +66,25 @@ class LevelEditorPanel {
 		void editorClydeSpriteButtonListener();
 		void editorClydeHomeTileButtonListener();
 
+		void mouseMoved(ofMouseEventArgs & args) {}
+		void mouseDragged(ofMouseEventArgs & args) {}
+		void mousePressed(ofMouseEventArgs & args) {}
+		void mouseReleased(ofMouseEventArgs & args) {}
+		void mouseScrolled(ofMouseEventArgs & args) {}
+		void mouseEntered(ofMouseEventArgs & args) {}
+		void mouseExited(ofMouseEventArgs & args) {}
+
+		// Getters
+		int getRows();
+		int getCols();
+
 	private:
 		EditorOptions *currentEditorOption;
 
 		ofxPanel levelEditorPanel;
+
+		ofParameter<int> editorNumRowsSlider;
+		ofParameter<int> editorNumColsSlider;
 
 		ofxButton editorDisplayBlockButton;
 		ofxButton editorWallBlockButton;

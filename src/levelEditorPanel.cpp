@@ -8,6 +8,9 @@ LevelEditorPanel::LevelEditorPanel(EditorOptions *ceo) {
 	// Setup
 	levelEditorPanel.setup("Variables");
 
+	levelEditorPanel.add(editorNumRowsSlider.set("Rows", 31, 25, 50));
+	levelEditorPanel.add(editorNumColsSlider.set("Columns", 28, 25, 50));
+
 	levelEditorPanel.add(editorDisplayBlockButton.setup("Display Block"));
 	levelEditorPanel.add(editorWallBlockButton.setup("Wall Block"));
 	levelEditorPanel.add(editorStandardPelletBlockButton.setup("Standard Pellet Block"));
@@ -28,6 +31,9 @@ LevelEditorPanel::LevelEditorPanel(EditorOptions *ceo) {
 	levelEditorPanel.add(editorClydeHomeTileButton.setup("Clyde Home Position"));
 
 	// Listeners
+	editorNumRowsSlider.addListener(this, &LevelEditorPanel::editorNumRowsSliderListener);
+	editorNumColsSlider.addListener(this, &LevelEditorPanel::editorNumColsSliderListener);
+
 	editorDisplayBlockButton.addListener(this, &LevelEditorPanel::editorDisplayBlockButtonListener);
 	editorWallBlockButton.addListener(this, &LevelEditorPanel::editorWallBlockButtonListener);
 	editorStandardPelletBlockButton.addListener(this, &LevelEditorPanel::editorStandardPelletBlockButtonListener);
@@ -50,7 +56,7 @@ LevelEditorPanel::LevelEditorPanel(EditorOptions *ceo) {
 
 LevelEditorPanel::~LevelEditorPanel() {}
 
-bool LevelEditorPanel::contains(int x, int y) {
+bool LevelEditorPanel::withinBounds(int x, int y) {
 	return (x > levelEditorPanel.getPosition().x &&
 		x < levelEditorPanel.getPosition().x + levelEditorPanel.getWidth() &&
 		y > levelEditorPanel.getPosition().y &&
@@ -59,6 +65,14 @@ bool LevelEditorPanel::contains(int x, int y) {
 
 void LevelEditorPanel::draw() {
 	levelEditorPanel.draw();
+}
+
+void LevelEditorPanel::editorNumRowsSliderListener(int &value) {
+	(*currentEditorOption) = ROW_ADJUSTMENT;
+}
+
+void LevelEditorPanel::editorNumColsSliderListener(int &value) {
+	(*currentEditorOption) = COL_ADJUSTMENT;
 }
 
 void LevelEditorPanel::editorDisplayBlockButtonListener() {
@@ -111,4 +125,12 @@ void LevelEditorPanel::editorClydeSpriteButtonListener() {
 
 void LevelEditorPanel::editorClydeHomeTileButtonListener() {
 	(*currentEditorOption) = CLYDE_HOME_TILE;
+}
+
+int LevelEditorPanel::getRows() {
+	return editorNumRowsSlider;
+}
+
+int LevelEditorPanel::getCols() {
+	return editorNumColsSlider;
 }

@@ -53,7 +53,7 @@ class BoardGenerator {
 		vector<vector<Tile>> resetBoard();
 
 		// Getters
-		vector<int> getBufferBounds();
+		vector<int> getBuffer();
 
 	private:
 		// Before & After Blank Tiles For Miscellaneous Display
