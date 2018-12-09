@@ -492,12 +492,12 @@ void ofApp::multiPlayerButtonListener(ofVec2f &e) {
 void ofApp::continueButtonListener(ofVec2f &e) {
 	if (currentState == LEVEL_EDITOR) {
 		// OutOfBounds
-		bool pacmanOutOfBounds = pacman.getTilePosition()[0] < 0 || pacman.getTilePosition()[0] >= currentBoard.size() ||
-			pacman.getTilePosition()[1] < 0 || pacman.getTilePosition()[1] >= currentBoard[1].size();
+		bool pacmanOutOfBounds = pacman.getTilePosition()[0] < 0 || (unsigned)pacman.getTilePosition()[0] >= currentBoard.size() ||
+			pacman.getTilePosition()[1] < 0 || (unsigned)pacman.getTilePosition()[1] >= currentBoard[1].size();
 		bool ghostOutOfBounds = false;
 		for (Ghost *g : ghostsVector) {
-			if (g->getTilePosition()[0] < 0 || g->getTilePosition()[0] >= currentBoard.size() ||
-				g->getTilePosition()[1] < 0 || g->getTilePosition()[1] >= currentBoard[1].size()) {
+			if (g->getTilePosition()[0] < 0 || (unsigned)g->getTilePosition()[0] >= currentBoard.size() ||
+				g->getTilePosition()[1] < 0 || (unsigned)g->getTilePosition()[1] >= currentBoard[1].size()) {
 				ghostOutOfBounds = true;
 				break;
 			}
@@ -646,10 +646,10 @@ void ofApp::drawGameBoard() {
 }
 
 void ofApp::drawMisc() {
-	// "HIGH SCORE" Horizontally Centered With Respect To The Screen
-	vector<int> highScoreLabelTilePosition = { 1, (int)((currentBoard[0].size() - string("HIGH SCORE").length()) / 2) };
+	// currentScore
+	string currentScore = std::to_string(pacman.getScore());
 
-	// High Score Horizontally Centered With Respect To The Screen
+	// highScore
 	string highScore;
 	if (pacman.getScore() > highScores[0]) {
 		highScore = std::to_string(pacman.getScore());
@@ -657,14 +657,6 @@ void ofApp::drawMisc() {
 	else {
 		highScore = std::to_string(highScores[0]);
 	}
-	vector<int> highScoreTilePosition = { 2,  (int)((currentBoard[0].size() - highScore.length()) / 2) };
-
-	// "1UP" Horizontally Centered With Respect To "HIGH SCORE"
-	vector<int> playerLabelTilePosition = { 1, (int)((highScoreLabelTilePosition[1] - string("1UP").length()) / 2) };
-
-	// "Rightermost Entry Of Score Is One Tile After End Of "1UP"
-	string currentScore = std::to_string(pacman.getScore());
-	vector<int> currentScoreTilePosition = { 2, (int)(playerLabelTilePosition[1] + string("1UP").length() + 1 - currentScore.length()) };
 
 	// Draw Upper Buffer
 	ofSetColor(0, 0, 0);
@@ -674,18 +666,18 @@ void ofApp::drawMisc() {
 	// Draw Upper Info
 	ofSetColor(255, 255, 255);
 	emulogic.drawString("HIGH SCORE",
-		(highScoreLabelTilePosition[1] * tileSize) + centerOffset[0],
-		(highScoreLabelTilePosition[0] * tileSize) + centerOffset[1]);
+		(screenWidth - emulogic.stringWidth("HIGH SCORE")) / 2 + centerOffset[0],
+		tileSize + centerOffset[1]);
 	emulogic.drawString(highScore,
-		(highScoreTilePosition[1] * tileSize) + centerOffset[0],
-		(highScoreTilePosition[0] * tileSize) + centerOffset[1]);
+		(screenWidth - emulogic.stringWidth(highScore)) / 2 + centerOffset[0],
+		(tileSize * 2) + centerOffset[1]);
 
 	emulogic.drawString("1UP",
-		(playerLabelTilePosition[1] * tileSize) + centerOffset[0],
-		(playerLabelTilePosition[0] * tileSize) + centerOffset[1]);
+		((screenWidth - emulogic.stringWidth("HIGH SCORE")) / 2 - emulogic.stringWidth("1UP")) / 2 + centerOffset[0],
+		tileSize + centerOffset[1]);
 	emulogic.drawString(currentScore,
-		(currentScoreTilePosition[1] * tileSize) + centerOffset[0],
-		(currentScoreTilePosition[0] * tileSize) + centerOffset[1]);
+		((screenWidth - emulogic.stringWidth("HIGH SCORE")) / 2 - emulogic.stringWidth("1UP")) / 2 + emulogic.stringWidth("1UP") - emulogic.stringWidth(currentScore) + centerOffset[0],
+		(tileSize * 2) + centerOffset[1]);
 
 	// Draw Lower Buffer
 	ofSetColor(0, 0, 0);
