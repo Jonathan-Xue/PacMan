@@ -20,8 +20,8 @@
 #include "board/tile.h"
 
 #include "sprites/pacman.h"
+#include "sprites/ghost.h"
 
-#include "sprites/ghosts/ghost.h"
 #include "sprites/ghosts/blinky.h"
 #include "sprites/ghosts/clyde.h"
 #include "sprites/ghosts/inky.h"

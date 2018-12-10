@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ghost.h"
+#include "sprites/ghost.h"
 
 #include "blinky.h"
 

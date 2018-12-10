@@ -64,9 +64,6 @@
     <ClCompile Include="src\sprites\ghosts\clyde.cpp">
       <Filter>src\sprites\ghosts</Filter>
     </ClCompile>
-    <ClCompile Include="src\sprites\ghosts\ghost.cpp">
-      <Filter>src\sprites\ghosts</Filter>
-    </ClCompile>
     <ClCompile Include="src\sprites\ghosts\inky.cpp">
       <Filter>src\sprites\ghosts</Filter>
     </ClCompile>
@@ -74,6 +71,9 @@
       <Filter>src\sprites\ghosts</Filter>
     </ClCompile>
     <ClCompile Include="src\sprites\pacman.cpp">
+      <Filter>src\sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprites\ghost.cpp">
       <Filter>src\sprites</Filter>
     </ClCompile>
   </ItemGroup>
@@ -173,9 +173,6 @@
     <ClInclude Include="src\sprites\ghosts\clyde.h">
       <Filter>src\sprites\ghosts</Filter>
     </ClInclude>
-    <ClInclude Include="src\sprites\ghosts\ghost.h">
-      <Filter>src\sprites\ghosts</Filter>
-    </ClInclude>
     <ClInclude Include="src\sprites\ghosts\inky.h">
       <Filter>src\sprites\ghosts</Filter>
     </ClInclude>
@@ -183,6 +180,9 @@
       <Filter>src\sprites\ghosts</Filter>
     </ClInclude>
     <ClInclude Include="src\sprites\pacman.h">
+      <Filter>src\sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprites\ghost.h">
       <Filter>src\sprites</Filter>
     </ClInclude>
   </ItemGroup>

@@ -158,7 +158,9 @@ void ofApp::update() {
 
 		// Check For Pacman - Ghost Collision
 		for (Ghost *g : ghostsVector) {
-			if ((pacman.getTilePosition() == g->getTilePosition() && g->isAlive())) {
+			// if ((pacman.getTilePosition() == g->getTilePosition() && g->isAlive())) { --> Doesn't Trigger If Pacman & Ghost Switch Tiles Perfectly
+			if (ofRectangle(pacman.getTopLeftPixelPosition()[0], pacman.getTopLeftPixelPosition()[1], tileSize, tileSize).intersects(
+				ofRectangle(g->getTopLeftPixelPosition()[0], g->getTopLeftPixelPosition()[1], tileSize, tileSize))){
 				if (g->getMode() == FRIGHTENED) {
 					if (g->isEdible()) {
 						g->setEdible(false);

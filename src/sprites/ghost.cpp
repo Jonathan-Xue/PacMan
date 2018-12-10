@@ -1,4 +1,4 @@
-#include "Ghost.h"
+#include "sprites/ghost.h"
 
 Ghost::Ghost() {}
 

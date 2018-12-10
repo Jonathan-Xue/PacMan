@@ -197,9 +197,9 @@
     <ClCompile Include="..\..\..\of_v0.10.0_vs2017_release\addons\ofxGui\src\ofxSlider.cpp" />
     <ClCompile Include="..\..\..\of_v0.10.0_vs2017_release\addons\ofxGui\src\ofxSliderGroup.cpp" />
     <ClCompile Include="..\..\..\of_v0.10.0_vs2017_release\addons\ofxGui\src\ofxToggle.cpp" />
+    <ClCompile Include="src\sprites\ghost.cpp" />
     <ClCompile Include="src\sprites\ghosts\blinky.cpp" />
     <ClCompile Include="src\sprites\ghosts\clyde.cpp" />
-    <ClCompile Include="src\sprites\ghosts\ghost.cpp" />
     <ClCompile Include="src\sprites\ghosts\inky.cpp" />
     <ClCompile Include="src\sprites\ghosts\pinky.cpp" />
     <ClCompile Include="src\sprites\pacman.cpp" />
@@ -224,9 +224,9 @@
     <ClInclude Include="..\..\..\of_v0.10.0_vs2017_release\addons\ofxGui\src\ofxSlider.h" />
     <ClInclude Include="..\..\..\of_v0.10.0_vs2017_release\addons\ofxGui\src\ofxSliderGroup.h" />
     <ClInclude Include="..\..\..\of_v0.10.0_vs2017_release\addons\ofxGui\src\ofxToggle.h" />
+    <ClInclude Include="src\sprites\ghost.h" />
     <ClInclude Include="src\sprites\ghosts\blinky.h" />
     <ClInclude Include="src\sprites\ghosts\clyde.h" />
-    <ClInclude Include="src\sprites\ghosts\ghost.h" />
     <ClInclude Include="src\sprites\ghosts\inky.h" />
     <ClInclude Include="src\sprites\ghosts\pinky.h" />
     <ClInclude Include="src\sprites\pacman.h" />
