@@ -4,10 +4,10 @@
 
 #include "enums.h"
 
-#include "board.h"
-#include "tile.h"
+#include "board/board.h"
+#include "board/tile.h"
 
-#include "pacman.h"
+#include "sprites/pacman.h"
 
 #include <iostream>
 #include <string>

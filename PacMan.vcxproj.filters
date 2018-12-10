@@ -13,9 +13,6 @@
     <ClCompile Include="src\ofApp.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\pacman.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\of_v0.10.0_vs2017_release\addons\ofxGui\src\ofxBaseGui.cpp">
       <Filter>addons\ofxGui\src</Filter>
     </ClCompile>
@@ -46,35 +43,38 @@
     <ClCompile Include="..\..\..\of_v0.10.0_vs2017_release\addons\ofxGui\src\ofxToggle.cpp">
       <Filter>addons\ofxGui\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\blinky.cpp">
-      <Filter>src\ghosts</Filter>
-    </ClCompile>
-    <ClCompile Include="src\pinky.cpp">
-      <Filter>src\ghosts</Filter>
-    </ClCompile>
-    <ClCompile Include="src\inky.cpp">
-      <Filter>src\ghosts</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ghost.cpp">
-      <Filter>src\ghosts</Filter>
-    </ClCompile>
-    <ClCompile Include="src\clyde.cpp">
-      <Filter>src\ghosts</Filter>
-    </ClCompile>
-    <ClCompile Include="src\board.cpp">
+    <ClCompile Include="src\board\board.cpp">
       <Filter>src\board</Filter>
     </ClCompile>
-    <ClCompile Include="src\tile.cpp">
+    <ClCompile Include="src\board\tile.cpp">
       <Filter>src\board</Filter>
     </ClCompile>
-    <ClCompile Include="src\button.cpp">
+    <ClCompile Include="src\gui\button.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
-    <ClCompile Include="src\levelEditorPanel.cpp">
+    <ClCompile Include="src\gui\levelEditorPanel.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
-    <ClCompile Include="src\roundedButton.cpp">
+    <ClCompile Include="src\gui\roundedButton.cpp">
       <Filter>src\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprites\ghosts\blinky.cpp">
+      <Filter>src\sprites\ghosts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprites\ghosts\clyde.cpp">
+      <Filter>src\sprites\ghosts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprites\ghosts\ghost.cpp">
+      <Filter>src\sprites\ghosts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprites\ghosts\inky.cpp">
+      <Filter>src\sprites\ghosts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprites\ghosts\pinky.cpp">
+      <Filter>src\sprites\ghosts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprites\pacman.cpp">
+      <Filter>src\sprites</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -90,30 +90,30 @@
     <Filter Include="addons\ofxGui\src">
       <UniqueIdentifier>{645E9533-4DCD-6179-1CDF-CB65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ghosts">
-      <UniqueIdentifier>{fc2f1257-a7a0-4df7-affe-adb5bba3fa5c}</UniqueIdentifier>
+    <Filter Include="src\board">
+      <UniqueIdentifier>{179912a5-8675-4a52-bab8-816f9a1fb721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\sprites">
+      <UniqueIdentifier>{27b97b13-a1ec-4a98-8cfa-01130b20e3eb}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\gui">
-      <UniqueIdentifier>{1dc82c5f-9710-4866-85c6-c90e2cdabe1d}</UniqueIdentifier>
+      <UniqueIdentifier>{a0f1218a-cb07-4a8d-9a82-ffe801bccd10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\board">
-      <UniqueIdentifier>{84fe1fee-c3f3-4e3b-9df5-4994445b167c}</UniqueIdentifier>
+    <Filter Include="src\misc">
+      <UniqueIdentifier>{f15a7a58-eb8a-4812-a15e-73ebc2e13ea9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\sprites\ghosts">
+      <UniqueIdentifier>{53e9f08b-4a96-46c1-8965-7b63a9e319c5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\cxxTimer.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\enums.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\ofApp.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\pacman.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\of_v0.10.0_vs2017_release\addons\ofxGui\src\ofxBaseGui.h">
@@ -149,35 +149,41 @@
     <ClInclude Include="..\..\..\of_v0.10.0_vs2017_release\addons\ofxGui\src\ofxToggle.h">
       <Filter>addons\ofxGui\src</Filter>
     </ClInclude>
-    <ClInclude Include="src\pinky.h">
-      <Filter>src\ghosts</Filter>
-    </ClInclude>
-    <ClInclude Include="src\inky.h">
-      <Filter>src\ghosts</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ghost.h">
-      <Filter>src\ghosts</Filter>
-    </ClInclude>
-    <ClInclude Include="src\blinky.h">
-      <Filter>src\ghosts</Filter>
-    </ClInclude>
-    <ClInclude Include="src\clyde.h">
-      <Filter>src\ghosts</Filter>
-    </ClInclude>
-    <ClInclude Include="src\board.h">
+    <ClInclude Include="src\board\board.h">
       <Filter>src\board</Filter>
     </ClInclude>
-    <ClInclude Include="src\tile.h">
+    <ClInclude Include="src\board\tile.h">
       <Filter>src\board</Filter>
     </ClInclude>
-    <ClInclude Include="src\button.h">
+    <ClInclude Include="src\gui\button.h">
       <Filter>src\gui</Filter>
     </ClInclude>
-    <ClInclude Include="src\levelEditorPanel.h">
+    <ClInclude Include="src\gui\levelEditorPanel.h">
       <Filter>src\gui</Filter>
     </ClInclude>
-    <ClInclude Include="src\roundedButton.h">
+    <ClInclude Include="src\gui\roundedButton.h">
       <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\misc\cxxTimer.h">
+      <Filter>src\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprites\ghosts\blinky.h">
+      <Filter>src\sprites\ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprites\ghosts\clyde.h">
+      <Filter>src\sprites\ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprites\ghosts\ghost.h">
+      <Filter>src\sprites\ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprites\ghosts\inky.h">
+      <Filter>src\sprites\ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprites\ghosts\pinky.h">
+      <Filter>src\sprites\ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprites\pacman.h">
+      <Filter>src\sprites</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

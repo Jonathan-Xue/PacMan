@@ -9,23 +9,23 @@
 #include "ofxGui.h"
 
 #include "ofEvents.h"
-#include "button.h"
-#include "roundedButton.h"
-#include "levelEditorPanel.h"
+#include "gui/button.h"
+#include "gui/roundedButton.h"
+#include "gui/levelEditorPanel.h"
 
 #include "enums.h"
-#include "cxxTimer.h"
+#include "misc/cxxTimer.h"
 
-#include "board.h"
-#include "tile.h"
+#include "board/board.h"
+#include "board/tile.h"
 
-#include "pacman.h"
+#include "sprites/pacman.h"
 
-#include "ghost.h"
-#include "blinky.h"
-#include "clyde.h"
-#include "inky.h"
-#include "pinky.h"
+#include "sprites/ghosts/ghost.h"
+#include "sprites/ghosts/blinky.h"
+#include "sprites/ghosts/clyde.h"
+#include "sprites/ghosts/inky.h"
+#include "sprites/ghosts/pinky.h"
 
 using std::ifstream;
 using std::ofstream;

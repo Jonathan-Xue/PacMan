@@ -40,7 +40,7 @@ void Inky::calculateTargetTile() {
 		else if (pacmanVelocity == vector<int>{0, -1}) {
 			// Up
 			tempTile[0] = pacman->getTilePosition()[0] - 2;
-			tempTile[1] = pacman->getTilePosition()[1] - 2;
+			tempTile[1] = pacman->getTilePosition()[1];
 		}
 		else if (pacmanVelocity == vector<int>{-1, 0}) {
 			// Left

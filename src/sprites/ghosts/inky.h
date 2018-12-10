@@ -30,7 +30,7 @@ class Inky : public Ghost {
 
 		/*
 			Set The targetTile
-				Pacman Moving Up: Two Tiles Up And Two Tiles Left Of Pacman's Current Position
+				Pacman Moving Up: Two Tiles Up Of Pacman's Current Position
 				Pacman Moving Left: Two Tiles Left Of Pacman's Current Position
 				Pacman Moving Down:	Two Tiles Down Of Pacman's Current Position
 				Pacman Moving Right:Two Tiles Right Of Pacman's Current Position

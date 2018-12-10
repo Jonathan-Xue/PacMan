@@ -36,7 +36,7 @@ void Pinky::calculateTargetTile() {
 		else if (pacmanVelocity == vector<int>{0, -1}) {
 			// Up
 			targetTilePosition[0] = pacman->getTilePosition()[0] - 4;
-			targetTilePosition[1] = pacman->getTilePosition()[1] - 4;
+			targetTilePosition[1] = pacman->getTilePosition()[1];
 		}
 		else if (pacmanVelocity == vector<int>{-1, 0}) {
 			// Left
