@@ -210,7 +210,7 @@
     <ClInclude Include="src\gui\button.h" />
     <ClInclude Include="src\gui\levelEditorPanel.h" />
     <ClInclude Include="src\gui\roundedButton.h" />
-    <ClInclude Include="src\misc\cxxTimer.h" />
+    <ClInclude Include="src\misc\timer.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\enums.h" />
     <ClInclude Include="..\..\..\of_v0.10.0_vs2017_release\addons\ofxGui\src\ofxBaseGui.h" />

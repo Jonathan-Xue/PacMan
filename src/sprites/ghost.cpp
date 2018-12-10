@@ -202,7 +202,7 @@ void Ghost::move() {
 void Ghost::adjustBounds() {
 	// Vertical OutOfBounds
 	if (tilePosition[0] < 0) {
-		tilePosition[0] = board->size() -  1;
+		tilePosition[0] = board->size() - 1;
 	}
 	else if (tilePosition[0] >= (int)board->size()) {
 		tilePosition[0] = 0;
@@ -316,7 +316,7 @@ ofImage Ghost::getImage() {
 			return rightDeadImage;
 		}
 	}
-	
+
 	return ofImage();
 }
 

@@ -3,38 +3,38 @@
 #include "sprites/ghost.h"
 
 class Pinky : public Ghost {
-		
-	public:
-		// Default Constructor
-		Pinky();
 
-		// Parameterized Constructor
-		Pinky(vector<vector<Tile>> *b, Pacman *p);
+public:
+	// Default Constructor
+	Pinky();
 
-		// Copy Constructor
-		Pinky(const Pinky& other) = default;
+	// Parameterized Constructor
+	Pinky(vector<vector<Tile>> *b, Pacman *p);
 
-		// Transfer Constructor
-		Pinky(Pinky&& other) = default;
+	// Copy Constructor
+	Pinky(const Pinky& other) = default;
 
-		// Destructor
-		~Pinky();
+	// Transfer Constructor
+	Pinky(Pinky&& other) = default;
 
-		// Copy Assignment Operator
-		Pinky& operator=(const Pinky& other) = default;
+	// Destructor
+	~Pinky();
 
-		// Transfer Assignment Operator
-		Pinky& operator=(Pinky&& other) = default;
+	// Copy Assignment Operator
+	Pinky& operator=(const Pinky& other) = default;
 
-		/*
-			Set The targetTile
-				Pacman Moving Up: Four Tiles Up Of Pacman's Current Position
-				Pacman Moving Left Four Tiles Left Of Pacman's Current Position
-				Pacman Moving Down: Four Tiles Down Of Pacman's Current Position
-				Pacman Moving Right: Four Tiles Right Of Pacman's Current Position
-		*/
-		void calculateTargetTile() override;
+	// Transfer Assignment Operator
+	Pinky& operator=(Pinky&& other) = default;
 
-	private:
+	/*
+		Set The targetTile
+			Pacman Moving Up: Four Tiles Up Of Pacman's Current Position
+			Pacman Moving Left Four Tiles Left Of Pacman's Current Position
+			Pacman Moving Down: Four Tiles Down Of Pacman's Current Position
+			Pacman Moving Right: Four Tiles Right Of Pacman's Current Position
+	*/
+	void calculateTargetTile() override;
+
+private:
 
 };

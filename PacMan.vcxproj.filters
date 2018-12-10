@@ -164,9 +164,6 @@
     <ClInclude Include="src\gui\roundedButton.h">
       <Filter>src\gui</Filter>
     </ClInclude>
-    <ClInclude Include="src\misc\cxxTimer.h">
-      <Filter>src\misc</Filter>
-    </ClInclude>
     <ClInclude Include="src\sprites\ghosts\blinky.h">
       <Filter>src\sprites\ghosts</Filter>
     </ClInclude>
@@ -184,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="src\sprites\ghost.h">
       <Filter>src\sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="src\misc\timer.h">
+      <Filter>src\misc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

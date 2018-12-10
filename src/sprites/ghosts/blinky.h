@@ -3,35 +3,35 @@
 #include "sprites/ghost.h"
 
 class Blinky : public Ghost {
-		
-	public:
-		// Default Constructor
-		Blinky();
 
-		// Parameterized Constructor
-		Blinky(vector<vector<Tile>> *b, Pacman *p);
+public:
+	// Default Constructor
+	Blinky();
 
-		// Copy Constructor
-		Blinky(const Blinky& other) = default;
+	// Parameterized Constructor
+	Blinky(vector<vector<Tile>> *b, Pacman *p);
 
-		// Transfer Constructor
-		Blinky(Blinky&& other) = default;
+	// Copy Constructor
+	Blinky(const Blinky& other) = default;
 
-		// Destructor
-		~Blinky();
+	// Transfer Constructor
+	Blinky(Blinky&& other) = default;
 
-		// Copy Assignment Operator
-		Blinky& operator=(const Blinky& other) = default;
+	// Destructor
+	~Blinky();
 
-		// Transfer Assignment Operator
-		Blinky& operator=(Blinky&& other) = default;
+	// Copy Assignment Operator
+	Blinky& operator=(const Blinky& other) = default;
 
-		/*
-			Set The targetTile
-				Pacman's Current tilePosition
-		*/
-		void calculateTargetTile() override;
+	// Transfer Assignment Operator
+	Blinky& operator=(Blinky&& other) = default;
 
-	private:
+	/*
+		Set The targetTile
+			Pacman's Current tilePosition
+	*/
+	void calculateTargetTile() override;
+
+private:
 
 };

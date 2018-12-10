@@ -1,6 +1,6 @@
 #include "roundedButton.h"
 
-RoundedButton::RoundedButton(){}
+RoundedButton::RoundedButton() {}
 
 RoundedButton::RoundedButton(int r) {
 	topLeftRadius = r;
@@ -16,7 +16,7 @@ RoundedButton::RoundedButton(int r1, int r2, int r3, int r4) {
 	bottomLeftRadius = r4;
 }
 
-RoundedButton::~RoundedButton(){}
+RoundedButton::~RoundedButton() {}
 
 void RoundedButton::draw() {
 	ofSetColor(backgroundColor);

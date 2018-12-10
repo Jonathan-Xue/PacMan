@@ -16,140 +16,140 @@ using std::vector;
 
 class Pacman {
 
-	public:
-		// Default Constructor
-		Pacman();
+public:
+	// Default Constructor
+	Pacman();
 
-		// Parameterized Constructor
-		Pacman(vector<vector<Tile>> *b);
+	// Parameterized Constructor
+	Pacman(vector<vector<Tile>> *b);
 
-		// Transfer Constructor
-		Pacman(const Pacman& other) = default;
+	// Transfer Constructor
+	Pacman(const Pacman& other) = default;
 
-		// Copy Constructor
-		Pacman(Pacman&& other) = default;
+	// Copy Constructor
+	Pacman(Pacman&& other) = default;
 
-		// Destructor
-		~Pacman();
+	// Destructor
+	~Pacman();
 
-		// Copy Assignment Operator
-		Pacman& operator=(const Pacman& other) = default;
+	// Copy Assignment Operator
+	Pacman& operator=(const Pacman& other) = default;
 
-		// Transfer Assignment Operator
-		Pacman& operator=(Pacman&& other) = default;
+	// Transfer Assignment Operator
+	Pacman& operator=(Pacman&& other) = default;
 
-		/*
-			Update
-		*/
-		void update();
+	/*
+		Update
+	*/
+	void update();
 
-		/*
-			Eat Pellets
-		*/
-		void eat();
+	/*
+		Eat Pellets
+	*/
+	void eat();
 
-		/*
-			Update Velocity
-		*/
-		void updateVelocity();
+	/*
+		Update Velocity
+	*/
+	void updateVelocity();
 
-		/*
-			Update Velocity
-				@param: velocity
-				@return: Boolean Detailing If The Input Velocity Is Valid
-		*/
-		bool checkValidVelocity(vector<int> velocity);
+	/*
+		Update Velocity
+			@param: velocity
+			@return: Boolean Detailing If The Input Velocity Is Valid
+	*/
+	bool checkValidVelocity(vector<int> velocity);
 
-		/*
-			Move Pacman In The Direction Of CurrentVelocity
-		*/
-		void move();
+	/*
+		Move Pacman In The Direction Of CurrentVelocity
+	*/
+	void move();
 
-		/*
-			Wraparound The Board
-		*/
-		void adjustBounds();
+	/*
+		Wraparound The Board
+	*/
+	void adjustBounds();
 
-		// Reset Functions
-		void resetLevel(int l);
-		void resetGame();
+	// Reset Functions
+	void resetLevel(int l);
+	void resetGame();
 
-		/*
-			Adjust The Sprite Size
-				@param: w
-					The width of the window
-				@param: h
-					The height of the window
-				@param: ts
-					The width/height of each tile on the board
-		*/
-		void resize(int w, int h, int ts);
+	/*
+		Adjust The Sprite Size
+			@param: w
+				The width of the window
+			@param: h
+				The height of the window
+			@param: ts
+				The width/height of each tile on the board
+	*/
+	void resize(int w, int h, int ts);
 
-		// Getters
-		ofColor getDefaultColor();
+	// Getters
+	ofColor getDefaultColor();
 
-		SpriteMode getMode();
-		int getLives();
-		int getScore();
+	SpriteMode getMode();
+	int getLives();
+	int getScore();
 
-		vector<double> getCenterPixelPosition();
-		vector<double> getTopLeftPixelPosition();
-		vector<int> getInitialTilePosition();
-		vector<int> getTilePosition();
+	vector<double> getCenterPixelPosition();
+	vector<double> getTopLeftPixelPosition();
+	vector<int> getInitialTilePosition();
+	vector<int> getTilePosition();
 
-		vector<int> getCurrentVelocity();
+	vector<int> getCurrentVelocity();
 
-		bool hasEatenPowerPellet();
+	bool hasEatenPowerPellet();
 
-		// Setters
-		void setMode(SpriteMode m);
-		void decrementLives();
-		void setInitialTilePosition(vector<int> itp);
-		void setQueuedVelocity(vector<int> v);
+	// Setters
+	void setMode(SpriteMode m);
+	void decrementLives();
+	void setInitialTilePosition(vector<int> itp);
+	void setQueuedVelocity(vector<int> v);
 
-	private:
-		// OpenFramework Variables
-		const int frameRate = 60;
-		const double epsilon = 0.001;
+private:
+	// OpenFramework Variables
+	const int frameRate = 60;
+	const double epsilon = 0.001;
 
-		int screenWidth;
-		int screenHeight;
-		int tileSize;
+	int screenWidth;
+	int screenHeight;
+	int tileSize;
 
-		// Enums
-		SpriteMode mode = CHASE;
+	// Enums
+	SpriteMode mode = CHASE;
 
-		// Flags
-		vector<bool> skipFrames = { false, false, false };
-		bool eatenPowerPellet = false;
+	// Flags
+	vector<bool> skipFrames = { false, false, false };
+	bool eatenPowerPellet = false;
 
-		// Game Variables
-		vector<vector<Tile>> *board;
+	// Game Variables
+	vector<vector<Tile>> *board;
 
-		// Class Variables
-		ofColor defaultColor = ofColor(255, 255, 0);
+	// Class Variables
+	ofColor defaultColor = ofColor(255, 255, 0);
 
-		const int maxLives = 3;
-		int level = 0;
-		int lives = 0;
-		int score = 0;
+	const int maxLives = 3;
+	int level = 0;
+	int lives = 0;
+	int score = 0;
 
-		vector<int> initialTilePosition = { 0, 0 };
-		vector<int> tilePosition = { 0, 0 };
-		vector<double> pixelPosition = { 0, 0 };
+	vector<int> initialTilePosition = { 0, 0 };
+	vector<int> tilePosition = { 0, 0 };
+	vector<double> pixelPosition = { 0, 0 };
 
-		vector<int> currentVelocity = { 0, 0 };
-		vector<int> queuedVelocity = { 0, 0 };
+	vector<int> currentVelocity = { 0, 0 };
+	vector<int> queuedVelocity = { 0, 0 };
 
-		// Separate Each Tile Into X Ticks
-		double maxTick = 1000.0;
-		vector<double> currentTick = { maxTick / 2, maxTick / 2 };
+	// Separate Each Tile Into X Ticks
+	double maxTick = 1000.0;
+	vector<double> currentTick = { maxTick / 2, maxTick / 2 };
 
-		// Tiles Per Second
-		const double defaultTilesPerSecond = 10;
-		double currentTilesPerSecond = 8;
+	// Tiles Per Second
+	const double defaultTilesPerSecond = 10;
+	double currentTilesPerSecond = 8;
 
-		// Ticks Per Frame
-		double speed = 0.0;
+	// Ticks Per Frame
+	double speed = 0.0;
 
 };

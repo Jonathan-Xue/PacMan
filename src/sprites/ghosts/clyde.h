@@ -3,36 +3,36 @@
 #include "sprites/ghost.h"
 
 class Clyde : public Ghost {
-		
-	public:
-		// Default Constructor
-		Clyde();
 
-		// Parameterized Constructor
-		Clyde(vector<vector<Tile>> *b, Pacman *p);
-		
-		// Copy Constructor
-		Clyde(const Clyde& other) = default;
+public:
+	// Default Constructor
+	Clyde();
 
-		// Transfer Constructor
-		Clyde(Clyde&& other) = default;
+	// Parameterized Constructor
+	Clyde(vector<vector<Tile>> *b, Pacman *p);
 
-		// Destructor
-		~Clyde();
+	// Copy Constructor
+	Clyde(const Clyde& other) = default;
 
-		// Copy Assignment Operator
-		Clyde& operator=(const Clyde& other) = default;
+	// Transfer Constructor
+	Clyde(Clyde&& other) = default;
 
-		// Transfer Assignment Operator
-		Clyde& operator=(Clyde&& other) = default;
+	// Destructor
+	~Clyde();
 
-		/*
-			Set The targetTile
-				Within 8 Units Of Pacman: homeTilePosition
-				Otherwise: Pacman's tilePosition
-		*/
-		void calculateTargetTile() override;
+	// Copy Assignment Operator
+	Clyde& operator=(const Clyde& other) = default;
 
-	private:
+	// Transfer Assignment Operator
+	Clyde& operator=(Clyde&& other) = default;
+
+	/*
+		Set The targetTile
+			Within 8 Units Of Pacman: homeTilePosition
+			Otherwise: Pacman's tilePosition
+	*/
+	void calculateTargetTile() override;
+
+private:
 
 };

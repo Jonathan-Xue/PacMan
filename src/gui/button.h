@@ -10,75 +10,75 @@ using std::vector;
 
 class Button {
 
-	public:
-		ofEvent<ofVec2f> clicked;
-		
-		// Default Constructor
-		Button();
+public:
+	ofEvent<ofVec2f> clicked;
 
-		// Transfer Constructor
-		Button(const Button& other) = default;
+	// Default Constructor
+	Button();
 
-		// Copy Constructor
-		Button(Button&& other) = default;
+	// Transfer Constructor
+	Button(const Button& other) = default;
 
-		// Destructor
-		~Button();
+	// Copy Constructor
+	Button(Button&& other) = default;
 
-		// Copy Assignment Operator
-		Button& operator=(const Button& other) = default;
+	// Destructor
+	~Button();
 
-		// Transfer Assignment Operator
-		Button& operator=(Button&& other) = default;
+	// Copy Assignment Operator
+	Button& operator=(const Button& other) = default;
 
-		// Setup
-		void setup(string n, const ofColor &bColor, const std::string& fFile, const ofColor &fColor, int fSize);
+	// Transfer Assignment Operator
+	Button& operator=(Button&& other) = default;
 
-		// Draw
-		void draw();
+	// Setup
+	void setup(string n, const ofColor &bColor, const std::string& fFile, const ofColor &fColor, int fSize);
 
-		// Getters
-		string getName();
-		vector<int> getPosition();
-		vector<int> getSize();
+	// Draw
+	void draw();
 
-		// Setters
-		void setBackgroundColor(const ofColor &bColor);
+	// Getters
+	string getName();
+	vector<int> getPosition();
+	vector<int> getSize();
 
-		void setFont(const std::string& fFile, const ofColor &fColor, int fSize);
-		void setFontType(const std::string& fFile);
-		void setFontColor(const ofColor &fColor);
-		void setFontSize(int fSize);
+	// Setters
+	void setBackgroundColor(const ofColor &bColor);
 
-		void setName(string n);
-		void setPosition(int x, int y);
-		void setSize(int w, int h);
+	void setFont(const std::string& fFile, const ofColor &fColor, int fSize);
+	void setFontType(const std::string& fFile);
+	void setFontColor(const ofColor &fColor);
+	void setFontSize(int fSize);
 
-		void setVisible(bool v);
+	void setName(string n);
+	void setPosition(int x, int y);
+	void setSize(int w, int h);
 
-		// Events
-		void mouseMoved(ofMouseEventArgs & args);
-		void mouseDragged(ofMouseEventArgs & args);
-		void mousePressed(ofMouseEventArgs & args);
-		void mouseReleased(ofMouseEventArgs & args);
-		void mouseScrolled(ofMouseEventArgs & args);
-		void mouseEntered(ofMouseEventArgs & args);
-		void mouseExited(ofMouseEventArgs & args);
+	void setVisible(bool v);
 
-	protected:
-		ofColor backgroundColor = ofColor(255, 255, 255);
+	// Events
+	void mouseMoved(ofMouseEventArgs & args);
+	void mouseDragged(ofMouseEventArgs & args);
+	void mousePressed(ofMouseEventArgs & args);
+	void mouseReleased(ofMouseEventArgs & args);
+	void mouseScrolled(ofMouseEventArgs & args);
+	void mouseEntered(ofMouseEventArgs & args);
+	void mouseExited(ofMouseEventArgs & args);
 
-		ofTrueTypeFont fontType;
-		ofColor fontColor = ofColor(0, 0, 0);
-		string fontFile = "";
-		int fontSize = 0;
+protected:
+	ofColor backgroundColor = ofColor(255, 255, 255);
 
-		string name = "";
-		int xPos = 0;
-		int yPos = 0;
-		int width = 0;
-		int height = 0;
+	ofTrueTypeFont fontType;
+	ofColor fontColor = ofColor(0, 0, 0);
+	string fontFile = "";
+	int fontSize = 0;
 
-		bool visible = false;
+	string name = "";
+	int xPos = 0;
+	int yPos = 0;
+	int width = 0;
+	int height = 0;
+
+	bool visible = false;
 
 };

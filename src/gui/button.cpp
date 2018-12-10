@@ -1,8 +1,8 @@
 #include "button.h"
 
-Button::Button(){}
+Button::Button() {}
 
-Button::~Button(){}
+Button::~Button() {}
 
 void Button::setup(string n, const ofColor &bColor, const std::string& fFile, const ofColor &fColor, int fSize) {
 	ofRegisterMouseEvents(this);
@@ -21,7 +21,7 @@ void Button::draw() {
 	ofDrawRectangle(xPos, yPos, width, height);
 
 	ofSetColor(fontColor);
-	fontType.drawString(name, 
+	fontType.drawString(name,
 		(width - fontType.stringWidth(name)) / 2 + xPos,
 		(height - fontType.stringHeight(name)) / 2 + fontType.stringHeight(name) + yPos);
 }

@@ -28,59 +28,58 @@
 
 */
 
-
 class Timer {
 
-	public:
-		// Default Constructor
-		Timer();
+public:
+	// Default Constructor
+	Timer();
 
-		// Paramaterized Constructor
-		Timer(bool start);
+	// Paramaterized Constructor
+	Timer(bool start);
 
-		// Copy Constructor
-		Timer(const Timer& other) = default;
+	// Copy Constructor
+	Timer(const Timer& other) = default;
 
-		// Transfer Constructor
-		Timer(Timer&& other) = default;
+	// Transfer Constructor
+	Timer(Timer&& other) = default;
 
-		// Destructor
-		~Timer();
+	// Destructor
+	~Timer();
 
-		// Copy Assignment Operator
-		Timer& operator=(const Timer& other) = default;
+	// Copy Assignment Operator
+	Timer& operator=(const Timer& other) = default;
 
-		// Transfer Assignment Operator
-		Timer& operator=(Timer&& other) = default;
+	// Transfer Assignment Operator
+	Timer& operator=(Timer&& other) = default;
 
-		// Start The Timer
-		void start();
+	// Start The Timer
+	void start();
 
-		// Stop The Timer
-		void stop();
+	// Stop The Timer
+	void stop();
 
-		// Reset The Timer
-		void reset();
+	// Reset The Timer
+	void reset();
 
-		/*
-			Return The Elapsed Time
-				@param: duration_t
-					The Duration Type Used To Return The Time Elapsed.duration type used to return the time elapsed.
-					Default: std::chrono::milliseconds.
-				@return: Elapsed Time
-		*/
-		template <class duration_t = std::chrono::milliseconds>
-		typename duration_t::rep count() const;
+	/*
+		Return The Elapsed Time
+			@param: duration_t
+				The Duration Type Used To Return The Time Elapsed.duration type used to return the time elapsed.
+				Default: std::chrono::milliseconds.
+			@return: Elapsed Time
+	*/
+	template <class duration_t = std::chrono::milliseconds>
+	typename duration_t::rep count() const;
 
-		// Getters
-		bool isStarted();
-		bool isPaused();
+	// Getters
+	bool isStarted();
+	bool isPaused();
 
-	private:
-		bool started_ = false;
-		bool paused_ = false;
-		std::chrono::steady_clock::time_point reference_;
-		std::chrono::duration<long double> accumulated_;
+private:
+	bool started_ = false;
+	bool paused_ = false;
+	std::chrono::steady_clock::time_point reference_;
+	std::chrono::duration<long double> accumulated_;
 
 };
 

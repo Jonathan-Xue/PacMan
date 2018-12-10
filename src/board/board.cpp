@@ -58,7 +58,7 @@ void BoardGenerator::parseBoardFromString(string bo, int r, int c) {
 	}
 }
 
-void BoardGenerator::generateStringFromBoard(vector<vector<Tile>> b) {	
+void BoardGenerator::generateStringFromBoard(vector<vector<Tile>> b) {
 	// Parse Ignoring Buffers
 	boardString = "";
 	for (unsigned i = 0; i < b.size(); i++) {

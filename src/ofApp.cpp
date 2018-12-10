@@ -160,7 +160,7 @@ void ofApp::update() {
 		for (Ghost *g : ghostsVector) {
 			// if ((pacman.getTilePosition() == g->getTilePosition() && g->isAlive())) { --> Doesn't Trigger If Pacman & Ghost Switch Tiles Perfectly
 			if (ofRectangle(pacman.getTopLeftPixelPosition()[0], pacman.getTopLeftPixelPosition()[1], tileSize, tileSize).intersects(
-				ofRectangle(g->getTopLeftPixelPosition()[0], g->getTopLeftPixelPosition()[1], tileSize, tileSize))){
+				ofRectangle(g->getTopLeftPixelPosition()[0], g->getTopLeftPixelPosition()[1], tileSize, tileSize))) {
 				if (g->getMode() == FRIGHTENED) {
 					if (g->isEdible()) {
 						g->setEdible(false);
@@ -365,7 +365,7 @@ void ofApp::mouseReleased(int x, int y, int button) {
 				}
 
 				numCols--;
-			}			
+			}
 		}
 
 		// Adjust Display Variables
@@ -555,6 +555,9 @@ void ofApp::drawLandingPage() {
 }
 
 void ofApp::drawLevelEditor() {
+	// redrawBackroundFlag
+	redrawBackgroundFlag = true;
+
 	// GameBoard
 	drawGameBoard();
 
@@ -571,7 +574,7 @@ void ofApp::drawLevelEditor() {
 			tileSize, tileSize);
 
 		ofColor darkenedColor = g->getDefaultColor();
-		darkenedColor.setBrightness(128);
+		darkenedColor.setBrightness(160);
 		ofSetColor(darkenedColor);
 		ofDrawRectangle((g->getHomeTilePosition()[1] * tileSize) + centerOffset[0],
 			(g->getHomeTilePosition()[0] * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1],
@@ -583,8 +586,8 @@ void ofApp::drawLevelEditor() {
 	ofSetColor(175, 175, 175);
 	for (unsigned i = 0; i < currentBoard.size(); i++) {
 		for (unsigned j = 0; j < currentBoard[0].size(); j++) {
-			ofDrawRectangle((j * tileSize) + centerOffset[0], 
-				(i * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1], 
+			ofDrawRectangle((j * tileSize) + centerOffset[0],
+				(i * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1],
 				tileSize, tileSize);
 		}
 	}
@@ -662,7 +665,7 @@ void ofApp::drawMisc() {
 
 	// Draw Upper Buffer
 	ofSetColor(0, 0, 0);
-	ofDrawRectangle(centerOffset[0], centerOffset[1], 
+	ofDrawRectangle(centerOffset[0], centerOffset[1],
 		currentBoard[0].size() * tileSize, tileBuffer[0] * tileSize);
 
 	// Draw Upper Info
@@ -746,7 +749,7 @@ void ofApp::drawPacMan() {
 	pacmanPath.setColor(pacman.getDefaultColor());
 	pacmanPath.setCircleResolution(360);
 	pacmanPath.setFilled(true);
-	pacmanPath.arc(pacman.getCenterPixelPosition()[0] + centerOffset[0], 
+	pacmanPath.arc(pacman.getCenterPixelPosition()[0] + centerOffset[0],
 		pacman.getCenterPixelPosition()[1] + (tileBuffer[0] * tileSize) + centerOffset[1],
 		tileSize / 2, tileSize / 2,
 		angleDisplacement + pacmanDegree, angleDisplacement - pacmanDegree);
@@ -810,7 +813,7 @@ void ofApp::drawHighScores() {
 	int count = 1;
 	for (int score : highScores) {
 		str = std::to_string(score);
-		
+
 		emulogic.drawString(str,
 			(screenWidth - emulogic.stringWidth(str)) / 2,
 			((screenHeight - ((highScores.size() + 1) * emulogic.stringHeight(str))) / 2) + tileSize + (count * tileSize));

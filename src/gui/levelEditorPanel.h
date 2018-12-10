@@ -15,86 +15,86 @@ using std::string;
 using std::vector;
 
 class LevelEditorPanel {
-	
-	public:
-		// Default Constructor
-		LevelEditorPanel();
 
-		// Parametrized Constructor
-		LevelEditorPanel(EditorOptions *ceo);
+public:
+	// Default Constructor
+	LevelEditorPanel();
 
-		// Copy Constructor
-		LevelEditorPanel(const LevelEditorPanel& other) = default;
+	// Parametrized Constructor
+	LevelEditorPanel(EditorOptions *ceo);
 
-		// Transfer Constructor
-		LevelEditorPanel(LevelEditorPanel&& other) = default;
+	// Copy Constructor
+	LevelEditorPanel(const LevelEditorPanel& other) = default;
 
-		// Destructor
-		~LevelEditorPanel();
+	// Transfer Constructor
+	LevelEditorPanel(LevelEditorPanel&& other) = default;
 
-		/*
-			Checks To See If An (x,y) Coordinate Is Inside Bounds
-				@param: x
-				@param: y
-				@return: true/false
-		*/
-		bool withinBounds(int x, int y);
+	// Destructor
+	~LevelEditorPanel();
 
-		// Draw
-		void draw();
+	/*
+		Checks To See If An (x,y) Coordinate Is Inside Bounds
+			@param: x
+			@param: y
+			@return: true/false
+	*/
+	bool withinBounds(int x, int y);
 
-		// Listeners
-		void editorNumRowsSliderListener(int &value);
-		void editorNumColsSliderListener(int &value);
+	// Draw
+	void draw();
 
-		void editorWallBlockButtonListener();
-		void editorRegularBlockButtonListener();
-		void editorStandardPelletBlockButtonListener();
-		void editorPowerPelletBlockButtonListener();
+	// Listeners
+	void editorNumRowsSliderListener(int &value);
+	void editorNumColsSliderListener(int &value);
 
-		void editorPacmanSpriteButtonListener();
+	void editorWallBlockButtonListener();
+	void editorRegularBlockButtonListener();
+	void editorStandardPelletBlockButtonListener();
+	void editorPowerPelletBlockButtonListener();
 
-		void editorBlinkySpriteButtonListener();
-		void editorBlinkyHomeTileButtonListener();
+	void editorPacmanSpriteButtonListener();
 
-		void editorPinkySpriteButtonListener();
-		void editorPinkyHomeTileButtonListener();
+	void editorBlinkySpriteButtonListener();
+	void editorBlinkyHomeTileButtonListener();
 
-		void editorInkySpriteButtonListener();
-		void editorInkyHomeTileButtonListener();
+	void editorPinkySpriteButtonListener();
+	void editorPinkyHomeTileButtonListener();
 
-		void editorClydeSpriteButtonListener();
-		void editorClydeHomeTileButtonListener();
+	void editorInkySpriteButtonListener();
+	void editorInkyHomeTileButtonListener();
 
-		// Getters
-		int getRows();
-		int getCols();
+	void editorClydeSpriteButtonListener();
+	void editorClydeHomeTileButtonListener();
 
-	private:
-		EditorOptions *currentEditorOption;
+	// Getters
+	int getRows();
+	int getCols();
 
-		ofxPanel levelEditorPanel;
+private:
+	EditorOptions *currentEditorOption;
 
-		ofParameter<int> editorNumRowsSlider;
-		ofParameter<int> editorNumColsSlider;
+	ofxPanel levelEditorPanel;
 
-		ofxButton editorWallBlockButton;
-		ofxButton editorRegularBlockButton;
-		ofxButton editorStandardPelletBlockButton;
-		ofxButton editorPowerPelletBlockButton;
+	ofParameter<int> editorNumRowsSlider;
+	ofParameter<int> editorNumColsSlider;
 
-		ofxButton editorPacmanSpriteButton;
+	ofxButton editorWallBlockButton;
+	ofxButton editorRegularBlockButton;
+	ofxButton editorStandardPelletBlockButton;
+	ofxButton editorPowerPelletBlockButton;
 
-		ofxButton editorBlinkySpriteButton;
-		ofxButton editorBlinkyHomeTileButton;
+	ofxButton editorPacmanSpriteButton;
 
-		ofxButton editorPinkySpriteButton;
-		ofxButton editorPinkyHomeTileButton;
+	ofxButton editorBlinkySpriteButton;
+	ofxButton editorBlinkyHomeTileButton;
 
-		ofxButton editorInkySpriteButton;
-		ofxButton editorInkyHomeTileButton;
+	ofxButton editorPinkySpriteButton;
+	ofxButton editorPinkyHomeTileButton;
 
-		ofxButton editorClydeSpriteButton;
-		ofxButton editorClydeHomeTileButton;
+	ofxButton editorInkySpriteButton;
+	ofxButton editorInkyHomeTileButton;
+
+	ofxButton editorClydeSpriteButton;
+	ofxButton editorClydeHomeTileButton;
 
 };

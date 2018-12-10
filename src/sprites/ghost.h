@@ -18,174 +18,174 @@ using std::vector;
 
 class Ghost {
 
-	public:
-		// Default
-		Ghost();
-		
-		// Copy Constructor
-		Ghost(const Ghost& other) = default;
+public:
+	// Default
+	Ghost();
 
-		// Transfer Constructor
-		Ghost(Ghost&& other) = default;
+	// Copy Constructor
+	Ghost(const Ghost& other) = default;
 
-		// Destructor
-		~Ghost();
+	// Transfer Constructor
+	Ghost(Ghost&& other) = default;
 
-		// Copy Assignment Operator
-		Ghost& operator=(const Ghost& other) = default;
+	// Destructor
+	~Ghost();
 
-		// Transfer Assignment Operator
-		Ghost& operator=(Ghost&& other) = default;
+	// Copy Assignment Operator
+	Ghost& operator=(const Ghost& other) = default;
 
-		/*
-			Update
-		*/
-		void update();
+	// Transfer Assignment Operator
+	Ghost& operator=(Ghost&& other) = default;
 
-		/*
-			Set The targetTile
-				Virtual Function: Defined In Subclass/Child
-		*/
-		virtual void calculateTargetTile();
+	/*
+		Update
+	*/
+	void update();
 
-		/*
-			Update Velocity
-		*/
-		void updateVelocity();
+	/*
+		Set The targetTile
+			Virtual Function: Defined In Subclass/Child
+	*/
+	virtual void calculateTargetTile();
 
-		/*
-			Update Velocity
-				@param: velocity
-				@return: Boolean Detailing If The Input Velocity Is Valid
-		*/
-		bool checkValidVelocity(vector<int> velocity);
+	/*
+		Update Velocity
+	*/
+	void updateVelocity();
 
-		/*
-			Calculate Euclidean Distance
-				@param: xi
-				@param: yi
-				@param: x2
-				@param: y2
-				@return: Euclidean Distance Between (x1, y1) and (x2, y2)
-		*/
-		double calculateDistance(double x1, double y1, double x2, double y2);
+	/*
+		Update Velocity
+			@param: velocity
+			@return: Boolean Detailing If The Input Velocity Is Valid
+	*/
+	bool checkValidVelocity(vector<int> velocity);
 
-		/*
-			Move Ghost In The Direction Of CurrentVelocity
-		*/
-		void move();
+	/*
+		Calculate Euclidean Distance
+			@param: xi
+			@param: yi
+			@param: x2
+			@param: y2
+			@return: Euclidean Distance Between (x1, y1) and (x2, y2)
+	*/
+	double calculateDistance(double x1, double y1, double x2, double y2);
 
-		/*
-			Wraparound The Board
-		*/
-		void adjustBounds();
+	/*
+		Move Ghost In The Direction Of CurrentVelocity
+	*/
+	void move();
 
-		// Reset Functions
-		void resetLevel(int l);
-		void resetGame();
+	/*
+		Wraparound The Board
+	*/
+	void adjustBounds();
 
-		/*
-			Adjust The Sprite Size
-				@param: w
-					The width of the window
-				@param: h
-					The height of the window
-				@param: ts
-					The width/height of each tile on the board
-		*/
-		void resize(int w, int h, int ts);
+	// Reset Functions
+	void resetLevel(int l);
+	void resetGame();
 
-		// Getters
-		GhostType getGhostType();
-		ofImage getImage();
-		ofColor getDefaultColor();
+	/*
+		Adjust The Sprite Size
+			@param: w
+				The width of the window
+			@param: h
+				The height of the window
+			@param: ts
+				The width/height of each tile on the board
+	*/
+	void resize(int w, int h, int ts);
 
-		bool isAlive();
-		bool isEdible();
-		SpriteMode getMode();
+	// Getters
+	GhostType getGhostType();
+	ofImage getImage();
+	ofColor getDefaultColor();
 
-		vector<double> getCenterPixelPosition();
-		vector<double> getTopLeftPixelPosition();
-		vector<int> getInitialTilePosition();
-		vector<int> getHomeTilePosition();
-		vector<int> getTilePosition();
+	bool isAlive();
+	bool isEdible();
+	SpriteMode getMode();
 
-		vector<double> getTargetTilePixelPosition();
-		vector<int> getTargetTilePosition();
+	vector<double> getCenterPixelPosition();
+	vector<double> getTopLeftPixelPosition();
+	vector<int> getInitialTilePosition();
+	vector<int> getHomeTilePosition();
+	vector<int> getTilePosition();
 
-		// Setters
-		void flipWhichEdibleImage(bool b);
-		void reverseDirection();
+	vector<double> getTargetTilePixelPosition();
+	vector<int> getTargetTilePosition();
 
-		void setAlive(bool a);
-		void setEdible(bool e);
-		void setMode(SpriteMode m);
+	// Setters
+	void flipWhichEdibleImage(bool b);
+	void reverseDirection();
 
-		void setInitialTilePosition(vector<int> itp);
-		void setHomeTilePosition(vector<int> htp);
+	void setAlive(bool a);
+	void setEdible(bool e);
+	void setMode(SpriteMode m);
 
-	protected:
-		// OpenFramework Variables
-		const int frameRate = 60;
-		const double epsilon = 0.001;
+	void setInitialTilePosition(vector<int> itp);
+	void setHomeTilePosition(vector<int> htp);
 
-		int screenWidth;
-		int screenHeight;
-		int tileSize;
+protected:
+	// OpenFramework Variables
+	const int frameRate = 60;
+	const double epsilon = 0.001;
 
-		// Image Variables
-		ofImage upAliveImage;
-		ofImage leftAliveImage;
-		ofImage downAliveImage;
-		ofImage rightAliveImage;
+	int screenWidth;
+	int screenHeight;
+	int tileSize;
 
-		ofImage upDeadImage;
-		ofImage leftDeadImage;
-		ofImage downDeadImage;
-		ofImage rightDeadImage;
+	// Image Variables
+	ofImage upAliveImage;
+	ofImage leftAliveImage;
+	ofImage downAliveImage;
+	ofImage rightAliveImage;
 
-		bool whichEdibleImage = true;
-		ofImage edibleImageOne;
-		ofImage edibleImageTwo;
+	ofImage upDeadImage;
+	ofImage leftDeadImage;
+	ofImage downDeadImage;
+	ofImage rightDeadImage;
 
-		// Enums
-		GhostType ghostType = UNDEFINED;
-		SpriteMode mode = SCATTER;
+	bool whichEdibleImage = true;
+	ofImage edibleImageOne;
+	ofImage edibleImageTwo;
 
-		// Flags
-		bool queuedReverseDirectionFlag = false;
-		bool reverseDirectionFlag = false;
+	// Enums
+	GhostType ghostType = UNDEFINED;
+	SpriteMode mode = SCATTER;
 
-		// Game Variables
-		vector<vector<Tile>> *board;
-		Pacman *pacman;
+	// Flags
+	bool queuedReverseDirectionFlag = false;
+	bool reverseDirectionFlag = false;
 
-		// Class Variables
-		ofColor defaultColor = ofColor(255, 255, 255);
+	// Game Variables
+	vector<vector<Tile>> *board;
+	Pacman *pacman;
 
-		bool alive = true;
-		bool edible = false;
-		int level = 0;
+	// Class Variables
+	ofColor defaultColor = ofColor(255, 255, 255);
 
-		vector<int> homeTilePosition = { 0, 0 };
-		vector<int> initialTilePosition = { 0, 0 };
-		vector<int> tilePosition = { 0, 0 };
-		vector<double> pixelPosition = { 0, 0 };
+	bool alive = true;
+	bool edible = false;
+	int level = 0;
 
-		vector<int> targetTilePosition = { 0, 0 };
+	vector<int> homeTilePosition = { 0, 0 };
+	vector<int> initialTilePosition = { 0, 0 };
+	vector<int> tilePosition = { 0, 0 };
+	vector<double> pixelPosition = { 0, 0 };
 
-		vector<int> currentVelocity = { 0, 0 };
-		vector<vector<int>> queuedVelocity{ {0, -1}, {-1, 0}, {0, 1}, {1, 0} };
+	vector<int> targetTilePosition = { 0, 0 };
 
-		// Separate Each Tile Into X Ticks
-		double maxTick = 1000.0;
-		vector<double> currentTick = { maxTick / 2, maxTick / 2 };
+	vector<int> currentVelocity = { 0, 0 };
+	vector<vector<int>> queuedVelocity{ {0, -1}, {-1, 0}, {0, 1}, {1, 0} };
 
-		// Tiles Per Second
-		const double defaultTilesPerSecond = 7.5;
-		double currentTilesPerSecond = 7.5;
+	// Separate Each Tile Into X Ticks
+	double maxTick = 1000.0;
+	vector<double> currentTick = { maxTick / 2, maxTick / 2 };
 
-		// Ticks Per Frame
-		double speed = 0.0;
+	// Tiles Per Second
+	const double defaultTilesPerSecond = 7.5;
+	double currentTilesPerSecond = 7.5;
+
+	// Ticks Per Frame
+	double speed = 0.0;
 
 };
