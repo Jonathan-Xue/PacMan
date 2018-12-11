@@ -85,7 +85,49 @@ void ofApp::update() {
 	}
 
 	// Game Logic
-	if (currentState == IN_PROGRESS) {
+	if (currentState == LEVEL_EDITOR) {
+		if (currentEditorOption == ROW_ADJUSTMENT || currentEditorOption == COL_ADJUSTMENT) {
+			bool adjustmentFlag = false;
+
+			// Row Adjustments
+			while ((unsigned)levelEditorPanel.getRows() != currentBoard.size()) {
+				if ((unsigned)levelEditorPanel.getRows() > currentBoard.size()) {
+					vector<Tile> temp;
+					for (unsigned i = 0; i < currentBoard[0].size(); i++) {
+						temp.push_back(Tile(0, false, false));
+					}
+					currentBoard.insert(currentBoard.begin() + currentBoard.size(), temp);
+				}
+				else if ((unsigned)levelEditorPanel.getRows() < currentBoard.size()) {
+					currentBoard.erase(currentBoard.begin() + (currentBoard.size() - 1));
+				}
+
+				adjustmentFlag = true;
+			}
+
+			// Column Adjustments
+			while ((unsigned)levelEditorPanel.getCols() != currentBoard[0].size()) {
+				if ((unsigned)levelEditorPanel.getCols() > currentBoard[0].size()) {
+					for (unsigned i = 0; i < currentBoard.size(); i++) {
+						currentBoard[i].push_back(Tile(0, false, false));
+					}
+				}
+				else if ((unsigned)levelEditorPanel.getCols() < currentBoard[0].size()) {
+					for (unsigned i = 0; i < currentBoard.size(); i++) {
+						currentBoard[i].pop_back();
+					}
+				}
+
+				adjustmentFlag = true;
+			}
+
+			// Adjust Display Variables
+			if (adjustmentFlag) {
+				windowResized(screenWidth, screenHeight);
+			}
+		}
+	}
+	else if (currentState == IN_PROGRESS) {
 		// SpriteMode
 		if (frightenedTimer.count<std::chrono::seconds>() >= frightenedTimeMarker) {
 			// Reset frightenedTimer
