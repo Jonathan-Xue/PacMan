@@ -82,7 +82,7 @@ private:
 	bool incomingMessage = false;
 
 	// OfxGui
-	EditorOptions currentEditorOption = REGULAR_BLOCK;
+	EditorOptions currentEditorOption = WALL_BLOCK;
 	LevelEditorPanel levelEditorPanel = LevelEditorPanel(&currentEditorOption);
 
 	// Buttons

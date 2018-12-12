@@ -5,6 +5,14 @@ Ghost::Ghost() {}
 Ghost::~Ghost() {}
 
 void Ghost::update() {
+	// Check To See If Ghost Is Now Alive
+	if (!alive && tilePosition == targetTilePosition) {
+		alive = true;
+		edible = false;
+		currentTilesPerSecond = defaultTilesPerSecond + level / 2;
+		speed = maxTick * currentTilesPerSecond / frameRate;
+	}
+
 	// Calculate targetTile
 	if (alive) {
 		calculateTargetTile();
@@ -21,14 +29,6 @@ void Ghost::update() {
 
 	// Adjust tilePosition To Stay In Bounds
 	adjustBounds();
-
-	// Check To See If Ghost Should Be Alive
-	if (!alive && tilePosition == targetTilePosition) {
-		alive = true;
-		edible = false;
-		currentTilesPerSecond = defaultTilesPerSecond;
-		speed = maxTick * currentTilesPerSecond / frameRate;
-	}
 }
 
 void Ghost::calculateTargetTile() {}
@@ -224,7 +224,7 @@ void Ghost::resetLevel(int l) {
 
 	mode = SCATTER;
 
-	currentTilesPerSecond = defaultTilesPerSecond;
+	currentTilesPerSecond = defaultTilesPerSecond + level / 2;
 	speed = maxTick * currentTilesPerSecond / frameRate;
 
 	tilePosition = initialTilePosition;
@@ -390,7 +390,7 @@ void Ghost::setEdible(bool e) {
 	}
 	else {
 		if (alive) {
-			currentTilesPerSecond = defaultTilesPerSecond;
+			currentTilesPerSecond = defaultTilesPerSecond + level / 2;
 			speed = maxTick * currentTilesPerSecond / frameRate;
 		}
 	}

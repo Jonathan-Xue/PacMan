@@ -48,7 +48,7 @@ public:
 	void editorNumColsSliderListener(int &value);
 
 	void editorWallBlockButtonListener();
-	void editorRegularBlockButtonListener();
+	void editorPathBlockButtonListener();
 	void editorStandardPelletBlockButtonListener();
 	void editorPowerPelletBlockButtonListener();
 
@@ -79,7 +79,7 @@ private:
 	ofParameter<int> editorNumColsSlider;
 
 	ofxButton editorWallBlockButton;
-	ofxButton editorRegularBlockButton;
+	ofxButton editorPathBlockButton;
 	ofxButton editorStandardPelletBlockButton;
 	ofxButton editorPowerPelletBlockButton;
 

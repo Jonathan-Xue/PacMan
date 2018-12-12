@@ -146,8 +146,8 @@ private:
 	vector<double> currentTick = { maxTick / 2, maxTick / 2 };
 
 	// Tiles Per Second
-	const double defaultTilesPerSecond = 10;
-	double currentTilesPerSecond = 8;
+	const double defaultTilesPerSecond = 8;
+	double currentTilesPerSecond = defaultTilesPerSecond;
 
 	// Ticks Per Frame
 	double speed = 0.0;

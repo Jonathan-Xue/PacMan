@@ -157,6 +157,9 @@ void Pacman::resetLevel(int l) {
 
 	mode = SCATTER;
 
+	currentTilesPerSecond = defaultTilesPerSecond + level / 2;
+	speed = maxTick * currentTilesPerSecond / frameRate;
+
 	tilePosition = initialTilePosition;
 	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };
 
@@ -170,6 +173,9 @@ void Pacman::resetGame() {
 	score = 0;
 
 	mode = SCATTER;
+
+	currentTilesPerSecond = defaultTilesPerSecond;
+	speed = maxTick * currentTilesPerSecond / frameRate;
 
 	tilePosition = initialTilePosition;
 	currentTick = vector<double>{ maxTick / 2, maxTick / 2 };

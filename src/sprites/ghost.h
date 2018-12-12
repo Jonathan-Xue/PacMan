@@ -124,6 +124,8 @@ public:
 	void setInitialTilePosition(vector<int> itp);
 	void setHomeTilePosition(vector<int> htp);
 
+	void setDefaultTilesPerSecond(int dtps);
+
 protected:
 	// OpenFramework Variables
 	const int frameRate = 60;
@@ -183,7 +185,7 @@ protected:
 
 	// Tiles Per Second
 	const double defaultTilesPerSecond = 7.5;
-	double currentTilesPerSecond = 7.5;
+	double currentTilesPerSecond = defaultTilesPerSecond;
 
 	// Ticks Per Frame
 	double speed = 0.0;

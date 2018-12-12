@@ -265,8 +265,7 @@ void ofApp::update() {
 void ofApp::draw() {
 	// Redraw Background
 	if (redrawBackgroundFlag) {
-		ofSetColor(ofColor(0, 0, 0));
-		ofDrawRectangle(0, 0, screenWidth, screenHeight);
+		ofBackground(ofColor(0, 0, 0));
 		redrawBackgroundFlag = false;
 	}
 
@@ -282,6 +281,7 @@ void ofApp::draw() {
 		break;
 	case LEVEL_EDITOR:
 		drawLevelEditor();
+		redrawBackgroundFlag = true;
 		break;
 	case IN_PROGRESS:
 		// Fallthrough Intended
@@ -320,7 +320,7 @@ void ofApp::mousePressed(int x, int y, int button) {
 				case WALL_BLOCK:
 					currentBoard[tilePosition[0]][tilePosition[1]].setParams(0, false, false);
 					break;
-				case REGULAR_BLOCK:
+				case PATH_BLOCK:
 					currentBoard[tilePosition[0]][tilePosition[1]].setParams(1, false, false);
 					break;
 				case STANDARD_PELLET_BLOCK:
@@ -597,9 +597,6 @@ void ofApp::drawLandingPage() {
 }
 
 void ofApp::drawLevelEditor() {
-	// redrawBackroundFlag
-	redrawBackgroundFlag = true;
-
 	// GameBoard
 	drawGameBoard();
 
@@ -707,24 +704,23 @@ void ofApp::drawMisc() {
 
 	// Draw Upper Buffer
 	ofSetColor(0, 0, 0);
-	ofDrawRectangle(centerOffset[0], centerOffset[1],
-		currentBoard[0].size() * tileSize, tileBuffer[0] * tileSize);
+	ofDrawRectangle(centerOffset[0], centerOffset[1], currentBoard[0].size() * tileSize, tileBuffer[0] * tileSize);
 
 	// Draw Upper Info
 	ofSetColor(255, 255, 255);
 	emulogic.drawString("HIGH SCORE",
-		(screenWidth - emulogic.stringWidth("HIGH SCORE")) / 2 + centerOffset[0],
-		tileSize + centerOffset[1]);
+		((currentBoard[0].size() * tileSize) - emulogic.stringWidth("HIGH SCORE")) / 2 + centerOffset[0], // Centered With Respect To The Board
+		tileSize + centerOffset[1]); // Vertical tileBuffer Tile Zero
 	emulogic.drawString(highScore,
-		(screenWidth - emulogic.stringWidth(highScore)) / 2 + centerOffset[0],
-		(tileSize * 2) + centerOffset[1]);
+		((currentBoard[0].size() * tileSize) - emulogic.stringWidth(highScore)) / 2 + centerOffset[0], // Centered With Respect To The Board
+		(tileSize * 2) + centerOffset[1]); // Vertical tileBuffer Tile One
 
 	emulogic.drawString("1UP",
-		((screenWidth - emulogic.stringWidth("HIGH SCORE")) / 2 - emulogic.stringWidth("1UP")) / 2 + centerOffset[0],
-		tileSize + centerOffset[1]);
+		((((currentBoard[0].size() * tileSize) - emulogic.stringWidth("HIGH SCORE")) / 2) - emulogic.stringWidth("1UP")) / 2 + centerOffset[0], // Center Of: Left Board Edge & Left Edge Of 'HIGH SCORE'
+		tileSize + centerOffset[1]); // Vertical tlleBuffer Tile Zero
 	emulogic.drawString(currentScore,
-		((screenWidth - emulogic.stringWidth("HIGH SCORE")) / 2 - emulogic.stringWidth("1UP")) / 2 + emulogic.stringWidth("1UP") - emulogic.stringWidth(currentScore) + centerOffset[0],
-		(tileSize * 2) + centerOffset[1]);
+		((((currentBoard[0].size() * tileSize) - emulogic.stringWidth("HIGH SCORE")) / 2) - emulogic.stringWidth("1UP")) / 2 + emulogic.stringWidth("1UP") - emulogic.stringWidth(currentScore) + centerOffset[0], // Right Edge Of Score Lines Up With Right Edge Of '1UP'
+		(tileSize * 2) + centerOffset[1]); // Vertical tileBuffer Tile One
 
 	// Draw Lower Buffer
 	ofSetColor(0, 0, 0);
@@ -846,7 +842,6 @@ void ofApp::drawHighScores() {
 
 	// Draw "HIGH SCORES"
 	string str = "HIGH SCORES";
-
 	emulogic.drawString(str,
 		(screenWidth - emulogic.stringWidth(str)) / 2,
 		((screenHeight - ((highScores.size() + 1) * emulogic.stringHeight(str))) / 2) + tileSize);

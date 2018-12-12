@@ -12,7 +12,7 @@ LevelEditorPanel::LevelEditorPanel(EditorOptions *ceo) {
 	levelEditorPanel.add(editorNumColsSlider.set("Columns", 28, 25, 50));
 
 	levelEditorPanel.add(editorWallBlockButton.setup("Wall Block"));
-	levelEditorPanel.add(editorRegularBlockButton.setup("Regular Block"));
+	levelEditorPanel.add(editorPathBlockButton.setup("Path Block"));
 	levelEditorPanel.add(editorStandardPelletBlockButton.setup("Standard Pellet Block"));
 	levelEditorPanel.add(editorPowerPelletBlockButton.setup("Power Pellet Block"));
 
@@ -35,7 +35,7 @@ LevelEditorPanel::LevelEditorPanel(EditorOptions *ceo) {
 	editorNumColsSlider.addListener(this, &LevelEditorPanel::editorNumColsSliderListener);
 
 	editorWallBlockButton.addListener(this, &LevelEditorPanel::editorWallBlockButtonListener);
-	editorRegularBlockButton.addListener(this, &LevelEditorPanel::editorRegularBlockButtonListener);
+	editorPathBlockButton.addListener(this, &LevelEditorPanel::editorPathBlockButtonListener);
 	editorStandardPelletBlockButton.addListener(this, &LevelEditorPanel::editorStandardPelletBlockButtonListener);
 	editorPowerPelletBlockButton.addListener(this, &LevelEditorPanel::editorPowerPelletBlockButtonListener);
 
@@ -79,8 +79,8 @@ void LevelEditorPanel::editorWallBlockButtonListener() {
 	(*currentEditorOption) = WALL_BLOCK;
 }
 
-void LevelEditorPanel::editorRegularBlockButtonListener() {
-	(*currentEditorOption) = REGULAR_BLOCK;
+void LevelEditorPanel::editorPathBlockButtonListener() {
+	(*currentEditorOption) = PATH_BLOCK;
 }
 
 void LevelEditorPanel::editorStandardPelletBlockButtonListener() {
