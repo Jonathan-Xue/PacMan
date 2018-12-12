@@ -302,12 +302,12 @@ void ofApp::draw() {
 	}
 }
 
-void ofApp::mousePressed(int x, int y, int button) {
+void ofApp::mousePressed(ofMouseEventArgs &args) {
 	// Level Editor
 	if (currentState == LEVEL_EDITOR) {
 		// Ignore Panel
-		if (!levelEditorPanel.withinBounds(x, y)) {
-			vector<int> tilePosition = vector<int>{ (y - centerOffset[1]) / tileSize - tileBuffer[0], (x - centerOffset[0]) / tileSize - tileBuffer[1] };
+		if (!levelEditorPanel.withinBounds(args.x, args.y)) {
+			vector<int> tilePosition = vector<int>{ ((int)args.y - centerOffset[1]) / tileSize - tileBuffer[0], ((int)args.x - centerOffset[0]) / tileSize - tileBuffer[1] };
 			// Prevent Elements From Being Placed Outside Of Board (Will Throw OutOfBounds Error)
 			if ((tilePosition[0] >= 0 && tilePosition[0] < (int)currentBoard.size() &&
 				tilePosition[1] >= 0 && tilePosition[1] < (int)currentBoard[0].size())) {
@@ -364,53 +364,8 @@ void ofApp::mousePressed(int x, int y, int button) {
 	}
 }
 
-void ofApp::mouseDragged(int x, int y, int button) {
-	mousePressed(x, y, button);
-}
-
-void ofApp::mouseReleased(int x, int y, int button) {
-	if (currentEditorOption == ROW_ADJUSTMENT || currentEditorOption == COL_ADJUSTMENT) {
-		// Row Adjustments
-		int numRows = currentBoard.size();
-		while (levelEditorPanel.getRows() != numRows) {
-			if (levelEditorPanel.getRows() > numRows) {
-				vector<Tile> temp;
-				for (unsigned i = 0; i < currentBoard[0].size(); i++) {
-					temp.push_back(Tile(0, false, false));
-				}
-				currentBoard.insert(currentBoard.begin() + currentBoard.size(), temp);
-
-				numRows++;
-			}
-			else if (levelEditorPanel.getRows() < numRows) {
-				currentBoard.erase(currentBoard.begin() + (currentBoard.size() - 1));
-
-				numRows--;
-			}
-		}
-
-		// Column Adjustments
-		int numCols = currentBoard[0].size();
-		while (levelEditorPanel.getCols() != numCols) {
-			if (levelEditorPanel.getCols() > numCols) {
-				for (unsigned i = 0; i < currentBoard.size(); i++) {
-					currentBoard[i].push_back(Tile(0, false, false));
-				}
-
-				numCols++;
-			}
-			else if (levelEditorPanel.getCols() < numCols) {
-				for (unsigned i = 0; i < currentBoard.size(); i++) {
-					currentBoard[i].pop_back();
-				}
-
-				numCols--;
-			}
-		}
-
-		// Adjust Display Variables
-		windowResized(screenWidth, screenHeight);
-	}
+void ofApp::mouseDragged(ofMouseEventArgs &args) {
+	mousePressed(args);
 }
 
 void ofApp::keyPressed(int key) {
@@ -547,7 +502,7 @@ void ofApp::continueButtonListener(ofVec2f &e) {
 
 		// Verify Board Validity
 		if (pacmanOutOfBounds || ghostOutOfBounds) {
-			ofSystemAlertDialog("The current board is invalid. All sprites need to be inside board bounds.");
+			ofSystemAlertDialog("Error! The Current Board Is Invalid. All Sprites Must Be Within Board Bounds");
 		}
 		else {
 			// Set Board

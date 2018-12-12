@@ -57,13 +57,13 @@ public:
 	void setVisible(bool v);
 
 	// Events
-	void mouseMoved(ofMouseEventArgs & args);
-	void mouseDragged(ofMouseEventArgs & args);
-	void mousePressed(ofMouseEventArgs & args);
-	void mouseReleased(ofMouseEventArgs & args);
-	void mouseScrolled(ofMouseEventArgs & args);
-	void mouseEntered(ofMouseEventArgs & args);
-	void mouseExited(ofMouseEventArgs & args);
+	void mouseMoved(ofMouseEventArgs &args);
+	void mouseDragged(ofMouseEventArgs &args);
+	void mousePressed(ofMouseEventArgs &args);
+	void mouseReleased(ofMouseEventArgs &args);
+	void mouseScrolled(ofMouseEventArgs &args);
+	void mouseEntered(ofMouseEventArgs &args);
+	void mouseExited(ofMouseEventArgs &args);
 
 protected:
 	ofColor backgroundColor = ofColor(255, 255, 255);

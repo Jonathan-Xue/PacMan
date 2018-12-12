@@ -84,11 +84,11 @@ void Button::setVisible(bool v) {
 	visible = v;
 }
 
-void Button::mouseMoved(ofMouseEventArgs & args) {}
+void Button::mouseMoved(ofMouseEventArgs &args) {}
 
-void Button::mouseDragged(ofMouseEventArgs & args) {}
+void Button::mouseDragged(ofMouseEventArgs &args) {}
 
-void Button::mousePressed(ofMouseEventArgs & args) {
+void Button::mousePressed(ofMouseEventArgs &args) {
 	if (visible) {
 		if (args.x > xPos && args.x < xPos + width && args.y > yPos && args.y < yPos + height) {
 			ofVec2f mousePos = ofVec2f(args.x, args.y);
@@ -97,10 +97,10 @@ void Button::mousePressed(ofMouseEventArgs & args) {
 	}
 }
 
-void Button::mouseReleased(ofMouseEventArgs & args) {}
+void Button::mouseReleased(ofMouseEventArgs &args) {}
 
-void Button::mouseScrolled(ofMouseEventArgs & args) {}
+void Button::mouseScrolled(ofMouseEventArgs &args) {}
 
-void Button::mouseEntered(ofMouseEventArgs & args) {}
+void Button::mouseEntered(ofMouseEventArgs &args) {}
 
-void Button::mouseExited(ofMouseEventArgs & args) {}
+void Button::mouseExited(ofMouseEventArgs &args) {}

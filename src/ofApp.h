@@ -49,9 +49,8 @@ public:
 		P->toggle pause
 		WASD->directional control
 	*/
-	void mousePressed(int x, int y, int button);
-	void mouseDragged(int x, int y, int button);
-	void mouseReleased(int x, int y, int button);
+	void mousePressed(ofMouseEventArgs &args);
+	void mouseDragged(ofMouseEventArgs &args);
 	void keyPressed(int key);
 	void windowResized(int w, int h);
 
