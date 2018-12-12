@@ -3,7 +3,7 @@
 ## How To Install
 ### OpenFrameworks Project
 1. Download OpenFrameworks [Link](https://openframeworks.cc/download/)
-2. Use the project generator to create a new OpenFrameworks project
+2. Use the project generator to create a new OpenFrameworks project with the addons: ofxGui, ofxSerial
 3. Copy the contents of *bin* and *src* into the corresponding directories in the new project
 
 ### Arduino Controller
