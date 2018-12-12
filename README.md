@@ -8,7 +8,7 @@
 
 ### Arduino Controller
 1. Download the Arduino IDE [Link](https://www.arduino.cc/en/Main/Software)
-2. Setup the Arduino & components as detailed in the wiring schematic (see Wiki)
+2. Setup the Arduino & components as detailed in the wiring schematic (see [Wiki](https://github.com/uiuc-fa18-cs126/finalproject-Jonathan-Xue/wiki))
 3. Load the corresponding *.ino* file onto the Arduino
 
 ## How To Connect An Arduino Controller
@@ -82,4 +82,4 @@
 * Edible Ghost: 200->400->800->1600 Points
 
 ## Further Documentation (Developers)
-* See Wiki
+* See [Wiki](https://github.com/uiuc-fa18-cs126/finalproject-Jonathan-Xue/wiki)
