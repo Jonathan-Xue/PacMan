@@ -8,7 +8,6 @@ void Ghost::update() {
 	// Check To See If Ghost Is Now Alive
 	if (!alive && tilePosition == targetTilePosition) {
 		alive = true;
-		edible = false;
 		currentTilesPerSecond = defaultTilesPerSecond + level / 2;
 		speed = maxTick * currentTilesPerSecond / frameRate;
 	}

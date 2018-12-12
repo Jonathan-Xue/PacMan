@@ -202,12 +202,10 @@ void ofApp::update() {
 		for (Ghost *g : ghostsVector) {
 			// if ((pacman.getTilePosition() == g->getTilePosition() && g->isAlive())) { --> Doesn't Trigger If Pacman & Ghost Switch Tiles Perfectly
 			if (ofRectangle(pacman.getTopLeftPixelPosition()[0], pacman.getTopLeftPixelPosition()[1], tileSize, tileSize).intersects(
-				ofRectangle(g->getTopLeftPixelPosition()[0], g->getTopLeftPixelPosition()[1], tileSize, tileSize))) {
-				if (g->getMode() == FRIGHTENED) {
-					if (g->isEdible()) {
-						g->setEdible(false);
-						g->setAlive(false);
-					}
+				ofRectangle(g->getTopLeftPixelPosition()[0], g->getTopLeftPixelPosition()[1], tileSize, tileSize)) && g->isAlive()) {
+				if (g->getMode() == FRIGHTENED && g->isEdible()) {
+					g->setEdible(false);
+					g->setAlive(false);
 				}
 				else {
 					// Decrement Lives
@@ -562,13 +560,15 @@ void ofApp::continueButtonListener(ofVec2f &e) {
 	else if (currentState == GAME_OVER) {
 		currentState = HIGH_SCORE;
 	}
+	else if (currentState == HIGH_SCORE) {
+		currentState = START;
+	}
 }
 
 // Private Methods
 void ofApp::drawLandingPage() {
 	// Reset Canvas
-	ofSetColor(0, 0, 0);
-	ofDrawRectangle(0, 0, screenWidth, screenHeight);
+	ofBackground(ofColor(0, 0, 0));
 
 	// Centering Variables
 	vector<int> elementBuffer = { screenWidth / 125, (int)crackman.stringHeight("PAC-MAN") / 5 };
@@ -835,8 +835,7 @@ void ofApp::drawGameOver() {
 }
 
 void ofApp::drawHighScores() {
-	ofSetColor(0, 0, 0);
-	ofDrawRectangle(0, 0, screenWidth, screenHeight);
+	ofBackground(ofColor(0, 0, 0));
 
 	ofSetColor(255, 255, 255);
 
@@ -856,6 +855,10 @@ void ofApp::drawHighScores() {
 			((screenHeight - ((highScores.size() + 1) * emulogic.stringHeight(str))) / 2) + tileSize + (count * tileSize));
 		count++;
 	}
+
+	// Buttons
+	continueButton.setVisible(true);
+	continueButton.draw();
 }
 
 void ofApp::resetSprites() {
