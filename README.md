@@ -1,10 +1,20 @@
 # PacMan
 # Pacman
 ## How To Install
+### OpenFrameworks Project
+1. Download OpenFrameworks [Link](https://openframeworks.cc/download/)
+2. Use the project generator to create a new OpenFrameworks project
+3. Copy the contents of *bin* and *src* into the corresponding directories in the new project
 
-## How To Connect An Arduino Controller (See Wiki For Wiring Schematic)
-1. Connect the computer via Bluetooth the the HC-05 module; the password is either '0000' or '1234'
-2. Launch the game; the RGBLED should turn green upon a successful connection
+### Arduino Controller
+1. Download the Arduino IDE [Link](https://www.arduino.cc/en/Main/Software)
+2. Setup the Arduino & components as detailed in the wiring schematic (see Wiki)
+3. Load the corresponding *.ino* file onto the Arduino
+
+## How To Connect An Arduino Controller
+1. Provide power to the Arduino; the RGBLED should turn on to indicate the controller is ready
+2. Connect the computer via Bluetooth the the HC-05 module; the password is either '0000' or '1234'
+3. Launch the game; the RGBLED should turn to green upon a successful connection
 
 ## Game Rules
 ### General
@@ -22,6 +32,11 @@
     * Occurs when Pacman eats a power pellet
     * Lasts for eight seconds; Ghosts start flashing when there are two seconds left
     * Ghosts travel at 87.5% of max speed
+* Speed
+    * Pacman Default Speed: 8.0 Tiles Per Second
+        * Increases By 0.5 Tiles Per Second For Each Level Passed
+    * Ghost Default Speed: 7.5 Tiles Per Second
+        * Increases By 0.5 Tiles Per Second For Each Level Passed
 
 ### Pacman
 * Three lives

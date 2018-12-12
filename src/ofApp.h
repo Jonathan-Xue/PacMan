@@ -120,7 +120,7 @@ private:
 
 	// drawPacman, drawGhosts, drawBoard, drawMisc, drawLevelEditor Variables
 	vector<int> centerOffset{ 0, 0 };
-	vector<int> tileBuffer = vector<int>{ 3, 0, 2, 0 };
+	vector<int> tileBuffer = vector<int>{ 3, 1, 2, 1 };
 
 	// drawPacMan Variables
 	int angleDisplacement = 0;

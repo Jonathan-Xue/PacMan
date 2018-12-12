@@ -44,7 +44,7 @@ Build a standard game of PacMan using OpenFrameworks. Input will be controlled e
     4. Scatter for 5 seconds, then switch to Chase mode permanently.
 * Frightened Phase
     * Edible by Pacman
-    * Upon death, travel back to the ghost house
+    * Upon death, travel back to the respective corner
 
 ### Optional Enhancements
 * Highscore File
