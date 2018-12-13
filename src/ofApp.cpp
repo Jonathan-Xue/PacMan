@@ -436,10 +436,10 @@ void ofApp::windowResized(int w, int h) {
 	singlePlayerButton.setSize(crackman.stringWidth("PAC-MAN") / 3, crackman.stringHeight("PAC-MAN") / 1.5);
 	singlePlayerButton.setFontSize(singlePlayerButton.getSize()[1] / 4);
 	singlePlayerButton.setRadius(
-		multiPlayerButton.getSize()[1] / 2, // Top Left
+		singlePlayerButton.getSize()[1] / 2, // Top Left
 		0, // Top Right
 		0, // Bottom Right
-		multiPlayerButton.getSize()[1] / 2 // Bottom Left
+		singlePlayerButton.getSize()[1] / 2 // Bottom Left
 	);
 
 	multiPlayerButton.setPosition(0, 0);
@@ -452,8 +452,7 @@ void ofApp::windowResized(int w, int h) {
 		0 // Bottom Left
 	);
 
-	continueButton.setPosition((tileBuffer[1] * tileSize) + centerOffset[0],
-		(currentBoard.size() * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1]);
+	continueButton.setPosition(0, 0);
 	continueButton.setSize(currentBoard[0].size() * tileSize, tileBuffer[2] * tileSize);
 	continueButton.setFontSize(tileSize);
 
@@ -486,7 +485,7 @@ void ofApp::singlePlayerButtonListener(ofVec2f &e) {
 }
 
 void ofApp::multiPlayerButtonListener(ofVec2f &e) {
-	singlePlayerButtonListener(e);
+	ofSystemAlertDialog("Feature Under Development. Please Check Back At A Later Time");
 }
 
 void ofApp::continueButtonListener(ofVec2f &e) {
@@ -591,6 +590,8 @@ void ofApp::drawLevelEditor() {
 	ofFill();
 
 	// Buttons
+	continueButton.setPosition((tileBuffer[1] * tileSize) + centerOffset[0],
+		(currentBoard.size() * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1]);
 	continueButton.setVisible(true);
 	continueButton.draw();
 
@@ -809,6 +810,8 @@ void ofApp::drawGhosts() {
 
 void ofApp::drawGameOver() {
 	// Buttons
+	continueButton.setPosition((tileBuffer[1] * tileSize) + centerOffset[0],
+		(currentBoard.size() * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1]);
 	continueButton.setVisible(true);
 	continueButton.draw();
 }
@@ -836,6 +839,8 @@ void ofApp::drawHighScores() {
 	}
 
 	// Buttons
+	continueButton.setPosition((tileBuffer[1] * tileSize) + centerOffset[0],
+		(currentBoard.size() * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1]);
 	continueButton.setVisible(true);
 	continueButton.draw();
 }
