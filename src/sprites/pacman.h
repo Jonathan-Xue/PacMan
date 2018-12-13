@@ -104,6 +104,7 @@ public:
 	// Setters
 	void setMode(SpriteMode m);
 	void decrementLives();
+	void incrementScore(int s);
 	void setInitialTilePosition(vector<int> itp);
 	void setQueuedVelocity(vector<int> v);
 

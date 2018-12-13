@@ -117,6 +117,7 @@ private:
 	vector<Ghost*> ghostsVector = vector<Ghost*>{ &blinky, &pinky, &inky, &clyde };
 
 	int level = 0;
+	const int pointsPerGhost = 500;
 
 	// drawPacman, drawGhosts, drawBoard, drawMisc, drawLevelEditor Variables
 	vector<int> centerOffset{ 0, 0 };

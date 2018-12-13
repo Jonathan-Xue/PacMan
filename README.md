@@ -79,7 +79,7 @@
 ### Point System
 * Regular Pellet: 10 Points
 * Power Pellet: 50 Points
-* Edible Ghost: 200->400->800->1600 Points
+* Edible Ghost: 500 Points
 
 ## Further Documentation (Developers)
 * See [Wiki](https://github.com/uiuc-fa18-cs126/finalproject-Jonathan-Xue/wiki)

@@ -234,6 +234,10 @@ void Pacman::decrementLives() {
 	lives--;
 }
 
+void Pacman::incrementScore(int s) {
+	score += s;
+}
+
 void Pacman::setInitialTilePosition(vector<int> itp) {
 	initialTilePosition = itp;
 	tilePosition = itp;

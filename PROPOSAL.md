@@ -15,7 +15,7 @@ Build a standard game of PacMan using OpenFrameworks. Input will be controlled e
     * Each regular dot is worth 10 points
 * There are 4 energizer dots on the default board
     * Each energizer dot is worth 50 points
-    * Edible ghosts scale (single session): 200 points, 400 points, 800 points, 1600 points
+    * Ghosts are worth 500 points
 
 #### Ghosts
 * Release

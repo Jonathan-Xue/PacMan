@@ -204,6 +204,7 @@ void ofApp::update() {
 			if (ofRectangle(pacman.getTopLeftPixelPosition()[0], pacman.getTopLeftPixelPosition()[1], tileSize, tileSize).intersects(
 				ofRectangle(g->getTopLeftPixelPosition()[0], g->getTopLeftPixelPosition()[1], tileSize, tileSize)) && g->isAlive()) {
 				if (g->getMode() == FRIGHTENED && g->isEdible()) {
+					pacman.incrementScore(pointsPerGhost);
 					g->setEdible(false);
 					g->setAlive(false);
 				}
@@ -419,7 +420,7 @@ void ofApp::windowResized(int w, int h) {
 	screenHeight = h;
 
 	// Tile Size
-	tileSize = min(screenHeight / (currentBoard.size() + tileBuffer[0] + tileBuffer[2]), 
+	tileSize = min(screenHeight / (currentBoard.size() + tileBuffer[0] + tileBuffer[2]),
 		screenWidth / (currentBoard[0].size() + tileBuffer[1] + tileBuffer[3]));
 
 	// Fonts
@@ -451,7 +452,7 @@ void ofApp::windowResized(int w, int h) {
 		0 // Bottom Left
 	);
 
-	continueButton.setPosition((tileBuffer[1] * tileSize) + centerOffset[0], 
+	continueButton.setPosition((tileBuffer[1] * tileSize) + centerOffset[0],
 		(currentBoard.size() * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1]);
 	continueButton.setSize(currentBoard[0].size() * tileSize, tileBuffer[2] * tileSize);
 	continueButton.setFontSize(tileSize);
@@ -603,13 +604,13 @@ void ofApp::drawGameBoard() {
 			if (currentBoard[i][j].getID() == -1) {
 				// Invalid Block
 				ofSetColor(ofColor(0, 0, 0));
-				ofDrawRectangle((j * tileSize) + (tileBuffer[1] * tileSize) + centerOffset[0], 
+				ofDrawRectangle((j * tileSize) + (tileBuffer[1] * tileSize) + centerOffset[0],
 					(i * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
 			}
 			else if (currentBoard[i][j].getID() == 0) {
 				// Wall
 				ofSetColor(ofColor(50, 50, 255));
-				ofDrawRectangle((j * tileSize) + (tileBuffer[1] * tileSize) + centerOffset[0], 
+				ofDrawRectangle((j * tileSize) + (tileBuffer[1] * tileSize) + centerOffset[0],
 					(i * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1], tileSize, tileSize);
 			}
 			else if (currentBoard[i][j].getID() == 1) {
@@ -688,8 +689,8 @@ void ofApp::drawMisc() {
 
 	// Draw Left Buffer
 	ofSetColor(ofColor(0, 0, 0));
-	ofDrawRectangle(centerOffset[0], 
-		(tileBuffer[0] * tileSize) + centerOffset[1], 
+	ofDrawRectangle(centerOffset[0],
+		(tileBuffer[0] * tileSize) + centerOffset[1],
 		tileBuffer[1] * tileSize, currentBoard.size() * tileSize);
 
 	// Draw Lower Buffer
