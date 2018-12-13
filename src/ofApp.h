@@ -56,7 +56,6 @@ public:
 
 	// Event Listeners
 	void singlePlayerButtonListener(ofVec2f &e);
-	void multiPlayerButtonListener(ofVec2f &e);
 	void continueButtonListener(ofVec2f &e);
 
 private:
@@ -86,8 +85,6 @@ private:
 
 	// Buttons
 	RoundedButton singlePlayerButton;
-	RoundedButton multiPlayerButton;
-
 	Button continueButton;
 
 	// Timers

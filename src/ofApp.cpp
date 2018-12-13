@@ -29,11 +29,8 @@ void ofApp::setup() {
 	setupSerial();
 
 	// Setup Buttons
-	singlePlayerButton.setup("Solo", ofColor(255, 255, 255), "emulogic.ttf", ofColor(0, 0, 0), 12);
+	singlePlayerButton.setup("Start", ofColor(255, 255, 255), "emulogic.ttf", ofColor(0, 0, 0), 12);
 	ofAddListener(singlePlayerButton.clicked, this, &ofApp::singlePlayerButtonListener);
-
-	multiPlayerButton.setup("Versus", ofColor(255, 255, 255), "emulogic.ttf", ofColor(0, 0, 0), 12);
-	ofAddListener(multiPlayerButton.clicked, this, &ofApp::singlePlayerButtonListener);
 
 	continueButton.setup("Continue", ofColor(255, 0, 0), "emulogic.ttf", ofColor(255, 255, 255), 12);
 	ofAddListener(continueButton.clicked, this, &ofApp::continueButtonListener);
@@ -270,7 +267,6 @@ void ofApp::draw() {
 
 	// Set All Button's Visibility To False
 	singlePlayerButton.setVisible(false);
-	multiPlayerButton.setVisible(false);
 	continueButton.setVisible(false);
 
 	// State-Based Drawing Calls
@@ -437,19 +433,9 @@ void ofApp::windowResized(int w, int h) {
 	singlePlayerButton.setFontSize(singlePlayerButton.getSize()[1] / 4);
 	singlePlayerButton.setRadius(
 		singlePlayerButton.getSize()[1] / 2, // Top Left
-		0, // Top Right
-		0, // Bottom Right
+		singlePlayerButton.getSize()[1] / 2, // Top Right
+		singlePlayerButton.getSize()[1] / 2, // Bottom Right
 		singlePlayerButton.getSize()[1] / 2 // Bottom Left
-	);
-
-	multiPlayerButton.setPosition(0, 0);
-	multiPlayerButton.setSize(crackman.stringWidth("PAC-MAN") / 3, crackman.stringHeight("PAC-MAN") / 1.5);
-	multiPlayerButton.setFontSize(multiPlayerButton.getSize()[1] / 4);
-	multiPlayerButton.setRadius(
-		0, // Top Left
-		multiPlayerButton.getSize()[1] / 2, // Top Right
-		multiPlayerButton.getSize()[1] / 2, // Bottom Right
-		0 // Bottom Left
 	);
 
 	continueButton.setPosition(0, 0);
@@ -482,10 +468,6 @@ void ofApp::singlePlayerButtonListener(ofVec2f &e) {
 
 	// State
 	currentState = LEVEL_EDITOR;
-}
-
-void ofApp::multiPlayerButtonListener(ofVec2f &e) {
-	ofSystemAlertDialog("Feature Under Development. Please Check Back At A Later Time");
 }
 
 void ofApp::continueButtonListener(ofVec2f &e) {
@@ -529,28 +511,19 @@ void ofApp::drawLandingPage() {
 
 	// Centering Variables
 	vector<int> elementBuffer = { screenWidth / 125, (int)crackman.stringHeight("PAC-MAN") / 5 };
-	int sumOfElementHeights = crackman.stringHeight("PAC-MAN") + elementBuffer[1] + max(singlePlayerButton.getSize()[1], multiPlayerButton.getSize()[1]);
 
-	// "PACMAN" Horizontally And Vertically Centered With Respect To The Buttons And The Screen
+	// "PAC-MAN" Horizontally And Vertically Centered With Respect To The Buttons And The Screen
 	ofSetColor(ofColor(255, 255, 0));
 	crackman.drawString("PAC-MAN",
 		(screenWidth - crackman.stringWidth("PAC-MAN")) / 2,
-		(screenHeight - sumOfElementHeights) / 2 + crackman.stringHeight("PAC-MAN"));
+		(screenHeight - crackman.stringHeight("PAC-MAN") - singlePlayerButton.getSize()[1]) / 2 + crackman.stringHeight("PAC-MAN"));
 
-	// Buttons Horitontally And Vertically Centered With Respect To "PACMAN", Each Other, And The Screen
-	int sumOfButtonWidths = singlePlayerButton.getSize()[0] + elementBuffer[0] + multiPlayerButton.getSize()[0];
-
-	singlePlayerButton.setVisible(true);
+	// SinglePlayerButton Horizontall And Vertically Centered With Respect To "PAC-MAN" And The Screen
 	singlePlayerButton.setPosition(
-		(screenWidth - sumOfButtonWidths) / 2,
-		(screenHeight - sumOfElementHeights) / 2 + crackman.stringHeight("PAC-MAN") + elementBuffer[1]);
+		(screenWidth - singlePlayerButton.getSize()[0]) / 2,
+		(screenHeight - crackman.stringHeight("PAC-MAN") - singlePlayerButton.getSize()[1]) / 2 + crackman.stringHeight("PAC-MAN") + elementBuffer[1]);
+	singlePlayerButton.setVisible(true);
 	singlePlayerButton.draw();
-
-	multiPlayerButton.setVisible(true);
-	multiPlayerButton.setPosition(
-		(screenWidth - sumOfButtonWidths) / 2 + singlePlayerButton.getSize()[0] + elementBuffer[0],
-		(screenHeight - sumOfElementHeights) / 2 + crackman.stringHeight("PAC-MAN") + elementBuffer[1]);
-	multiPlayerButton.draw();
 }
 
 void ofApp::drawLevelEditor() {
