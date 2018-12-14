@@ -1,5 +1,4 @@
 # PacMan
-# Pacman
 ## How To Install
 ### OpenFrameworks Project
 1. Download OpenFrameworks [Link](https://openframeworks.cc/download/)
