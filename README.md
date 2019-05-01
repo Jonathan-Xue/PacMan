@@ -49,11 +49,11 @@
     * Blinky
         * Scatter Target: Blinky's home tile
         * Chase Target: Pacman's current tile
-    * Inky
-        * Scatter Target: Inky's home tile
-        * Chase Target: Four tiles in front of Pacman
     * Pinky
         * Scatter Target: Pinky's home tile
+        * Chase Target: Four tiles in front of Pacman
+    * Inky
+        * Scatter Target: Inky's home tile
         * Chase Target: Tile obtained by doubling the vector from Blinky's current tile position to two tiles in front of PacMan
     * Clyde
         * Scatter Target: Clyde's home tile

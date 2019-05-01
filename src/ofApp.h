@@ -59,6 +59,8 @@ public:
 	void continueButtonListener(ofVec2f &e);
 
 private:
+	const bool debug = false;
+
 	// OpenFramework Variables
 	const int frameRate = 60;
 
@@ -106,12 +108,12 @@ private:
 
 	BoardGenerator *board = new BoardGenerator();
 	vector<vector<Tile>> currentBoard = board->resetBoard();
-	Pacman &pacman = Pacman(&currentBoard);
-	Ghost &blinky = Blinky(&currentBoard, &pacman);
-	Ghost &pinky = Pinky(&currentBoard, &pacman);
-	Ghost &inky = Inky(&currentBoard, &pacman, &blinky);
-	Ghost &clyde = Clyde(&currentBoard, &pacman);
-	vector<Ghost*> ghostsVector = vector<Ghost*>{ &blinky, &pinky, &inky, &clyde };
+	Pacman* pacman = new Pacman(&currentBoard);
+	Ghost* blinky = new Blinky(&currentBoard, pacman);
+	Ghost* pinky = new Pinky(&currentBoard, pacman);
+	Ghost* inky = new Inky(&currentBoard, pacman, blinky);
+	Ghost* clyde = new Clyde(&currentBoard, pacman);
+	vector<Ghost*> ghostsVector = vector<Ghost*>{ blinky, pinky, inky, clyde };
 
 	int level = 0;
 	const int pointsPerGhost = 500;

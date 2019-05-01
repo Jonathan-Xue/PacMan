@@ -23,7 +23,7 @@ void ofApp::setup() {
 	// Background Music
 	backgroundMusic.load("temp.mp3");
 	backgroundMusic.setLoop(true);
-	// backgroundMusic.play();
+	backgroundMusic.play();
 
 	// Setup Arduino
 	setupSerial();
@@ -131,7 +131,7 @@ void ofApp::update() {
 			frightenedTimer.reset();
 
 			// Set SpriteMode And Edible
-			pacman.setMode(modeMarkers[modeIndex]);
+			pacman->setMode(modeMarkers[modeIndex]);
 
 			for (Ghost *g : ghostsVector) {
 				g->setMode(modeMarkers[modeIndex]);
@@ -152,7 +152,7 @@ void ofApp::update() {
 				modeTimer.reset();
 
 				// Set SpriteModes And reverseDirection
-				pacman.setMode(modeMarkers[modeIndex]);
+				pacman->setMode(modeMarkers[modeIndex]);
 				for (Ghost *g : ghostsVector) {
 					g->setMode(modeMarkers[modeIndex]);
 					if (g->isAlive()) {
@@ -164,15 +164,15 @@ void ofApp::update() {
 		}
 
 		// Update Sprites
-		pacman.update();
+		pacman->update();
 		for (Ghost *g : ghostsVector) {
 			g->update();
 		}
 
 		// Check For PowerPellet Consumption
-		if (pacman.hasEatenPowerPellet()) {
+		if (pacman->hasEatenPowerPellet()) {
 			// Set SpriteModes And Edible
-			pacman.setMode(FRIGHTENED);
+			pacman->setMode(FRIGHTENED);
 			for (Ghost *g : ghostsVector) {
 				g->setMode(FRIGHTENED);
 				g->setEdible(true);
@@ -197,17 +197,17 @@ void ofApp::update() {
 
 		// Check For Pacman - Ghost Collision
 		for (Ghost *g : ghostsVector) {
-			// if ((pacman.getTilePosition() == g->getTilePosition() && g->isAlive())) { --> Doesn't Trigger If Pacman & Ghost Switch Tiles Perfectly
-			if (ofRectangle(pacman.getTopLeftPixelPosition()[0], pacman.getTopLeftPixelPosition()[1], tileSize, tileSize).intersects(
+			// if ((pacman->getTilePosition() == g->getTilePosition() && g->isAlive())) { --> Doesn't Trigger If Pacman & Ghost Switch Tiles Perfectly
+			if (ofRectangle(pacman->getTopLeftPixelPosition()[0], pacman->getTopLeftPixelPosition()[1], tileSize, tileSize).intersects(
 				ofRectangle(g->getTopLeftPixelPosition()[0], g->getTopLeftPixelPosition()[1], tileSize, tileSize)) && g->isAlive()) {
 				if (g->getMode() == FRIGHTENED && g->isEdible()) {
-					pacman.incrementScore(pointsPerGhost);
+					pacman->incrementScore(pointsPerGhost);
 					g->setEdible(false);
 					g->setAlive(false);
 				}
 				else {
 					// Decrement Lives
-					pacman.decrementLives();
+					pacman->decrementLives();
 
 					// Reset Sprites
 					resetSprites();
@@ -228,14 +228,14 @@ void ofApp::update() {
 	stop:
 
 		// Check For State Changes
-		if (pacman.getLives() == 0) {
+		if (pacman->getLives() == 0) {
 			currentState = GAME_OVER;
 		}
 	}
 	else if (currentState == GAME_OVER) {
 		if (highScoreFlag) {
 			// Reorder highscores
-			highScores.push_back(pacman.getScore());
+			highScores.push_back(pacman->getScore());
 			std::sort(highScores.begin(), highScores.end(), std::greater<>());
 			highScores.pop_back();
 
@@ -325,31 +325,31 @@ void ofApp::mousePressed(ofMouseEventArgs &args) {
 					currentBoard[tilePosition[0]][tilePosition[1]].setParams(1, false, true);
 					break;
 				case PACMAN_SPRITE:
-					pacman.setInitialTilePosition(tilePosition);
+					pacman->setInitialTilePosition(tilePosition);
 					break;
 				case BLINKY_SPRITE:
-					blinky.setInitialTilePosition(tilePosition);
+					blinky->setInitialTilePosition(tilePosition);
 					break;
 				case BLINKY_HOME_TILE:
-					blinky.setHomeTilePosition(tilePosition);
+					blinky->setHomeTilePosition(tilePosition);
 					break;
 				case PINKY_SPRITE:
-					pinky.setInitialTilePosition(tilePosition);
+					pinky->setInitialTilePosition(tilePosition);
 					break;
 				case PINKY_HOME_TILE:
-					pinky.setHomeTilePosition(tilePosition);
+					pinky->setHomeTilePosition(tilePosition);
 					break;
 				case INKY_SPRITE:
-					inky.setInitialTilePosition(tilePosition);
+					inky->setInitialTilePosition(tilePosition);
 					break;
 				case INKY_HOME_TILE:
-					inky.setHomeTilePosition(tilePosition);
+					inky->setHomeTilePosition(tilePosition);
 					break;
 				case CLYDE_SPRITE:
-					clyde.setInitialTilePosition(tilePosition);
+					clyde->setInitialTilePosition(tilePosition);
 					break;
 				case CLYDE_HOME_TILE:
-					clyde.setHomeTilePosition(tilePosition);
+					clyde->setHomeTilePosition(tilePosition);
 					break;
 				default:
 					std::cerr << "Error. Invalid editorOptions Enum. Verify That The Corresponding Enum Is Handled Within ofApp::mousePressed" << std::endl;
@@ -393,16 +393,16 @@ void ofApp::keyPressed(int key) {
 	}
 	else if (currentState == IN_PROGRESS) {
 		if (upper_key == 'W') {
-			pacman.setQueuedVelocity({ 0, -1 });
+			pacman->setQueuedVelocity({ 0, -1 });
 		}
 		else if (upper_key == 'A') {
-			pacman.setQueuedVelocity({ -1, 0 });
+			pacman->setQueuedVelocity({ -1, 0 });
 		}
 		else if (upper_key == 'S') {
-			pacman.setQueuedVelocity({ 0, 1 });
+			pacman->setQueuedVelocity({ 0, 1 });
 		}
 		else if (upper_key == 'D') {
-			pacman.setQueuedVelocity({ 1, 0 });
+			pacman->setQueuedVelocity({ 1, 0 });
 		}
 	}
 }
@@ -443,7 +443,7 @@ void ofApp::windowResized(int w, int h) {
 	continueButton.setFontSize(tileSize);
 
 	// Sprite Resize
-	pacman.resize(screenWidth, screenHeight, tileSize);
+	pacman->resize(screenWidth, screenHeight, tileSize);
 	for (Ghost *g : ghostsVector) {
 		g->resize(screenWidth, screenHeight, tileSize);
 	}
@@ -455,12 +455,13 @@ void ofApp::singlePlayerButtonListener(ofVec2f &e) {
 
 	// Board
 	board = new BoardGenerator();
+	currentBoard = board->resetBoard();
 
 	// Set Sprites' initialTilePosition
 	vector<vector<int>> ghostInitialTilePositions = vector<vector<int>>{ {1, 1}, {29, 26}, {1, 26}, {29, 1} };
 	vector<vector<int>> ghostHomeTilePositions = vector<vector<int>>{ { 0, 27 }, { 0, 0 }, { 30, 27 }, { 30, 0 } };
 
-	pacman.setInitialTilePosition(vector<int>{ 23, 14 });
+	pacman->setInitialTilePosition(vector<int>{ 23, 14 });
 	for (unsigned i = 0; i < ghostsVector.size(); i++) {
 		ghostsVector[i]->setHomeTilePosition(ghostHomeTilePositions[i]);
 		ghostsVector[i]->setInitialTilePosition(ghostInitialTilePositions[i]);
@@ -473,8 +474,8 @@ void ofApp::singlePlayerButtonListener(ofVec2f &e) {
 void ofApp::continueButtonListener(ofVec2f &e) {
 	if (currentState == LEVEL_EDITOR) {
 		// OutOfBounds
-		bool pacmanOutOfBounds = pacman.getTilePosition()[0] < 0 || (unsigned)pacman.getTilePosition()[0] >= currentBoard.size() ||
-			pacman.getTilePosition()[1] < 0 || (unsigned)pacman.getTilePosition()[1] >= currentBoard[1].size();
+		bool pacmanOutOfBounds = pacman->getTilePosition()[0] < 0 || (unsigned)pacman->getTilePosition()[0] >= currentBoard.size() ||
+			pacman->getTilePosition()[1] < 0 || (unsigned)pacman->getTilePosition()[1] >= currentBoard[1].size();
 		bool ghostOutOfBounds = false;
 		for (Ghost *g : ghostsVector) {
 			if (g->getTilePosition()[0] < 0 || (unsigned)g->getTilePosition()[0] >= currentBoard.size() ||
@@ -488,7 +489,7 @@ void ofApp::continueButtonListener(ofVec2f &e) {
 		if (pacmanOutOfBounds || ghostOutOfBounds) {
 			ofSystemAlertDialog("Error! The Current Board Is Invalid! All Sprites Must Be Within Board Bounds!");
 		}
-		else {
+		else {			
 			// Set Board
 			board->generateStringFromBoard(currentBoard);
 
@@ -531,9 +532,9 @@ void ofApp::drawLevelEditor() {
 	drawGameBoard();
 
 	// Sprites
-	ofSetColor(pacman.getDefaultColor());
-	ofDrawRectangle((pacman.getInitialTilePosition()[1] * tileSize) + (tileBuffer[1] * tileSize) + centerOffset[0],
-		(pacman.getInitialTilePosition()[0] * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1],
+	ofSetColor(pacman->getDefaultColor());
+	ofDrawRectangle((pacman->getInitialTilePosition()[1] * tileSize) + (tileBuffer[1] * tileSize) + centerOffset[0],
+		(pacman->getInitialTilePosition()[0] * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1],
 		tileSize, tileSize);
 
 	for (Ghost *g : ghostsVector) {
@@ -630,12 +631,12 @@ void ofApp::drawGameBoard() {
 
 void ofApp::drawMisc() {
 	// currentScore
-	string currentScore = std::to_string(pacman.getScore());
+	string currentScore = std::to_string(pacman->getScore());
 
 	// highScore
 	string highScore;
-	if (pacman.getScore() > highScores[0]) {
-		highScore = std::to_string(pacman.getScore());
+	if (pacman->getScore() > highScores[0]) {
+		highScore = std::to_string(pacman->getScore());
 	}
 	else {
 		highScore = std::to_string(highScores[0]);
@@ -676,7 +677,7 @@ void ofApp::drawMisc() {
 	// Draw Lower Info (Lives)
 	ofSetColor(ofColor(255, 255, 255));
 	vector<int> tilePosition{ (int)currentBoard.size() + 1, 3 };
-	for (int i = 0; i < pacman.getLives() - 1; i++) {
+	for (int i = 0; i < pacman->getLives() - 1; i++) {
 		ofSetColor(ofColor(255, 255, 0));
 		ofDrawCircle(((tilePosition[1] + (i * 2)) * tileSize) + centerOffset[0],
 			(tilePosition[0] * tileSize) + (tileBuffer[0] * tileSize) + centerOffset[1],
@@ -693,7 +694,7 @@ void ofApp::drawMisc() {
 
 void ofApp::drawPacMan() {
 	if (currentState == IN_PROGRESS) {
-		if (pacman.getCurrentVelocity() == vector<int>{0, 0}) {
+		if (pacman->getCurrentVelocity() == vector<int>{0, 0}) {
 			angleDisplacement = 0;
 			pacmanDegree = 0;
 		}
@@ -715,19 +716,19 @@ void ofApp::drawPacMan() {
 			}
 
 			// angleDisplacement
-			if (pacman.getCurrentVelocity() == vector<int>{0, -1}) {
+			if (pacman->getCurrentVelocity() == vector<int>{0, -1}) {
 				// Up
 				angleDisplacement = 270;
 			}
-			else if (pacman.getCurrentVelocity() == vector<int>{-1, 0}) {
+			else if (pacman->getCurrentVelocity() == vector<int>{-1, 0}) {
 				// Left
 				angleDisplacement = 180;
 			}
-			else if (pacman.getCurrentVelocity() == vector<int>{0, 1}) {
+			else if (pacman->getCurrentVelocity() == vector<int>{0, 1}) {
 				// Down
 				angleDisplacement = 90;
 			}
-			else if (pacman.getCurrentVelocity() == vector<int>{1, 0}) {
+			else if (pacman->getCurrentVelocity() == vector<int>{1, 0}) {
 				// Right
 				angleDisplacement = 0;
 			}
@@ -737,28 +738,28 @@ void ofApp::drawPacMan() {
 
 	// Draw Pacman
 	ofPath pacmanPath;
-	pacmanPath.setColor(pacman.getDefaultColor());
+	pacmanPath.setColor(pacman->getDefaultColor());
 	pacmanPath.setCircleResolution(360);
 	pacmanPath.setFilled(true);
-	pacmanPath.arc(pacman.getCenterPixelPosition()[0] + (tileBuffer[1] * tileSize) + centerOffset[0],
-		pacman.getCenterPixelPosition()[1] + (tileBuffer[0] * tileSize) + centerOffset[1],
+	pacmanPath.arc(pacman->getCenterPixelPosition()[0] + (tileBuffer[1] * tileSize) + centerOffset[0],
+		pacman->getCenterPixelPosition()[1] + (tileBuffer[0] * tileSize) + centerOffset[1],
 		tileSize / 2, tileSize / 2,
 		angleDisplacement + pacmanDegree, angleDisplacement - pacmanDegree);
 	pacmanPath.draw();
 }
 
 void ofApp::drawGhosts() {
-	/*
-	// Draw targetTile
-	for (Ghost *g : ghostsVector) {
-		ofColor darkenedColor = g->getDefaultColor();
-		darkenedColor.setBrightness(128);
-		ofSetColor(darkenedColor);
-		ofDrawRectangle(g->getTargetTilePixelPosition()[0] - (tileSize / 4) + centerOffset[0] ,
-			g->getTargetTilePixelPosition()[1] - (tileSize / 4) + (buffer[0] * tileSize) + centerOffset[1],
-			tileSize / 2, tileSize / 2);
-	}
-	*/
+	if (debug) {
+		// Draw targetTile
+		for (Ghost *g : ghostsVector) {
+			ofColor darkenedColor = g->getDefaultColor();
+			// darkenedColor.setBrightness(128);
+			ofSetColor(darkenedColor);
+			ofDrawRectangle(g->getTargetTilePixelPosition()[0] - (tileSize / 4) + (tileBuffer[1] * tileSize) + centerOffset[0] ,
+				g->getTargetTilePixelPosition()[1] - (tileSize / 4) + (tileBuffer[0] * tileSize) + centerOffset[1],
+				tileSize / 2, tileSize / 2);
+		}
+	}	
 
 	for (Ghost *g : ghostsVector) {
 		if (g->isEdible()) {
@@ -824,7 +825,7 @@ void ofApp::resetSprites() {
 	pacmanDegree = 0;
 
 	// Reset Sprites
-	pacman.resetLevel(level);
+	pacman->resetLevel(level);
 	for (Ghost *g : ghostsVector) {
 		g->resetLevel(level);
 	}
@@ -875,7 +876,7 @@ void ofApp::resetGame() {
 	currentBoard = board->resetBoard();
 
 	// Reset Sprites
-	pacman.resetGame();
+	pacman->resetGame();
 	for (Ghost *g : ghostsVector) {
 		g->resetGame();
 	}
