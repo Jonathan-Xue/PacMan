@@ -38,12 +38,17 @@
 Makefile
 *.make
 
+# Qt
+*.qbs
+
 ### OpenFrameworks ###
-# ignore generated binaries
-# but not the data folder
+# ignore generated binaries but not the data folder
+# ignore obj
 
 /bin/*
 !/bin/data/
+
+/obj/*
 
 # general
 
@@ -98,7 +103,6 @@ local.properties
 # Linux
 *~
 
-
 # KDE
 .directory
 .AppleDouble
@@ -120,8 +124,8 @@ Desktop.ini
 .csettings
 
 ### OpenFrameworks+VisualStudio ###
-# ignore generated binaries
-# but not the data folder
+# ignore generated binaries but not the data folder
+# ignore obj
 
 
 # general
